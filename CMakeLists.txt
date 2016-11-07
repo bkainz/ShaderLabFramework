@@ -1,4 +1,4 @@
-project(Imperial-CG-Coursework)
+project(ShaderLabFramework)
 
 cmake_minimum_required(VERSION 2.8)
 cmake_policy(SET CMP0020 NEW)
@@ -98,6 +98,6 @@ set(RCS src/images/images.qrc )
 
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 
-add_executable(Imperial-CG-Coursework ${SRCS} ${HDRS} ${FORMS})
-qt5_use_modules(Imperial-CG-Coursework Core Gui OpenGL Xml)
-target_link_libraries(Imperial-CG-Coursework ${QT_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES})
+add_executable(ShaderLabFramework ${SRCS} ${HDRS} ${FORMS})
+qt5_use_modules(ShaderLabFramework Core Gui OpenGL Xml)
+target_link_libraries(ShaderLabFramework ${QT_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES})
