@@ -30,4 +30,23 @@ make
 ./ShaderLab
 
 Features:
-TODO
+- render window
+- mouse-based interaction
+- shader compilation log output
+- Shader editor with syntax highlighter
+- render-to-texture wrapped shader pipeline
+- Object selection
+- wireframe mode
+- display of origin
+- backface culling
+- screenshot tool
+- Camera parameter adjustments
+- direct manipulation widget for Model, View and Projection Matrices
+- automatic evaluation of user uniforms in uniform editor; 
+  default material and matrix uniforms are ignored
+- simple numeric material editor 
+- GPU info output
+- saving and loading of whole shader pipelines or individual shaders
+- full OpenGL 4.x support
+
+
