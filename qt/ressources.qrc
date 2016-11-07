@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="enter">
+    <file>rcs/mono-key-enter.png</file>
+  </qresource>
+</RCC>

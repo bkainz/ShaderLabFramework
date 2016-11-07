@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1195</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Open GL</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout_4">
+    <item>
+     <widget class="GLDisplay" name="m_GLWidget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="m_tabWidget">
+      <property name="currentIndex">
+       <number>4</number>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+      <widget class="QWidget" name="m_logTab">
+       <attribute name="title">
+        <string>Log</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QPlainTextEdit" name="plainTextEdit"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="m_sceneTab">
+       <attribute name="title">
+        <string>Scene</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="title">
+           <string>Object</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="0">
+              <widget class="QComboBox" name="comboBox">
+               <property name="currentText">
+                <string>Teapot</string>
+               </property>
+               <property name="currentIndex">
+                <number>0</number>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Teapot</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Teapot low res</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Square</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Cube</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Monkey</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QGroupBox" name="groupBox">
+          <property name="title">
+           <string>Camera</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <item>
+            <layout class="QGridLayout" name="gridLayout">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Type</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QDoubleSpinBox" name="doubleSpinBox">
+               <property name="decimals">
+                <number>1</number>
+               </property>
+               <property name="minimum">
+                <double>1.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>90.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>45.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QComboBox" name="comboBox_2">
+               <item>
+                <property name="text">
+                 <string>Perspective</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Orthographic</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Field Of View</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QGroupBox" name="groupBox_3">
+          <property name="title">
+           <string>Rendering</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="checkBox">
+               <property name="text">
+                <string>Enable wireframe</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="checkBox_2">
+               <property name="text">
+                <string>Enable backface culling</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QPushButton" name="pushButton">
+               <property name="text">
+                <string>Screenshot</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="checkBox_3">
+               <property name="text">
+                <string>Show coordinate frame</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="text">
+           <string>Reset scene</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="m_matricesTab">
+       <property name="toolTipDuration">
+        <number>-1</number>
+       </property>
+       <attribute name="title">
+        <string>Matrices</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="MatricesWidget" name="matricesWidget" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>891</width>
+            <height>361</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>1920</width>
+            <height>1080</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="m_uniformsTab">
+       <attribute name="title">
+        <string>User uniforms</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="m_materialTab">
+       <attribute name="title">
+        <string>Material</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="m_GLInfoTab">
+       <attribute name="title">
+        <string>GL Info</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QTextEdit" name="textEdit"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>GLDisplay</class>
+   <extends>QWidget</extends>
+   <header>qt/gldisplay.h</header>
+   <container>1</container>
+   <slots>
+    <signal>updateGLInfo(QString)</signal>
+    <signal>updateModelMatrix(QMatrix4x4)</signal>
+    <signal>updateViewMatrix(QMatrix4x4)</signal>
+    <signal>updateProjectionMatrix(QMatrix4x4)</signal>
+    <signal>updateLog(QString)</signal>
+    <signal>updateTexturePath(QString)</signal>
+    <signal>displayLog()</signal>
+    <signal>updateUniformTab()</signal>
+    <slot>setXRotation(int)</slot>
+    <slot>setYRotation(int)</slot>
+    <slot>setZRotation(int)</slot>
+    <slot>updateObject(QString)</slot>
+    <slot>takeScreenshot()</slot>
+    <slot>changeExposure(int)</slot>
+    <slot>updateCameraType(QString)</slot>
+    <slot>updateCameraFieldOfView(double)</slot>
+    <slot>updateWireframeRendering(bool)</slot>
+    <slot>updateBackfaceCulling(bool)</slot>
+    <slot>modelMatrixUpdated(QMatrix4x4)</slot>
+    <slot>viewMatrixUpdated(QMatrix4x4)</slot>
+    <slot>projectionMatrixUpdated(QMatrix4x4)</slot>
+    <slot>resetMatrices()</slot>
+    <slot>setTexture()</slot>
+    <slot>updateRenderCoordinateFrame(bool)</slot>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>MatricesWidget</class>
+   <extends>QWidget</extends>
+   <header>qt/MatricesWidget.h</header>
+   <container>1</container>
+   <slots>
+    <signal>modelMatrixChanged(QMatrix4x4)</signal>
+    <signal>viewMatrixChanged(QMatrix4x4)</signal>
+    <signal>projectionMatrixChanged(QMatrix4x4)</signal>
+    <signal>resetMatrices()</signal>
+    <slot>updateModelMatrix(QMatrix4x4)</slot>
+    <slot>updateViewMatrix(QMatrix4x4)</slot>
+    <slot>updateProjectionMatrix(QMatrix4x4)</slot>
+   </slots>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>m_GLWidget</sender>
+   <signal>displayLog()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showLogTab()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>34</x>
+     <y>251</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_GLWidget</sender>
+   <signal>updateUniformTab()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>updateUniformTab()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>341</x>
+     <y>115</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-112</x>
+     <y>559</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_GLWidget</sender>
+   <signal>updateViewMatrix(QMatrix4x4)</signal>
+   <receiver>matricesWidget</receiver>
+   <slot>updateViewMatrix(QMatrix4x4)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>504</x>
+     <y>298</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>491</x>
+     <y>443</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>doubleSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>m_GLWidget</receiver>
+   <slot>updateCameraFieldOfView(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1112</x>
+     <y>481</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>567</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_GLWidget</sender>
+   <signal>updateModelMatrix(QMatrix4x4)</signal>
+   <receiver>matricesWidget</receiver>
+   <slot>updateModelMatrix(QMatrix4x4)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>414</x>
+     <y>298</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>407</x>
+     <y>464</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_2</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>m_GLWidget</receiver>
+   <slot>updateCameraType(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1161</x>
+     <y>459</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>513</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>m_GLWidget</receiver>
+   <slot>takeScreenshot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>212</x>
+     <y>618</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>181</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>m_GLWidget</receiver>
+   <slot>resetMatrices()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1172</x>
+     <y>577</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>617</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_GLWidget</sender>
+   <signal>updateLog(QString)</signal>
+   <receiver>plainTextEdit</receiver>
+   <slot>appendPlainText(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>138</x>
+     <y>298</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>119</x>
+     <y>439</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_GLWidget</sender>
+   <signal>updateProjectionMatrix(QMatrix4x4)</signal>
+   <receiver>matricesWidget</receiver>
+   <slot>updateProjectionMatrix(QMatrix4x4)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>567</x>
+     <y>298</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>547</x>
+     <y>449</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>matricesWidget</sender>
+   <signal>viewMatrixChanged(QMatrix4x4)</signal>
+   <receiver>m_GLWidget</receiver>
+   <slot>viewMatrixUpdated(QMatrix4x4)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>328</x>
+     <y>442</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>m_GLWidget</receiver>
+   <slot>updateObject(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>182</x>
+     <y>472</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>123</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>m_GLWidget</receiver>
+   <slot>updateWireframeRendering(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>179</x>
+     <y>543</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>257</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_2</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>m_GLWidget</receiver>
+   <slot>updateBackfaceCulling(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>209</x>
+     <y>566</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>86</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_GLWidget</sender>
+   <signal>updateGLInfo(QString)</signal>
+   <receiver>textEdit</receiver>
+   <slot>append(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>291</x>
+     <y>298</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>283</x>
+     <y>459</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>matricesWidget</sender>
+   <signal>projectionMatrixChanged(QMatrix4x4)</signal>
+   <receiver>m_GLWidget</receiver>
+   <slot>projectionMatrixUpdated(QMatrix4x4)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>377</x>
+     <y>434</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>393</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>matricesWidget</sender>
+   <signal>resetMatrices()</signal>
+   <receiver>m_GLWidget</receiver>
+   <slot>resetMatrices()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>649</x>
+     <y>442</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>663</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_3</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>m_GLWidget</receiver>
+   <slot>updateRenderCoordinateFrame(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>469</x>
+     <y>589</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>446</x>
+     <y>358</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>matricesWidget</sender>
+   <signal>modelMatrixChanged(QMatrix4x4)</signal>
+   <receiver>m_GLWidget</receiver>
+   <slot>modelMatrixUpdated(QMatrix4x4)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>353</x>
+     <y>450</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>371</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>setTextureIcon(QString)</slot>
+  <slot>showLogTab()</slot>
+  <slot>updateUniformTab()</slot>
+ </slots>
+</ui>
