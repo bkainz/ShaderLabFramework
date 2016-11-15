@@ -27,7 +27,7 @@ FROM, OUT OF OR IN C
 
 Compile and run:
 
-git clone https://github.com/bkainz/fetalReconstruction/ShaderLabFramework.git
+git clone https://github.com/bkainz/ShaderLabFramework.git
 
 cd ShaderLabFramework
 
