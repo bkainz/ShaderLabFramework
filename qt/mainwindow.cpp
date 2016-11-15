@@ -41,8 +41,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     format.setSamples(16);
     ui->m_GLWidget->setFormat(format);
 
-	this->setGeometry(
-		QRect(100, 100, qApp->desktop()->width() / 2 - 100, qApp->desktop()->height() - 200));
+	this->resize(QDesktopWidget().availableGeometry(this).size().width() * 0.5, 
+		QDesktopWidget().availableGeometry(this).size().height() * 0.97);
 
 	QApplication::restoreOverrideCursor();
 	QCoreApplication::organizationName() = QString("Imperial College London, Department of Computing");

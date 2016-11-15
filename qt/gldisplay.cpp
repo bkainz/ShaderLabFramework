@@ -87,8 +87,11 @@ void GLDisplay::initializeGL()
 	connect(shaderEditor, SIGNAL(updateUniformTab()), this, SIGNAL(updateUniformTab()));
 	
 	shaderEditor->loadDefaultShaders();
-	shaderEditor->setGeometry(
-		QRect(qApp->desktop()->width() / 2, 100, qApp->desktop()->width() / 2 - 100, qApp->desktop()->height() - 200));
+
+	shaderEditor->resize(QDesktopWidget().availableGeometry(this).size().width() * 0.5,
+		QDesktopWidget().availableGeometry(this).size().height() * 0.97);
+	shaderEditor->move(QDesktopWidget().availableGeometry(this).size().width() * 0.5, 0);
+
 	shaderEditor->show();
 
     //Initialisation of GLEW
