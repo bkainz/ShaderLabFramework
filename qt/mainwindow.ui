@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1195</width>
-    <height>800</height>
+    <width>1127</width>
+    <height>934</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,262 +20,271 @@
    <string>Open GL</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_4">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <widget class="GLDisplay" name="m_GLWidget" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
       </property>
-      <property name="minimumSize">
-       <size>
-        <width>800</width>
-        <height>600</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QTabWidget" name="m_tabWidget">
-      <property name="currentIndex">
-       <number>4</number>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>64</width>
-        <height>64</height>
-       </size>
-      </property>
-      <widget class="QWidget" name="m_logTab">
-       <attribute name="title">
-        <string>Log</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <widget class="QPlainTextEdit" name="plainTextEdit"/>
-        </item>
-       </layout>
+      <widget class="GLDisplay" name="m_GLWidget" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>400</width>
+         <height>200</height>
+        </size>
+       </property>
       </widget>
-      <widget class="QWidget" name="m_sceneTab">
-       <attribute name="title">
-        <string>Scene</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_4">
-        <item row="0" column="0">
-         <widget class="QGroupBox" name="groupBox_2">
-          <property name="title">
-           <string>Object</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_6">
-           <item>
-            <layout class="QGridLayout" name="gridLayout_2">
-             <item row="0" column="0">
-              <widget class="QComboBox" name="comboBox">
-               <property name="currentText">
-                <string>Teapot</string>
-               </property>
-               <property name="currentIndex">
-                <number>0</number>
-               </property>
-               <item>
-                <property name="text">
+      <widget class="QTabWidget" name="m_tabWidget">
+       <property name="minimumSize">
+        <size>
+         <width>600</width>
+         <height>400</height>
+        </size>
+       </property>
+       <property name="currentIndex">
+        <number>2</number>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>64</width>
+         <height>64</height>
+        </size>
+       </property>
+       <widget class="QWidget" name="m_logTab">
+        <attribute name="title">
+         <string>Log</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QPlainTextEdit" name="plainTextEdit"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="m_sceneTab">
+        <attribute name="title">
+         <string>Scene</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="0" column="0">
+          <widget class="QGroupBox" name="groupBox_2">
+           <property name="title">
+            <string>Object</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <layout class="QGridLayout" name="gridLayout_2">
+              <item row="0" column="0">
+               <widget class="QComboBox" name="comboBox">
+                <property name="currentText" stdset="0">
                  <string>Teapot</string>
                 </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Teapot low res</string>
+                <property name="currentIndex">
+                 <number>0</number>
                 </property>
-               </item>
-               <item>
+                <item>
+                 <property name="text">
+                  <string>Teapot</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Teapot low res</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Square</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Cube</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Monkey</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QGroupBox" name="groupBox">
+           <property name="title">
+            <string>Camera</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <item>
+             <layout class="QGridLayout" name="gridLayout">
+              <item row="1" column="0">
+               <widget class="QLabel" name="label">
                 <property name="text">
-                 <string>Square</string>
+                 <string>Type</string>
                 </property>
-               </item>
-               <item>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QDoubleSpinBox" name="doubleSpinBox">
+                <property name="decimals">
+                 <number>1</number>
+                </property>
+                <property name="minimum">
+                 <double>1.000000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>90.000000000000000</double>
+                </property>
+                <property name="value">
+                 <double>45.000000000000000</double>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="comboBox_2">
+                <item>
+                 <property name="text">
+                  <string>Perspective</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Orthographic</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_2">
                 <property name="text">
-                 <string>Cube</string>
+                 <string>Field Of View</string>
                 </property>
-               </item>
-               <item>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QGroupBox" name="groupBox_3">
+           <property name="title">
+            <string>Rendering</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <item>
+             <layout class="QGridLayout" name="gridLayout_3">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="checkBox">
                 <property name="text">
-                 <string>Monkey</string>
+                 <string>Enable wireframe</string>
                 </property>
-               </item>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QGroupBox" name="groupBox">
-          <property name="title">
-           <string>Camera</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_7">
-           <item>
-            <layout class="QGridLayout" name="gridLayout">
-             <item row="1" column="0">
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Type</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QDoubleSpinBox" name="doubleSpinBox">
-               <property name="decimals">
-                <number>1</number>
-               </property>
-               <property name="minimum">
-                <double>1.000000000000000</double>
-               </property>
-               <property name="maximum">
-                <double>90.000000000000000</double>
-               </property>
-               <property name="value">
-                <double>45.000000000000000</double>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QComboBox" name="comboBox_2">
-               <item>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QCheckBox" name="checkBox_2">
                 <property name="text">
-                 <string>Perspective</string>
+                 <string>Enable backface culling</string>
                 </property>
-               </item>
-               <item>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QPushButton" name="pushButton">
                 <property name="text">
-                 <string>Orthographic</string>
+                 <string>Screenshot</string>
                 </property>
-               </item>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string>Field Of View</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QGroupBox" name="groupBox_3">
-          <property name="title">
-           <string>Rendering</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_5">
-           <item>
-            <layout class="QGridLayout" name="gridLayout_3">
-             <item row="0" column="0">
-              <widget class="QCheckBox" name="checkBox">
-               <property name="text">
-                <string>Enable wireframe</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QCheckBox" name="checkBox_2">
-               <property name="text">
-                <string>Enable backface culling</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QPushButton" name="pushButton">
-               <property name="text">
-                <string>Screenshot</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QCheckBox" name="checkBox_3">
-               <property name="text">
-                <string>Show coordinate frame</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="pushButton_2">
-          <property name="text">
-           <string>Reset scene</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="m_matricesTab">
-       <property name="toolTipDuration">
-        <number>-1</number>
-       </property>
-       <attribute name="title">
-        <string>Matrices</string>
-       </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="MatricesWidget" name="matricesWidget" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>891</width>
-            <height>361</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>1920</width>
-            <height>1080</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="m_uniformsTab">
-       <attribute name="title">
-        <string>User uniforms</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="m_materialTab">
-       <attribute name="title">
-        <string>Material</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="m_GLInfoTab">
-       <attribute name="title">
-        <string>GL Info</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <widget class="QTextEdit" name="textEdit"/>
-        </item>
-       </layout>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QCheckBox" name="checkBox_3">
+                <property name="text">
+                 <string>Show coordinate frame</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="pushButton_2">
+           <property name="text">
+            <string>Reset scene</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="m_matricesTab">
+        <property name="toolTipDuration" stdset="0">
+         <number>-1</number>
+        </property>
+        <attribute name="title">
+         <string>Matrices</string>
+        </attribute>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="MatricesWidget" name="matricesWidget" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>300</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>1920</width>
+             <height>1080</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="m_uniformsTab">
+        <attribute name="title">
+         <string>User uniforms</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="m_materialTab">
+        <attribute name="title">
+         <string>Material</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="m_GLInfoTab">
+        <attribute name="title">
+         <string>GL Info</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QTextEdit" name="textEdit"/>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </widget>
     </item>

@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1538</width>
-    <height>1158</height>
+    <width>961</width>
+    <height>739</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
     <widget class="QFrame" name="frame">
      <property name="minimumSize">
       <size>
-       <width>1380</width>
-       <height>320</height>
+       <width>0</width>
+       <height>0</height>
       </size>
      </property>
      <property name="frameShape">
@@ -30,84 +30,83 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QGroupBox" name="ModelMatrixBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>450</width>
-          <height>300</height>
-         </size>
-        </property>
-        <property name="title">
-         <string>Model Matrix</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QGroupBox" name="ModelMatrixBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Model Matrix</string>
+          </property>
+          <zorder>ProjectionMatrixBox</zorder>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="ProjectionMatrixBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Projection Matrix</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
-       <widget class="QGroupBox" name="ViewMatrixBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>450</width>
-          <height>300</height>
-         </size>
-        </property>
-        <property name="title">
-         <string>View Matrix</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QGroupBox" name="ProjectionMatrixBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>450</width>
-          <height>300</height>
-         </size>
-        </property>
-        <property name="title">
-         <string>Projection Matrix</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QGroupBox" name="ViewMatrixBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>View Matrix</string>
+          </property>
+          <zorder>verticalSpacer</zorder>
+          <zorder>ProjectionMatrixBox</zorder>
+          <zorder>m_resetButton</zorder>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="m_resetButton">
+          <property name="text">
+           <string>Reset Matrices</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="m_resetButton">
-     <property name="text">
-      <string>Reset Matrices</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -115,7 +114,9 @@
       <widget class="QLabel" name="label">
        <property name="font">
         <font>
-         <pointsize>22</pointsize>
+         <pointsize>8</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -132,8 +133,8 @@ manual matrix changes!</string>
       <widget class="QLabel" name="label_3">
        <property name="maximumSize">
         <size>
-         <width>151</width>
-         <height>171</height>
+         <width>40</width>
+         <height>50</height>
         </size>
        </property>
        <property name="text">
