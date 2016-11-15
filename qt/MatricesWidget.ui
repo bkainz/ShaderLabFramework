@@ -48,7 +48,6 @@
           <property name="title">
            <string>Model Matrix</string>
           </property>
-          <zorder>ProjectionMatrixBox</zorder>
          </widget>
         </item>
         <item>
@@ -91,9 +90,6 @@
           <property name="title">
            <string>View Matrix</string>
           </property>
-          <zorder>verticalSpacer</zorder>
-          <zorder>ProjectionMatrixBox</zorder>
-          <zorder>m_resetButton</zorder>
          </widget>
         </item>
         <item>

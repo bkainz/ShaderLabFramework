@@ -40,11 +40,13 @@ GLSLEditorWindow::GLSLEditorWindow(QGLShaderProgram* sProgram, QGLShaderProgram*
 	ui->setupUi(this);
 	m_shaderProgram = sProgram;
 	m_shaderProgramDisplay = dsProgram;
+	pipelineFileName = QString();
 
 	readSettings();
 
 	setupTabs();
-    connect(ui->actionSave_pipeline, SIGNAL(triggered()), this, SLOT(savePipeline()));
+    connect(ui->actionSave_pipeline, SIGNAL(triggered()), this, SLOT(savePipelineAction()));
+	connect(ui->actionSave_pipeline_As, SIGNAL(triggered()), this, SLOT(savePipelineAsAction()));
     connect(ui->actionLoad_pipeline, SIGNAL(triggered()), this, SLOT(loadPipeline()));
 	connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT(loadFromFileAction()));
 	connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveToFileAction()));
@@ -376,7 +378,32 @@ void GLSLEditorWindow::loadFile(QString &fileName)
 	statusBar()->showMessage(tr("File loaded"), 2000);
 }
 
-bool GLSLEditorWindow::savePipeline()
+bool GLSLEditorWindow::savePipelineAsAction()
+{
+	QStringList filters;
+	filters << "ShaderLab pipeline definitions (*.xml)";
+	
+	QFileDialog dialog(this);
+	dialog.setNameFilters(filters);
+	dialog.setWindowModality(Qt::WindowModal);
+	dialog.setAcceptMode(QFileDialog::AcceptSave);
+	if (dialog.exec() != QDialog::Accepted)
+		return false;
+	return savePipeline(dialog.selectedFiles().first());
+}
+
+bool GLSLEditorWindow::savePipelineAction()
+{
+	if (pipelineFileName.isEmpty()) {
+		return savePipelineAsAction();
+	}
+	else {
+		return savePipeline(pipelineFileName);
+	}
+
+}
+
+bool GLSLEditorWindow::savePipeline(const QString& fileName)
 {
     GLSLEditorWidget* vertexEditor = static_cast<GLSLEditorWidget*>(ui->EditorTabWidget->widget(0));
     GLSLEditorWidget* geomEditor = static_cast<GLSLEditorWidget*>(ui->EditorTabWidget->widget(1));
@@ -384,19 +411,26 @@ bool GLSLEditorWindow::savePipeline()
     GLSLEditorWidget* R2TVertEditor = static_cast<GLSLEditorWidget*>(ui->EditorTabWidget->widget(3));
     GLSLEditorWidget* T2TFragEditor = static_cast<GLSLEditorWidget*>(ui->EditorTabWidget->widget(4));
 
-    QString fileName = QFileDialog::getSaveFileName(this,
-          tr("Save Pipeline"), "",
-          tr("XML file (*.xml);; All Files (*)"));
+	if (fileName.isEmpty())
+	{
+		pipelineFileName = QFileDialog::getSaveFileName(this,
+			tr("Save Pipeline"), "",
+			tr("XML file (*.xml);"));
+	}
+	else
+	{
+		pipelineFileName = fileName;
+	}
 
-    if (!fileName.isEmpty())
+    if (!pipelineFileName.isEmpty())
     {
-        QFile file(fileName);
+        QFile file(pipelineFileName);
         if (!file.open(QFile::WriteOnly | QFile::Text))
         {
             //Could not write the file
             QMessageBox::warning(this, tr("Application"),
                 tr("Cannot write file %1:\n%2.")
-                .arg(QDir::toNativeSeparators(fileName),
+                .arg(QDir::toNativeSeparators(pipelineFileName),
                     file.errorString()));
             return false;
         }
@@ -502,6 +536,7 @@ bool GLSLEditorWindow::loadPipeline()
         //Close the document
         xmlDocument.close();
    }
+	return true;
 }
 
 void GLSLEditorWindow::loadFromFileAction()

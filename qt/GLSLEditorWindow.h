@@ -72,7 +72,8 @@ signals:
 
 public slots:
 	void compileAndLink();
-    bool savePipeline();
+	bool savePipelineAction();
+	bool savePipelineAsAction();
     bool loadPipeline();
 	void loadFromFileAction();
 	bool saveToFileAction();
@@ -87,6 +88,7 @@ protected:
 	void loadFile(QString &fileName);
 	bool save();
 	bool saveFile(const QString &fileName);
+	bool savePipeline(const QString &fileName);
 	void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
 
 private:
@@ -96,6 +98,7 @@ private:
 	Ui::GLSLEditorWindow* ui;
 	QGLShaderProgram* m_shaderProgram;
 	QGLShaderProgram* m_shaderProgramDisplay;
+	QString pipelineFileName;
 };
 
 #endif
