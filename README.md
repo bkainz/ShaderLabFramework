@@ -68,4 +68,5 @@ make
 
 ## TODO:
 - search function in code editor
+- some random bug in the screenshot function
 
