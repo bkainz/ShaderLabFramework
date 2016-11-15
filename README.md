@@ -28,6 +28,7 @@ FROM, OUT OF OR IN C
 ## Dependencies:
 - [Qt5](https://www.qt.io/download/)
 - [CMake](https://cmake.org/download/) 
+- [GLEW](http://glew.sourceforge.net/)
 
 ## Compile and run:
 
