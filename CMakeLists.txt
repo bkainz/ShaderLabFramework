@@ -2,7 +2,9 @@ project(ShaderLabFramework)
 
 cmake_minimum_required(VERSION 2.8)
 cmake_policy(SET CMP0020 NEW)
-#cmake_policy(SET CMP0043 NEW)
+if( POLICY CMP0043)
+   cmake_policy(SET CMP0043 NEW)
+endif()
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
@@ -47,8 +49,6 @@ set(SRCS  main.cpp
     qt/Matrix4x4Widget.cpp
 	qt/GLSLCodeEditor.cpp
 	qt/SyntaxHighlighterGLSL.cpp
-	#qt/EditWindow.cpp
-	#qt/Editor.cpp
 	qt/codeeditor.cpp
 	qt/GLSLEditorWindow.cpp
 	qt/GLSLEditorWidget.cpp
