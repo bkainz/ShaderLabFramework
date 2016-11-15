@@ -1,4 +1,4 @@
-This is the Computer Graphics Shader Lab.
+# This is the Computer Graphics Shader Lab.
 
 ShaderLab is a teaching tool to solidify the fundamentals of Computer Graphics. The ShaderLab framework is based on Qt5, CMake, OpenGL 4.0, and GLSL and allows the student to modify GLSL shaders in an IDE-like environment. The framework is able to render shaded polyhedral geometry (.off/.obj), supports image-based post-processing, and  allows to implement simple ray-tracing algorithms. This tool will be intensively tested by 140 [Imperial College London CO317 Computer Graphics](http://wp.doc.ic.ac.uk/bkainz/teaching/co317-computer-graphics/) students in Spring 2017.
 
@@ -25,7 +25,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN C
 
-Compile and run:
+## Dependencies:
+- [Qt5](https://www.qt.io/download/)
+- [CMake](https://cmake.org/download/) 
+
+## Compile and run:
 
 git clone https://github.com/bkainz/ShaderLabFramework.git
 
@@ -41,7 +45,7 @@ make
 
 ./ShaderLabFramework
 
-Features:
+## Features:
 - render window
 - mouse-based interaction
 - shader compilation log output
@@ -61,6 +65,6 @@ Features:
 - saving and loading of whole shader pipelines or individual shaders
 - full OpenGL 4.x support
 
-TODO:
+## TODO:
 - search function in code editor
 
