@@ -35,57 +35,57 @@ class GLSLCodeEditor;
 
 class GLSLEditorWidget : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
-    public:
-		GLSLEditorWidget(QGLShader* shader, QWidget *parent);
-		~GLSLEditorWidget();
+public:
+    GLSLEditorWidget(QGLShader* shader, QWidget *parent);
+    ~GLSLEditorWidget();
 
-        /**
-         * Removes the OpenGLES defines added by Qt.
-         * @brief removeQtDefines
-         * @param sourceCode
-         * @return
-         */
-        QString removeQtDefines(QString sourceCode);
-		void setLinkToProgram(bool val);
-		bool getLinkToProgram();
-		QGLShader* getShader();
-		QString getCurFileName();
-        void setShaderCode(QString& text);
-		QString getShaderCode();
-		GLSLCodeEditor* getCodeEditor();
+    /**
+     * Removes the OpenGLES defines added by Qt.
+     * @brief removeQtDefines
+     * @param sourceCode
+     * @return
+     */
+    QString removeQtDefines(QString sourceCode);
+    void setLinkToProgram(bool val);
+    bool getLinkToProgram();
+    QGLShader* getShader();
+    QString getCurFileName();
+    void setShaderCode(QString& text);
+    QString getShaderCode();
+    GLSLCodeEditor* getCodeEditor();
 
-	signals:
-		/**
-		* triggers linking
-		* @brief updateLog
-		*/
-		void compileAndLink();
-		/**
-		* Appends text to the log tab
-		* @brief updateLog
-		*/
-		void updateLog(QString);
+signals:
+    /**
+    * triggers linking
+    * @brief updateLog
+    */
+    void compileAndLink();
+    /**
+    * Appends text to the log tab
+    * @brief updateLog
+    */
+    void updateLog(QString);
 
-		/**
-		* Displays the log tab.
-		* @brief displayLog
-		*/
-		void displayLog();
+    /**
+    * Displays the log tab.
+    * @brief displayLog
+    */
+    void displayLog();
 
-	public slots:
-		void setCurrentFile(const QString &fileName);
-		void updateShaderSource();
+    public slots:
+    void setCurrentFile(const QString &fileName);
+    void updateShaderSource();
 
-	protected:
-	    void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+protected:
+    void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
 
-    private:
-        Ui::GLSLEditorWidget* ui;
-		QGLShader* m_shader;
-		GLSLCodeEditor* sEditor;
-		QString currentFileName;
+private:
+    Ui::GLSLEditorWidget* ui;
+    QGLShader* m_shader;
+    GLSLCodeEditor* sEditor;
+    QString currentFileName;
 };
 
 #endif

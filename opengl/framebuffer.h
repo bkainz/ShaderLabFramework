@@ -37,45 +37,45 @@
 
 class FrameBuffer
 {
-    public:
-        FrameBuffer();
-        FrameBuffer(int width, int height);
-        ~FrameBuffer();
+public:
+    FrameBuffer();
+    FrameBuffer(int width, int height);
+    ~FrameBuffer();
 
-        void createRenderBuffer(GLuint &id, GLenum format);
+    void createRenderBuffer(GLuint &id, GLenum format);
 
-        /**
-         * Load a framebuffer with a color buffer of 8 bits.
-         * @brief load_8UC3
-         * @return
-         */
-        bool load_8UC3();
+    /**
+     * Load a framebuffer with a color buffer of 8 bits.
+     * @brief load_8UC3
+     * @return
+     */
+    bool load_8UC3();
 
-        /**
-         * Load a framebuffer with a color buffer of 32 bits floats.
-         * @brief load_32FC3
-         * @return
-         */
-        bool load_32FC3();
+    /**
+     * Load a framebuffer with a color buffer of 32 bits floats.
+     * @brief load_32FC3
+     * @return
+     */
+    bool load_32FC3();
 
-        GLuint getFramebufferID() const;
-        GLuint getColorBufferID(unsigned int index) const;
+    GLuint getFramebufferID() const;
+    GLuint getColorBufferID(unsigned int index) const;
 
-        int getWidth() const;
-        int getHeight() const;
+    int getWidth() const;
+    int getHeight() const;
 
-    signals:
+signals:
 
-    public slots:
+    public slots :
 
-    private:
-        GLuint m_framebufferId;
-        int m_width;
-        int m_height;
+private:
+    GLuint m_framebufferId;
+    int m_width;
+    int m_height;
 
-        //A framebuffer contains a color buffer, a depth buffer and a stencil buffer
-        std::vector<Texture> m_colourBuffers;
-        GLuint m_depthBufferId;
+    //A framebuffer contains a color buffer, a depth buffer and a stencil buffer
+    std::vector<Texture> m_colourBuffers;
+    GLuint m_depthBufferId;
 };
 
 #endif // FRAMEBUFFER_H

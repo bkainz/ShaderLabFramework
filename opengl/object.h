@@ -39,77 +39,77 @@
 
 class Object
 {
-    public:
-        Object();
+public:
+    Object();
 
-        /**
-         * Loads an object just from its name.
-         * @brief Object::Object
-         * @param objectName
-         */
-        Object(std::string objectName);
+    /**
+     * Loads an object just from its name.
+     * @brief Object::Object
+     * @param objectName
+     */
+    Object(std::string objectName);
 
-        ~Object();
+    ~Object();
 
-        void resetModelMatrix();
-
-
-        /**
-         * Set a given aspect ratio.
-         * @brief setAspectRatio
-         * @param aspectRatio
-         */
-        void setAspectRatio(float aspectRatio);
-
-        /**
-         * Scales the object in every dimension.
-         * @brief scale
-         * @param scalingFactor
-         */
-        void scale(float scalingFactor);
-
-          /**
-         * Function that returns the path of the .off file corresponding to the object.
-         * Also sets the texture coordinates
-         * @brief loadPath
-         * @param objectName
-         * @return
-         */
-        std::string loadPath(std::string &objectName);
+    void resetModelMatrix();
 
 
-        /**
-         * Loads the mesh.
-         * @brief loadMesh
-         */
-        void loadMesh();
+    /**
+     * Set a given aspect ratio.
+     * @brief setAspectRatio
+     * @param aspectRatio
+     */
+    void setAspectRatio(float aspectRatio);
 
-        void setModelMatrix(QMatrix4x4 modelMatrix);
+    /**
+     * Scales the object in every dimension.
+     * @brief scale
+     * @param scalingFactor
+     */
+    void scale(float scalingFactor);
 
-        void rotateX(int angleX);
-        void rotateY(int angleY);
-        void rotateZ(int angleZ);
+    /**
+   * Function that returns the path of the .off file corresponding to the object.
+   * Also sets the texture coordinates
+   * @brief loadPath
+   * @param objectName
+   * @return
+   */
+    std::string loadPath(std::string &objectName);
 
-        Mesh getMesh() const;
-        Material getMaterial() const;
 
-		void setMaterial(Material material);
+    /**
+     * Loads the mesh.
+     * @brief loadMesh
+     */
+    void loadMesh();
 
-        QMatrix4x4 getModelMatrix() const;
-        int getRotationX() const;
-        int getRotationY() const;
-        int getRotationZ() const;
+    void setModelMatrix(QMatrix4x4 modelMatrix);
 
-    private:
+    void rotateX(int angleX);
+    void rotateY(int angleY);
+    void rotateZ(int angleZ);
 
-        std::string m_objectName;
-        Mesh m_mesh;
-        Material m_material;
+    Mesh getMesh() const;
+    Material getMaterial() const;
 
-        QMatrix4x4 m_modelMatrix;
-        int m_rotationX;
-        int m_rotationY;
-        int m_rotationZ;
+    void setMaterial(Material material);
+
+    QMatrix4x4 getModelMatrix() const;
+    int getRotationX() const;
+    int getRotationY() const;
+    int getRotationZ() const;
+
+private:
+
+    std::string m_objectName;
+    Mesh m_mesh;
+    Material m_material;
+
+    QMatrix4x4 m_modelMatrix;
+    int m_rotationX;
+    int m_rotationY;
+    int m_rotationZ;
 
 };
 

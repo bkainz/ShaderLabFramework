@@ -38,42 +38,42 @@ class UniformEditorWidget;
 class MaterialEditorWidget;
 
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 
 class MainWindow : public QMainWindow
 {
-        Q_OBJECT
+    Q_OBJECT
 
-    public:
-        explicit MainWindow(QWidget *parent = 0);
-        ~MainWindow();
+public:
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
 
     public slots:
 
-        /**
-         * Shows the log tab when this slot is executed.
-         * @brief showLogTab
-         */
-        void showLogTab();
+    /**
+     * Shows the log tab when this slot is executed.
+     * @brief showLogTab
+     */
+    void showLogTab();
 
-		/**
-		* Creates the uniform tab from current shader programme.
-		* @brief createUniformTab
-		*/
-		void updateUniformTab();
+    /**
+    * Creates the uniform tab from current shader programme.
+    * @brief createUniformTab
+    */
+    void updateUniformTab();
 
-		/**
-		* Creates the material tab from current object.
-		* @brief createUniformTab
-		*/
-		void updateMaterialTab();
+    /**
+    * Creates the material tab from current object.
+    * @brief createUniformTab
+    */
+    void updateMaterialTab();
 
 
-    private:
-        Ui::MainWindow *ui;
-        UniformEditorWidget* m_uniformEditor;
-		QVector<MaterialEditorWidget*> m_materialEditors;
+private:
+    Ui::MainWindow *ui;
+    UniformEditorWidget* m_uniformEditor;
+    QVector<MaterialEditorWidget*> m_materialEditors;
 };
 
 #endif // MAINWINDOW_H

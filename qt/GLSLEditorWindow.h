@@ -37,68 +37,68 @@ class GLSLCodeEditor;
 
 class GLSLEditorWindow : public QMainWindow
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	GLSLEditorWindow(QGLShaderProgram* sProgram, QGLShaderProgram* dsProgram, QWidget *parent);
-	~GLSLEditorWindow();
+    GLSLEditorWindow(QGLShaderProgram* sProgram, QGLShaderProgram* dsProgram, QWidget *parent);
+    ~GLSLEditorWindow();
 
-	//TODO documentation
-	void loadDefaultShaders();
-	void linkShader();
-	QGLShaderProgram* getShaderProgram() { return m_shaderProgram; };
-	QGLShaderProgram* getShaderProgramDisplay() { return m_shaderProgramDisplay; };
+    //TODO documentation
+    void loadDefaultShaders();
+    void linkShader();
+    QGLShaderProgram* getShaderProgram() { return m_shaderProgram; };
+    QGLShaderProgram* getShaderProgramDisplay() { return m_shaderProgramDisplay; };
 
-//	private slots:
+    //	private slots:
 
-signals: 
-	/**
-	* Appends text to the log tab
-	* @brief updateLog
-	*/
-	void updateLog(QString);
+signals:
+    /**
+    * Appends text to the log tab
+    * @brief updateLog
+    */
+    void updateLog(QString);
 
-	/**
-	* Displays the log tab.
-	* @brief displayLog
-	*/
-	void displayLog();
+    /**
+    * Displays the log tab.
+    * @brief displayLog
+    */
+    void displayLog();
 
-	/**
-	* Updated the uniform tab in mainwindow.
-	* @brief updateUniformWiget
-	*/
-	void updateUniformTab();
+    /**
+    * Updated the uniform tab in mainwindow.
+    * @brief updateUniformWiget
+    */
+    void updateUniformTab();
 
-public slots:
-	void compileAndLink();
-	bool savePipelineAction();
-	bool savePipelineAsAction();
+    public slots:
+    void compileAndLink();
+    bool savePipelineAction();
+    bool savePipelineAsAction();
     bool loadPipeline();
-	void loadFromFileAction();
-	bool saveToFileAction();
-	void exitApplicationAction();
-	void documentWasModified();
-	bool saveAs();
-	void about();
+    void loadFromFileAction();
+    bool saveToFileAction();
+    void exitApplicationAction();
+    void documentWasModified();
+    bool saveAs();
+    void about();
 
 protected:
-	void setupTabs();
-	bool maybeSave();
-	void loadFile(QString &fileName);
-	bool save();
-	bool saveFile(const QString &fileName);
-	bool savePipeline(const QString &fileName);
-	void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
+    void setupTabs();
+    bool maybeSave();
+    void loadFile(QString &fileName);
+    bool save();
+    bool saveFile(const QString &fileName);
+    bool savePipeline(const QString &fileName);
+    void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
 
 private:
-	void writeSettings();
-	void readSettings();
+    void writeSettings();
+    void readSettings();
 
-	Ui::GLSLEditorWindow* ui;
-	QGLShaderProgram* m_shaderProgram;
-	QGLShaderProgram* m_shaderProgramDisplay;
-	QString pipelineFileName;
+    Ui::GLSLEditorWindow* ui;
+    QGLShaderProgram* m_shaderProgram;
+    QGLShaderProgram* m_shaderProgramDisplay;
+    QString pipelineFileName;
 };
 
 #endif

@@ -33,29 +33,29 @@
 using namespace std;
 
 GLDisplay::GLDisplay(QWidget *parent) : QGLWidget(QGLFormat(), parent),
-    m_cameraScene(Camera()), m_cameraQuad(Camera()), 
-    m_mousePos(0,0),
-    m_lastFPSUpdate(0), m_frameCounter(0), m_FPS(0),
-    //m_shaderProgram(), m_shaderProgramDisplay(),
-    m_wireframe(false), m_backFaceCulling(false), m_renderCoordinateFrame(false)
+m_cameraScene(Camera()), m_cameraQuad(Camera()),
+m_mousePos(0, 0),
+m_lastFPSUpdate(0), m_frameCounter(0), m_FPS(0),
+//m_shaderProgram(), m_shaderProgramDisplay(),
+m_wireframe(false), m_backFaceCulling(false), m_renderCoordinateFrame(false)
 {
-	m_shaderProgram = new QGLShaderProgram(this);
-	m_shaderProgramDisplay = new QGLShaderProgram(this);
+    m_shaderProgram = new QGLShaderProgram(this);
+    m_shaderProgramDisplay = new QGLShaderProgram(this);
 
-    m_timer.start(1000.0/MAX_FPS);
+    m_timer.start(1000.0 / MAX_FPS);
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(updateOpenGL()));
 }
 
 
 GLDisplay::GLDisplay(const QGLFormat& glFormat, QWidget *parent) : QGLWidget(glFormat, parent),
-        m_cameraScene(Camera()), m_cameraQuad(Camera()),
-        m_mousePos(0,0),
-        m_timeFPS(QTime()), m_lastFPSUpdate(0), m_frameCounter(0), m_FPS(0),
-       // m_shaderProgram(), m_shaderProgramDisplay(),
-        m_wireframe(false), m_backFaceCulling(false), m_renderCoordinateFrame(false)
+m_cameraScene(Camera()), m_cameraQuad(Camera()),
+m_mousePos(0, 0),
+m_timeFPS(QTime()), m_lastFPSUpdate(0), m_frameCounter(0), m_FPS(0),
+// m_shaderProgram(), m_shaderProgramDisplay(),
+m_wireframe(false), m_backFaceCulling(false), m_renderCoordinateFrame(false)
 {
-	m_shaderProgram = new QGLShaderProgram(this);
-	m_shaderProgramDisplay = new QGLShaderProgram(this);
+    m_shaderProgram = new QGLShaderProgram(this);
+    m_shaderProgramDisplay = new QGLShaderProgram(this);
 }
 
 GLDisplay::~GLDisplay()
@@ -81,23 +81,23 @@ void GLDisplay::initializeGL()
     glEnable(GL_MULTISAMPLE);
     qglClearColor(QColor(Qt::black));
 
-	shaderEditor = new GLSLEditorWindow(m_shaderProgram, m_shaderProgramDisplay, this);
-	connect(shaderEditor, SIGNAL(updateLog(QString)), this, SIGNAL(updateLog(QString)));
-	connect(shaderEditor, SIGNAL(displayLog()), this, SIGNAL(displayLog()));
-	connect(shaderEditor, SIGNAL(updateUniformTab()), this, SIGNAL(updateUniformTab()));
-	
-	shaderEditor->loadDefaultShaders();
+    shaderEditor = new GLSLEditorWindow(m_shaderProgram, m_shaderProgramDisplay, this);
+    connect(shaderEditor, SIGNAL(updateLog(QString)), this, SIGNAL(updateLog(QString)));
+    connect(shaderEditor, SIGNAL(displayLog()), this, SIGNAL(displayLog()));
+    connect(shaderEditor, SIGNAL(updateUniformTab()), this, SIGNAL(updateUniformTab()));
 
-	shaderEditor->resize(QDesktopWidget().availableGeometry(this).size().width() * 0.5,
-		QDesktopWidget().availableGeometry(this).size().height() * 0.97);
-	shaderEditor->move(QDesktopWidget().availableGeometry(this).size().width() * 0.5, 0);
+    shaderEditor->loadDefaultShaders();
 
-	shaderEditor->show();
+    shaderEditor->resize(QDesktopWidget().availableGeometry(this).size().width() * 0.5,
+        QDesktopWidget().availableGeometry(this).size().height() * 0.97);
+    shaderEditor->move(QDesktopWidget().availableGeometry(this).size().width() * 0.5, 0);
+
+    shaderEditor->show();
 
     //Initialisation of GLEW
     GLenum glewError = glewInit();
 
-    if( glewError != GLEW_OK )
+    if (glewError != GLEW_OK)
     {
         QString error = QString("Error in GLEW initialisation\n\n");
         updateLog(error);
@@ -113,31 +113,31 @@ void GLDisplay::initializeGL()
     /*---- Camera initialisation to render----*/
     //The camera that displays the final square is the moving camera
     //Compute the transformation of the camera
-    QVector4D positionQuad = QVector4D(0.0,0.0, 1.0, 1.0);
-    QVector4D upVectorQuad = QVector4D(0.0,1.0,0.0, 1.0);
-    QVector4D centerQuad = QVector4D(0.0, 0.0,0.0, 1.0);
+    QVector4D positionQuad = QVector4D(0.0, 0.0, 1.0, 1.0);
+    QVector4D upVectorQuad = QVector4D(0.0, 1.0, 0.0, 1.0);
+    QVector4D centerQuad = QVector4D(0.0, 0.0, 0.0, 1.0);
 
     //Render the quad without perspective
     m_cameraQuad = Camera(positionQuad, upVectorQuad, centerQuad, false);
 
-    QVector4D positionScene = QVector4D(0.0,0.0, INITIAL_CAMERA_Z_POSITION, 1.0);
-    QVector4D upVectorScene = QVector4D(0.0,1.0,0.0, 1.0);
-    QVector4D centerScene = QVector4D(0.0, 0.0,0.0, 1.0);
+    QVector4D positionScene = QVector4D(0.0, 0.0, INITIAL_CAMERA_Z_POSITION, 1.0);
+    QVector4D upVectorScene = QVector4D(0.0, 1.0, 0.0, 1.0);
+    QVector4D centerScene = QVector4D(0.0, 0.0, 0.0, 1.0);
 
-    m_cameraScene = Camera(positionScene, upVectorScene, centerScene, true, (float)m_framebuffer.getWidth()/(float)m_framebuffer.getHeight(), 45.0);
-	emit updateViewMatrix(m_cameraScene.getViewMatrix());
+    m_cameraScene = Camera(positionScene, upVectorScene, centerScene, true, (float)m_framebuffer.getWidth() / (float)m_framebuffer.getHeight(), 45.0);
+    emit updateViewMatrix(m_cameraScene.getViewMatrix());
     emit updateProjectionMatrix(m_cameraScene.getProjectionMatrix());
-	emit(updateMaterialTab());
+    emit(updateMaterialTab());
 }
 
 void GLDisplay::resizeGL(int width, int height)
 {
     //Avoid division by 0
-    if(height == 0)
+    if (height == 0)
         height = 1;
 
     //Recompute projection matrix
-    m_cameraQuad.setProjectionMatrix((float)width/(float)height, 30.0); //Reset the projection matrix
+    m_cameraQuad.setProjectionMatrix((float)width / (float)height, 30.0); //Reset the projection matrix
 
     //Map the projection to the GLWidget window
     glViewport(0, 0, width, height);
@@ -157,7 +157,7 @@ void GLDisplay::paintGL()
 
     this->setOpenGLRenderingState();
 
-    if(m_renderCoordinateFrame)
+    if (m_renderCoordinateFrame)
         this->renderCoordinateFrame();
 
     glClear(GL_DEPTH_BUFFER_BIT);
@@ -186,21 +186,21 @@ void GLDisplay::paintGL()
 
 void GLDisplay::setOpenGLWireframeState(bool activateWireframeMode)
 {
-	//Wireframe rendering
-	if (activateWireframeMode) {
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	}
-	else
-	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	}
+    //Wireframe rendering
+    if (activateWireframeMode) {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
+    else
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
 }
 
 
 void GLDisplay::setOpenGLRenderingState()
 {
     //Backface culling rendering
-    if(m_backFaceCulling)
+    if (m_backFaceCulling)
         glEnable(GL_CULL_FACE);
     else
         glDisable(GL_CULL_FACE);
@@ -239,20 +239,20 @@ void GLDisplay::renderCoordinateFrame()
     //Render the coordinate frame
     // ! The rotation must be applied when the line is centered at the origin
     glBegin(GL_LINES);
-        glColor3f(0.0, 0.0, 0.0);
-        glVertex3f(-1.0, 0.0, 0.0);
-        glColor3f(1.0, 0.0, 0.0);
-        glVertex3f(1.0, 0.0, 0.0);
+    glColor3f(0.0, 0.0, 0.0);
+    glVertex3f(-1.0, 0.0, 0.0);
+    glColor3f(1.0, 0.0, 0.0);
+    glVertex3f(1.0, 0.0, 0.0);
 
-        glColor3f(0.0, 0.0, 0.0);
-        glVertex3f(0.0, -1.0, 0.0);
-        glColor3f(0.0, 1.0, 0.0);
-        glVertex3f(0.0, 1.0, 0.0);
+    glColor3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, -1.0, 0.0);
+    glColor3f(0.0, 1.0, 0.0);
+    glVertex3f(0.0, 1.0, 0.0);
 
-        glColor3f(0.0, 0.0, 0.0);
-        glVertex3f(0.0, 0.0, -1.0);
-        glColor3f(0.0, 0.0, 1.0);
-        glVertex3f(0.0, 0.0, 1.0);
+    glColor3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, 0.0, -1.0);
+    glColor3f(0.0, 0.0, 1.0);
+    glVertex3f(0.0, 0.0, 1.0);
     glEnd();
 
     glLineWidth(1);
@@ -268,8 +268,8 @@ void GLDisplay::renderScene()
     //Matrices for the Frame buffer object
     //The camera is fixed
     QMatrix4x4 projectionScene, viewMatrixScene;
-    viewMatrixScene =  m_cameraScene.getViewMatrix();
-    projectionScene =  m_cameraScene.getProjectionMatrix();
+    viewMatrixScene = m_cameraScene.getViewMatrix();
+    projectionScene = m_cameraScene.getProjectionMatrix();
 
     //Setup the openGL pipeline
 
@@ -288,26 +288,26 @@ void GLDisplay::renderScene()
     QVector4D lightPosition = pointLights[0].getLightPosition();
     QMatrix4x4 lightModelMatrix = pointLights[0].getModelMatrix();
 
-	for (int k = 0; k < objectList.size(); k++)
-	{
-		//Get the data
-		modelMatrixObject = objectList[k].getModelMatrix();
-		vertices = objectList[k].getMesh().getVertices();
-		normals = objectList[k].getMesh().getVertexNormals();
-		textureCoordinates = objectList[k].getMesh().getTextureCoordinates();
-		indicesArray = objectList[k].getMesh().getIndicesArray();
+    for (int k = 0; k < objectList.size(); k++)
+    {
+        //Get the data
+        modelMatrixObject = objectList[k].getModelMatrix();
+        vertices = objectList[k].getMesh().getVertices();
+        normals = objectList[k].getMesh().getVertexNormals();
+        textureCoordinates = objectList[k].getMesh().getTextureCoordinates();
+        indicesArray = objectList[k].getMesh().getIndicesArray();
 
-		//Send uniform data to shaders
-		//Do the maximum of matrix multiplication on the CPU for better efficiency
-		m_shaderProgram->setUniformValue("mMatrix", modelMatrixObject);
-		m_shaderProgram->setUniformValue("mvMatrix", viewMatrixScene*modelMatrixObject);
-		m_shaderProgram->setUniformValue("pMatrix", projectionScene);
-		m_shaderProgram->setUniformValue("normalMatrix", (viewMatrixScene*modelMatrixObject).normalMatrix()); //Normals are in the camera space
-		m_shaderProgram->setUniformValue("lightPosition_camSpace", viewMatrixScene*lightModelMatrix*lightPosition); //Light position in the camera space
-		m_shaderProgram->setUniformValue("time", m_timeFPS.elapsed()); //Time
+        //Send uniform data to shaders
+        //Do the maximum of matrix multiplication on the CPU for better efficiency
+        m_shaderProgram->setUniformValue("mMatrix", modelMatrixObject);
+        m_shaderProgram->setUniformValue("mvMatrix", viewMatrixScene*modelMatrixObject);
+        m_shaderProgram->setUniformValue("pMatrix", projectionScene);
+        m_shaderProgram->setUniformValue("normalMatrix", (viewMatrixScene*modelMatrixObject).normalMatrix()); //Normals are in the camera space
+        m_shaderProgram->setUniformValue("lightPosition_camSpace", viewMatrixScene*lightModelMatrix*lightPosition); //Light position in the camera space
+        m_shaderProgram->setUniformValue("time", m_timeFPS.elapsed()); //Time
 
-		//sendData
-		this->sendObjectDataToShaders(objectList[k]);
+        //sendData
+        this->sendObjectDataToShaders(objectList[k]);
 
         /*---------------- Vertices, texture coordinates and normals ---------------------*/
 
@@ -319,21 +319,21 @@ void GLDisplay::renderScene()
 
         m_shaderProgram->setAttributeArray("normal_worldSpace", normals.constData());
         m_shaderProgram->enableAttributeArray("normal_worldSpace");
-		
-		//on some platforms Qt and ANGLE require this workaround
-		if (m_wireframe)
-		{
-			//activate wireframe
-			setOpenGLWireframeState(true);
-		}
+
+        //on some platforms Qt and ANGLE require this workaround
+        if (m_wireframe)
+        {
+            //activate wireframe
+            setOpenGLWireframeState(true);
+        }
         //Draw the current object
         glDrawElements(GL_TRIANGLES, indicesArray.size(), GL_UNSIGNED_INT, indicesArray.constData());
-		
-		if (m_wireframe)
-		{
-			//deactivate wireframe!
-			setOpenGLWireframeState(false);
-		}
+
+        if (m_wireframe)
+        {
+            //deactivate wireframe!
+            setOpenGLWireframeState(false);
+        }
 
         //Unbind the textures
         glBindTexture(GL_TEXTURE_2D, 0);
@@ -349,12 +349,12 @@ void GLDisplay::renderScene()
 
 void GLDisplay::renderToTexture(const int textureId, bool isSimplifiedPipeline)
 {
-   //Switch to the display shader
-   //Always bind before sending the textures to the shader
-   if(!m_shaderProgramDisplay->bind())
-       cout << "m_shaderProgramDisplay not bound" << endl;
+    //Switch to the display shader
+    //Always bind before sending the textures to the shader
+    if (!m_shaderProgramDisplay->bind())
+        cout << "m_shaderProgramDisplay not bound" << endl;
 
-   //The first texture will always be the rendered texture
+    //The first texture will always be the rendered texture
     GLint textureRenderedId = glGetUniformLocation(m_shaderProgramDisplay->programId(), "textureRendered");
 
     glActiveTexture(GL_TEXTURE0);
@@ -364,21 +364,21 @@ void GLDisplay::renderToTexture(const int textureId, bool isSimplifiedPipeline)
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureId);
 
-    if(!isSimplifiedPipeline)
+    if (!isSimplifiedPipeline)
     {
         //Additional textures
-        for(int i = 0 ; i<m_texturesDisplayProgram.size() ; ++i)
+        for (int i = 0; i < m_texturesDisplayProgram.size(); ++i)
         {
             //If the texture has been loaded correctly
-            if(m_texturesDisplayProgram[i].isTextureLoaded())
+            if (m_texturesDisplayProgram[i].isTextureLoaded())
             {
                 GLint textureId = glGetUniformLocation(m_shaderProgramDisplay->programId(), m_textureNamesDisplayProgram[i].c_str());
 
-                glActiveTexture(GL_TEXTURE0+i+1);
+                glActiveTexture(GL_TEXTURE0 + i + 1);
                 glUniform1i(textureId, i); // 0 is the texture number
 
                 //Bind the texture so that it can be used by the shader
-                glActiveTexture(GL_TEXTURE0+i+1);
+                glActiveTexture(GL_TEXTURE0 + i + 1);
                 glBindTexture(GL_TEXTURE_2D, m_texturesDisplayProgram[i].getTextureId());
             }
         }
@@ -421,9 +421,9 @@ void GLDisplay::loadTexturesAndFramebuffers()
 
     //If the FBO has the width and height of the window then the rendering is aliased (too low resolution)
     //The width is imposed to FRAMEBUFFER_WIDTH and the height is calculated to keep the aspec ratio
-    float aspectRatio = this->width()/this->height();
+    float aspectRatio = this->width() / this->height();
     int widthFBO = FRAMEBUFFER_WIDTH;
-    int heightFBO = widthFBO/aspectRatio;
+    int heightFBO = widthFBO / aspectRatio;
 
     //Create a framebuffer and load it (empty but creates its ID)
     m_framebuffer = FrameBuffer(widthFBO, heightFBO);
@@ -438,26 +438,26 @@ void GLDisplay::sendObjectDataToShaders(Object &object)
     Material material = Material();
     material = object.getMaterial();
 
-	//TODO defaults should come and be set in Uniform Editor widget
-	//or define a separate material editor and exclude these here
+    //TODO defaults should come and be set in Uniform Editor widget
+    //or define a separate material editor and exclude these here
 
     m_shaderProgram->setUniformValue("ambient", material.getAmbientColor());
     m_shaderProgram->setUniformValue("diffuse", material.getDiffuseColor());
     m_shaderProgram->setUniformValue("specular", material.getSpecularColor());
     m_shaderProgram->setUniformValue("shininess", material.getShininess());
 
-    for(int i = 0 ; i<m_texturesShaderProgram.size() ; ++i)
+    for (int i = 0; i < m_texturesShaderProgram.size(); ++i)
     {
         //If the texture has been loaded correctly
-        if(m_texturesShaderProgram[i].isTextureLoaded())
+        if (m_texturesShaderProgram[i].isTextureLoaded())
         {
             GLint textureId = glGetUniformLocation(m_shaderProgram->programId(), m_textureNamesShaderProgram[i].c_str());
 
-            glActiveTexture(GL_TEXTURE0+i);
+            glActiveTexture(GL_TEXTURE0 + i);
             glUniform1i(textureId, i); // 0 is the texture number
 
             //Bind the texture so that it can be used by the shader
-            glActiveTexture(GL_TEXTURE0+i);
+            glActiveTexture(GL_TEXTURE0 + i);
             glBindTexture(GL_TEXTURE_2D, m_texturesShaderProgram[i].getTextureId());
         }
     }
@@ -465,7 +465,7 @@ void GLDisplay::sendObjectDataToShaders(Object &object)
 
 void GLDisplay::updateMaterial(int objectID, Material material)
 {
-	m_scene->updateObjectMaterial(objectID, material);
+    m_scene->updateObjectMaterial(objectID, material);
 }
 
 void GLDisplay::drawFPS()
@@ -475,18 +475,18 @@ void GLDisplay::drawFPS()
     int currentTime = m_timeFPS.elapsed();
 
     //Every 1 second update the number of FPS
-    if(currentTime-m_lastFPSUpdate>=1000)
+    if (currentTime - m_lastFPSUpdate >= 1000)
     {
         m_FPS = m_frameCounter;
         m_frameCounter = 0;
         m_lastFPSUpdate = currentTime;
     }
 
-    QString textFPS = QString( "%1 FPS" ).arg(m_FPS);
+    QString textFPS = QString("%1 FPS").arg(m_FPS);
 
     //Set the color to white for to draw the FPS
     glColor3f(1.0, 1.0, 1.0);
-    renderText(width() - textFPS.size()- 40, 20, textFPS);
+    renderText(width() - textFPS.size() - 40, 20, textFPS);
 }
 
 /*--------------------------Mouse events-----------------------------------*/
@@ -495,17 +495,17 @@ void GLDisplay::wheelEvent(QWheelEvent* event)
     int variation = event->delta();
 
     //Control the Camera if CTRL NOT pressed
-    if(event->orientation() == Qt::Vertical && !(QApplication::keyboardModifiers() == Qt::ControlModifier))
+    if (event->orientation() == Qt::Vertical && !(QApplication::keyboardModifiers() == Qt::ControlModifier))
     {
-        m_cameraScene.translateAlongViewAxis(-(float)variation/100.0);
+        m_cameraScene.translateAlongViewAxis(-(float)variation / 100.0);
         emit updateViewMatrix(m_cameraScene.getViewMatrix());
         qApp->processEvents();
     }
 
     //Control the light if CTRL is pressed
-    if(event->orientation() == Qt::Vertical && (QApplication::keyboardModifiers() == Qt::ControlModifier))
+    if (event->orientation() == Qt::Vertical && (QApplication::keyboardModifiers() == Qt::ControlModifier))
     {
-            m_scene->translateLightSourceZ(0, variation/1000.0);
+        m_scene->translateLightSourceZ(0, variation / 1000.0);
     }
 
     updateGL();
@@ -521,39 +521,39 @@ void GLDisplay::mousePressEvent(QMouseEvent *event)
 
 void GLDisplay::mouseMoveEvent(QMouseEvent *event)
 {
-   // static float rotationX = 0.0;
-   // static float rotationY = 0.0;
-    //Mouse move camera
-    //CTRL+mouse move light
+    // static float rotationX = 0.0;
+    // static float rotationY = 0.0;
+     //Mouse move camera
+     //CTRL+mouse move light
 
-    //When the mouse is moved after it has been pressed,
-    //calculate the number of pixels it has moved and rotate the scene
-    if(event->buttons() == Qt::LeftButton &&  !(QApplication::keyboardModifiers() == Qt::ControlModifier))
+     //When the mouse is moved after it has been pressed,
+     //calculate the number of pixels it has moved and rotate the scene
+    if (event->buttons() == Qt::LeftButton && !(QApplication::keyboardModifiers() == Qt::ControlModifier))
     {
-		//from camera view inverse rotation
-        float rotationX = 2.0*(m_mousePos.y()-event->pos().y());
-        float rotationY = 2.0*(m_mousePos.x()-event->pos().x());
+        //from camera view inverse rotation
+        float rotationX = 2.0*(m_mousePos.y() - event->pos().y());
+        float rotationY = 2.0*(m_mousePos.x() - event->pos().x());
         m_cameraScene.rotateX(-rotationX);
         m_cameraScene.rotateY(-rotationY);
         emit updateViewMatrix(m_cameraScene.getViewMatrix());
     }
     else if (event->buttons() == Qt::RightButton && !(QApplication::keyboardModifiers() == Qt::ControlModifier))
-	{
+    {
         float translationX = 100.0*(m_mousePos.x() - event->pos().x()) / this->width();
         float translationY = 100.0*(m_mousePos.y() - event->pos().y()) / this->height();
 
-		m_cameraScene.translateX(-translationX);
-		m_cameraScene.translateY(translationY);
-		emit updateViewMatrix(m_cameraScene.getViewMatrix());
-	}
-    else if(event->buttons() == Qt::LeftButton && QApplication::keyboardModifiers() == Qt::ControlModifier)
+        m_cameraScene.translateX(-translationX);
+        m_cameraScene.translateY(translationY);
+        emit updateViewMatrix(m_cameraScene.getViewMatrix());
+    }
+    else if (event->buttons() == Qt::LeftButton && QApplication::keyboardModifiers() == Qt::ControlModifier)
     {
-        m_scene->translateLightSourceX(0, (m_mousePos.x()-event->pos().x())/100.0);
-        m_scene->translateLightSourceY(0, (m_mousePos.y()-event->pos().y())/100.0);
+        m_scene->translateLightSourceX(0, (m_mousePos.x() - event->pos().x()) / 100.0);
+        m_scene->translateLightSourceY(0, (m_mousePos.y() - event->pos().y()) / 100.0);
     }
 
-	//Update openGL
-	updateGL();
+    //Update openGL
+    updateGL();
 
     //Update the position of the mouse
     m_mousePos = QVector2D(event->pos().x(), event->pos().y());
@@ -564,19 +564,19 @@ void GLDisplay::keyPressEvent(QKeyEvent *event)
 {
 
     //Quick translation of light source
-    if(event->key() == Qt::Key_Z)
+    if (event->key() == Qt::Key_Z)
     {
         m_scene->translateLightSourceZ(0, -5.0);
     }
 
-    if(event->key() == Qt::Key_X)
+    if (event->key() == Qt::Key_X)
     {
         m_scene->translateLightSourceZ(0, 5.0);
     }
 
 
     //Reset scene and animation
-    if(event->key() == Qt::Key_D)
+    if (event->key() == Qt::Key_D)
     {
         //Reset the camera
         m_cameraScene.resetCamera();
@@ -605,7 +605,7 @@ void GLDisplay::updateCameraType(QString cameraType)
 void GLDisplay::updateCameraFieldOfView(double fieldOfView)
 {
     //Changes the field of view if the camera is a perspective camera
-    m_cameraScene.setProjectionMatrix((float)m_framebuffer.getWidth()/(float)m_framebuffer.getHeight(), fieldOfView);
+    m_cameraScene.setProjectionMatrix((float)m_framebuffer.getWidth() / (float)m_framebuffer.getHeight(), fieldOfView);
     emit updateProjectionMatrix(m_cameraScene.getProjectionMatrix());
     updateGL();//Update openGL
 }
@@ -614,30 +614,30 @@ void GLDisplay::updateObject(QString object)
 {
     string objectFileName;
 
-    if(object == "Square")
+    if (object == "Square")
     {
         objectFileName = "square";
     }
-    else if(object == "Cube")
+    else if (object == "Cube")
     {
         objectFileName = "cube";
     }
-    else if(object == "Monkey")
+    else if (object == "Monkey")
     {
         objectFileName = "monkey";
     }
-    else if(object == "Teapot")
+    else if (object == "Teapot")
     {
         objectFileName = "teapot";
     }
-    else if(object == "Teapot low res")
+    else if (object == "Teapot low res")
     {
         objectFileName = "teapot-low";
     }
 
     m_scene->removeObjects();
     m_scene->addObject(objectFileName);
-	emit(updateMaterialTab());
+    emit(updateMaterialTab());
     updateGL();//Update openGL
 }
 
@@ -686,43 +686,43 @@ void GLDisplay::takeScreenshot()
 
     uchar *data = new uchar[width*height*numberOfComponents];
 
-    if(data != NULL)
+    if (data != NULL)
     {
         //Read the data from the screen
         glBindFramebuffer(GL_FRAMEBUFFER, m_framebufferFinalResult.getFramebufferID());
         //Reset the viewport !!
-        glViewport(0,0, width, height);
+        glViewport(0, 0, width, height);
 
         //Add the username date and time to the screenshot
         QDate currentDate = QDate::currentDate();
         QTime currentTime = QTime::currentTime();
-		QString username;
+        QString username;
 #ifdef WIN32
-		username = qgetenv("USERNAME");
+        username = qgetenv("USERNAME");
 #else
-		username = qgetenv("USER");
+        username = qgetenv("USER");
 #endif
-		if (username.isEmpty())
-		{
-			QStringList homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-			username = homePath.first().split(QDir::separator()).last();
-		}
-		glColor3f(1.0, 1.0, 1.0);
+        if (username.isEmpty())
+        {
+            QStringList homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+            username = homePath.first().split(QDir::separator()).last();
+        }
+        glColor3f(1.0, 1.0, 1.0);
         renderText(10.0, 20.0, username + QString(" ") + currentDate.toString() + QString(" ") + currentTime.toString());
 
         //The OpenGL window is at position this->x(), this->y() in its parent
         //Start reading pixels from there
 
-        glReadPixels(0, 0, (GLsizei) width, (GLsizei) height, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glReadPixels(0, 0, (GLsizei)width, (GLsizei)height, GL_RGB, GL_UNSIGNED_BYTE, data);
 
         //Reverse the image : OpenGL texture coordinate system has a y axis going up
         //QImage is indexed with a y axis going down
         //Save the mirrored screenshot
         QImage screenshot = QImage(data, width, height, QImage::Format_RGB888);
-        
-		QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-			QDir::currentPath(),
-			tr("Images (*.jpg)"));
+
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+            QDir::currentPath(),
+            tr("Images (*.jpg)"));
 
         screenshot.mirrored().save(fileName);
 
@@ -736,11 +736,11 @@ void GLDisplay::takeScreenshot()
 
 void GLDisplay::resetMatrices()
 {
-    QVector4D positionScene = QVector4D(0.0,0.0, INITIAL_CAMERA_Z_POSITION, 1.0);
-    QVector4D upVectorScene = QVector4D(0.0,1.0,0.0, 1.0);
-    QVector4D centerScene = QVector4D(0.0, 0.0,0.0, 1.0);
+    QVector4D positionScene = QVector4D(0.0, 0.0, INITIAL_CAMERA_Z_POSITION, 1.0);
+    QVector4D upVectorScene = QVector4D(0.0, 1.0, 0.0, 1.0);
+    QVector4D centerScene = QVector4D(0.0, 0.0, 0.0, 1.0);
 
-    m_cameraScene = Camera(positionScene, upVectorScene, centerScene, true, (float)m_framebuffer.getWidth()/(float)m_framebuffer.getHeight(), 45.0);
+    m_cameraScene = Camera(positionScene, upVectorScene, centerScene, true, (float)m_framebuffer.getWidth() / (float)m_framebuffer.getHeight(), 45.0);
     emit updateViewMatrix(m_cameraScene.getViewMatrix());
     emit updateProjectionMatrix(m_cameraScene.getProjectionMatrix());
 
@@ -755,17 +755,17 @@ void GLDisplay::setTexture(QString name, bool isAShaderProgramUniform)
 {
     //Let the user choose a file
     QString chosenFile = QFileDialog::getOpenFileName(this,
-                            tr("Choose texture"),
-                            QDir::currentPath(),
-                            QString(tr("All Images files (*.jpg *.jpeg *.png *.bmp *.tif);;JPEG (*.jpg *.jpeg);;PNG (*.png);;BMP (*.bmp);;TIFF (*.tif)")));
+        tr("Choose texture"),
+        QDir::currentPath(),
+        QString(tr("All Images files (*.jpg *.jpeg *.png *.bmp *.tif);;JPEG (*.jpg *.jpeg);;PNG (*.png);;BMP (*.bmp);;TIFF (*.tif)")));
 
-    if (!chosenFile.isEmpty()){
+    if (!chosenFile.isEmpty()) {
         emit updateTexturePath(chosenFile);
 
         Texture newTexture(chosenFile.toStdString());
         bool loaded = newTexture.load_8UC3();
 
-        if(!loaded)
+        if (!loaded)
         {
             QString error = QString("Could not load texture : %1\n\n").arg(chosenFile);
             emit updateLog(error);
@@ -773,7 +773,7 @@ void GLDisplay::setTexture(QString name, bool isAShaderProgramUniform)
         }
         else
         {
-            if(isAShaderProgramUniform)
+            if (isAShaderProgramUniform)
             {
                 m_texturesShaderProgram.push_back(newTexture);
                 m_textureNamesShaderProgram.push_back(name.toStdString());
@@ -792,6 +792,6 @@ void GLDisplay::setTexture(QString name, bool isAShaderProgramUniform)
 
 void GLDisplay::updateOpenGL()
 {
-    m_timer.start(1000.0/MAX_FPS);
+    m_timer.start(1000.0 / MAX_FPS);
     updateGL();
 }

@@ -38,69 +38,69 @@
 
 class Texture
 {
-    public:
+public:
 
-        Texture();
-        Texture(std::string filePath);
-        Texture(int width, int height, int numberOfcomponents);
+    Texture();
+    Texture(std::string filePath);
+    Texture(int width, int height, int numberOfcomponents);
 
-        ~Texture();
+    ~Texture();
 
-        /**
-         * Load an ampty texture with a (width,height,  numberOfComponents)
-         * @brief loadEmptyTexture_8UC3
-         */
-        void loadEmptyTexture_8UC3();
+    /**
+     * Load an ampty texture with a (width,height,  numberOfComponents)
+     * @brief loadEmptyTexture_8UC3
+     */
+    void loadEmptyTexture_8UC3();
 
-        /**
-         * Loads an empty texture with a (width,height,  numberOfComponents) with 32 bits float for each channel.
-         * @brief loadEmptyTexture_32FC3
-         */
-        void loadEmptyTexture_32FC3();
+    /**
+     * Loads an empty texture with a (width,height,  numberOfComponents) with 32 bits float for each channel.
+     * @brief loadEmptyTexture_32FC3
+     */
+    void loadEmptyTexture_32FC3();
 
-        /**
-         * Load textures saved as 8 bits images.
-         * @brief load_8UC3
-         * @return
-         */
-        bool load_8UC3();
-
-
-        /**
-         * Set the m_filePath of the texture.
-         * @brief setFilePath
-         * @param m_filePath
-         */
-        void setFilePath(std::string filePath);
-
-        /**
-         * Get the texture id
-         * @brief getTextureId
-         * @return
-         */
-        GLuint getTextureId() const;
-
-        /**
-         * Get the aspect ratio.
-         * @brief getAspectRatio
-         * @return
-         */
-        float getAspectRatio() const;
-
-        int getWidth() const;
-        int getHeight() const;
-        bool isTextureLoaded() const;
+    /**
+     * Load textures saved as 8 bits images.
+     * @brief load_8UC3
+     * @return
+     */
+    bool load_8UC3();
 
 
-    private:
-        GLuint m_textureId;
-        std::string m_filePath;
+    /**
+     * Set the m_filePath of the texture.
+     * @brief setFilePath
+     * @param m_filePath
+     */
+    void setFilePath(std::string filePath);
 
-        int m_width;
-        int m_height;
-        int m_numberOfComponents;
+    /**
+     * Get the texture id
+     * @brief getTextureId
+     * @return
+     */
+    GLuint getTextureId() const;
 
-        bool m_isTextureLoaded;
+    /**
+     * Get the aspect ratio.
+     * @brief getAspectRatio
+     * @return
+     */
+    float getAspectRatio() const;
+
+    int getWidth() const;
+    int getHeight() const;
+    bool isTextureLoaded() const;
+
+
+private:
+    GLuint m_textureId;
+    std::string m_filePath;
+
+    int m_width;
+    int m_height;
+    int m_numberOfComponents;
+
+    bool m_isTextureLoaded;
 
 };
 

@@ -34,62 +34,62 @@
 
 class Scene
 {
-    public:
+public:
 
-        Scene();
-        Scene(std::string object);
-        Scene(QVector<std::string>& listOfObjectNames, const QVector<Light> &listOfPointLights);
-        ~Scene();
+    Scene();
+    Scene(std::string object);
+    Scene(QVector<std::string>& listOfObjectNames, const QVector<Light> &listOfPointLights);
+    ~Scene();
 
-        /*---Geometric transformations--*/
-        void translateLightSourceX(int lightNumber, float translationX);
-        void translateLightSourceY(int lightNumber, float translationY);
-        void translateLightSourceZ(int lightNumber, float translationZ);
-        void setLightSourcePosition(int lightNumber, float x, float y, float z);
+    /*---Geometric transformations--*/
+    void translateLightSourceX(int lightNumber, float translationX);
+    void translateLightSourceY(int lightNumber, float translationY);
+    void translateLightSourceZ(int lightNumber, float translationZ);
+    void setLightSourcePosition(int lightNumber, float x, float y, float z);
 
-        void rotateObjectX(int objectNumber, int rotationX);
-        void rotateObjectY(int objectNumber, int rotationY);
-        void rotateObjectZ(int objectNumber, int rotationZ);
-        void setModelMatrix(int objectNumber, QMatrix4x4 &matrix);
+    void rotateObjectX(int objectNumber, int rotationX);
+    void rotateObjectY(int objectNumber, int rotationY);
+    void rotateObjectZ(int objectNumber, int rotationZ);
+    void setModelMatrix(int objectNumber, QMatrix4x4 &matrix);
 
-        /**
-         * Reset the model matrix.
-         * @brief resetTransformationsObjects
-         */
-        void resetTransformationsObjects();
+    /**
+     * Reset the model matrix.
+     * @brief resetTransformationsObjects
+     */
+    void resetTransformationsObjects();
 
-        /**
-         * Set the aspect ratio of the objects.
-         * @brief setAspectRatiosObjects
-         */
-        void setAspectRatiosObjects();
+    /**
+     * Set the aspect ratio of the objects.
+     * @brief setAspectRatiosObjects
+     */
+    void setAspectRatiosObjects();
 
-        /**
-         * Build the scene by loading the geometry and setting the light sources.
-         * @brief buildScene
-         */
-        void buildScene(std::string object);
+    /**
+     * Build the scene by loading the geometry and setting the light sources.
+     * @brief buildScene
+     */
+    void buildScene(std::string object);
 
-        void removeObjects();
+    void removeObjects();
 
-        void addObject(std::string object);
+    void addObject(std::string object);
 
-        /**
-         * Reset the objects and the lights to their original position
-         * @brief resetScene
-         */
-        void resetScene();
+    /**
+     * Reset the objects and the lights to their original position
+     * @brief resetScene
+     */
+    void resetScene();
 
-		void updateObjectMaterial(int objectID, Material material);
+    void updateObjectMaterial(int objectID, Material material);
 
-        QVector<Object> getObjects();    
-        int getObjectRotation(int objectNumber, std::string rotationAxis);
+    QVector<Object> getObjects();
+    int getObjectRotation(int objectNumber, std::string rotationAxis);
 
-        QVector<Light> getPointLightSources();
+    QVector<Light> getPointLightSources();
 
-    private:
-        QVector<Object> m_objects;
-        QVector<Light> m_pointLights;
+private:
+    QVector<Object> m_objects;
+    QVector<Light> m_pointLights;
 };
 
 #endif // SCENE_H

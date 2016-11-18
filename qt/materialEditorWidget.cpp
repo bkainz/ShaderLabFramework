@@ -36,64 +36,64 @@
 
 MaterialEditorWidget::MaterialEditorWidget(int objectID, Scene* scene, QWidget *parent) : QWidget(parent), ui(new Ui::MaterialEditor)
 {
-	ui->setupUi(this);
-	m_scene = scene;
-	updateEditor(objectID);
+    ui->setupUi(this);
+    m_scene = scene;
+    updateEditor(objectID);
 }
 
 MaterialEditorWidget::~MaterialEditorWidget()
 {
-	delete ui;
+    delete ui;
 }
 
 void MaterialEditorWidget::updateEditor(int objectID)
 {
-	m_objectID = objectID;
+    m_objectID = objectID;
 
-	QVector<Object> objectList = m_scene->getObjects();
+    QVector<Object> objectList = m_scene->getObjects();
 
-	Material material = objectList.at(m_objectID).getMaterial();
-	QColor ambient = material.getAmbientColor();
-	QColor diffuse = material.getDiffuseColor();
-	QColor specular = material.getSpecularColor();
-	float shininess = material.getShininess();
-	float aceoff = material.getAmbientCoefficient();
-	float dceoff = material.getDiffuseCoefficient();
-	float sceoff = material.getSpecularCoefficient();
+    Material material = objectList.at(m_objectID).getMaterial();
+    QColor ambient = material.getAmbientColor();
+    QColor diffuse = material.getDiffuseColor();
+    QColor specular = material.getSpecularColor();
+    float shininess = material.getShininess();
+    float aceoff = material.getAmbientCoefficient();
+    float dceoff = material.getDiffuseCoefficient();
+    float sceoff = material.getSpecularCoefficient();
 
-	ui->a0_0->setValue(ambient.redF());
-	ui->a0_1->setValue(ambient.greenF());
-	ui->a0_2->setValue(ambient.blueF());
-	ui->a0_3->setValue(ambient.alphaF());
+    ui->a0_0->setValue(ambient.redF());
+    ui->a0_1->setValue(ambient.greenF());
+    ui->a0_2->setValue(ambient.blueF());
+    ui->a0_3->setValue(ambient.alphaF());
 
-	ui->d0_0->setValue(diffuse.redF());
-	ui->d0_1->setValue(diffuse.greenF());
-	ui->d0_2->setValue(diffuse.blueF());
-	ui->d0_3->setValue(diffuse.alphaF());
+    ui->d0_0->setValue(diffuse.redF());
+    ui->d0_1->setValue(diffuse.greenF());
+    ui->d0_2->setValue(diffuse.blueF());
+    ui->d0_3->setValue(diffuse.alphaF());
 
-	ui->s0_0->setValue(specular.redF());
-	ui->s0_1->setValue(specular.greenF());
-	ui->s0_2->setValue(specular.blueF());
-	ui->s0_3->setValue(specular.alphaF());
+    ui->s0_0->setValue(specular.redF());
+    ui->s0_1->setValue(specular.greenF());
+    ui->s0_2->setValue(specular.blueF());
+    ui->s0_3->setValue(specular.alphaF());
 
-	ui->shininess->setValue(shininess);
+    ui->shininess->setValue(shininess);
 
-	ui->acoeff->setValue(aceoff);
-	ui->dcoeff->setValue(dceoff);
-	ui->scoeff->setValue(sceoff);
+    ui->acoeff->setValue(aceoff);
+    ui->dcoeff->setValue(dceoff);
+    ui->scoeff->setValue(sceoff);
 }
 
 void MaterialEditorWidget::updateSceneObject()
 {
-	//qDebug() << "updateSceneObject()";
-	Material newMaterial =  
-		Material(
-			QColor::fromRgbF(ui->a0_0->value(),ui->a0_1->value(), ui->a0_2->value(), ui->a0_3->value()),
-			QColor::fromRgbF(ui->d0_0->value(),ui->d0_1->value(), ui->d0_2->value(), ui->d0_3->value()),
-			QColor::fromRgbF(ui->s0_0->value(),ui->s0_1->value(), ui->s0_2->value(), ui->s0_3->value()),
-			ui->acoeff->value(), ui->dcoeff->value(), ui->scoeff->value(),
-			ui->shininess->value());
-	
-	emit(updateMaterial(m_objectID, newMaterial));
-	
+    //qDebug() << "updateSceneObject()";
+    Material newMaterial =
+        Material(
+            QColor::fromRgbF(ui->a0_0->value(), ui->a0_1->value(), ui->a0_2->value(), ui->a0_3->value()),
+            QColor::fromRgbF(ui->d0_0->value(), ui->d0_1->value(), ui->d0_2->value(), ui->d0_3->value()),
+            QColor::fromRgbF(ui->s0_0->value(), ui->s0_1->value(), ui->s0_2->value(), ui->s0_3->value()),
+            ui->acoeff->value(), ui->dcoeff->value(), ui->scoeff->value(),
+            ui->shininess->value());
+
+    emit(updateMaterial(m_objectID, newMaterial));
+
 }

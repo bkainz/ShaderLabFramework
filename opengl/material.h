@@ -32,34 +32,34 @@
 
 class Material
 {
-    public:
-        Material();
-        Material(QColor ambientColor, QColor diffuseColor, QColor specularColor, float ambientCoefficient, float diffuseCoefficient, float specularCoefficient, float shininess);
+public:
+    Material();
+    Material(QColor ambientColor, QColor diffuseColor, QColor specularColor, float ambientCoefficient, float diffuseCoefficient, float specularCoefficient, float shininess);
 
-        QColor getAmbientColor();
-        QColor getDiffuseColor();
-        QColor getSpecularColor();
-        float getAmbientCoefficient();
-        float getDiffuseCoefficient();
-        float getSpecularCoefficient();
-        float getShininess();
+    QColor getAmbientColor();
+    QColor getDiffuseColor();
+    QColor getSpecularColor();
+    float getAmbientCoefficient();
+    float getDiffuseCoefficient();
+    float getSpecularCoefficient();
+    float getShininess();
 
-		void setAmbientColor(QColor color);
-		void setDiffuseColor(QColor color);
-		void setSpecularColor(QColor color);
-		void setAmbientCoefficient(float val);
-		void setDiffuseCoefficient(float val);
-		void setSpecularCoefficient(float val);
-		void setShininess(float val);
+    void setAmbientColor(QColor color);
+    void setDiffuseColor(QColor color);
+    void setSpecularColor(QColor color);
+    void setAmbientCoefficient(float val);
+    void setDiffuseCoefficient(float val);
+    void setSpecularCoefficient(float val);
+    void setShininess(float val);
 
-    private:
-        QColor m_ambientColor;
-        QColor m_diffuseColor;
-        QColor m_specularColor;
-        float m_ambientCoefficient;
-        float m_diffuseCoefficient;
-        float m_specularCoefficient;
-        float m_shininess;
+private:
+    QColor m_ambientColor;
+    QColor m_diffuseColor;
+    QColor m_specularColor;
+    float m_ambientCoefficient;
+    float m_diffuseCoefficient;
+    float m_specularCoefficient;
+    float m_shininess;
 
 };
 

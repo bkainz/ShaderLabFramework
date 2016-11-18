@@ -35,25 +35,25 @@
 
 class MaterialEditorWidget : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	MaterialEditorWidget(int objectID, Scene* scene, QWidget *parent);
-	~MaterialEditorWidget();
+    MaterialEditorWidget(int objectID, Scene* scene, QWidget *parent);
+    ~MaterialEditorWidget();
 
-	void updateEditor(int objectID);
-	
-public slots:
-	void updateSceneObject();
+    void updateEditor(int objectID);
+
+    public slots:
+    void updateSceneObject();
 
 signals:
-	void updateGL();
-	void updateMaterial(int objectID, Material material);
+    void updateGL();
+    void updateMaterial(int objectID, Material material);
 
 private:
-	Scene* m_scene;
-	int m_objectID;
-	Ui::MaterialEditor* ui;
+    Scene* m_scene;
+    int m_objectID;
+    Ui::MaterialEditor* ui;
 };
 
 #endif

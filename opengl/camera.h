@@ -35,124 +35,124 @@
 
 class Camera
 {
-    public:
-        Camera();
-        Camera(QVector4D position, QVector4D upVector, QVector4D center, bool perspectiveCamera = true, float aspectRatio = 16.0/9.0, float fieldOfView = 30.0);
+public:
+    Camera();
+    Camera(QVector4D position, QVector4D upVector, QVector4D center, bool perspectiveCamera = true, float aspectRatio = 16.0 / 9.0, float fieldOfView = 30.0);
 
-        /**
-         * Sets the view matrix so that the camera is at position, looks at the center with a upVector.
-         * @brief setViewMatrix
-         * @param position
-         * @param upVector
-         * @param center
-         */
-        void setViewMatrix(QVector4D position, QVector4D upVector, QVector4D center);
+    /**
+     * Sets the view matrix so that the camera is at position, looks at the center with a upVector.
+     * @brief setViewMatrix
+     * @param position
+     * @param upVector
+     * @param center
+     */
+    void setViewMatrix(QVector4D position, QVector4D upVector, QVector4D center);
 
 
-        /**
-         * Sets the view matrix to a given value.
-         * @brief setViewMatrix
-         * @param viewMatrix
-         */
-        void setViewMatrix(QMatrix4x4 &viewMatrix);
+    /**
+     * Sets the view matrix to a given value.
+     * @brief setViewMatrix
+     * @param viewMatrix
+     */
+    void setViewMatrix(QMatrix4x4 &viewMatrix);
 
-        /**
-         * Sets the projection matrix given an aspect ratio and a field of view (if perspective camera, orthographic camera otherwise).
-         * @brief setProjectionMatrix
-         * @param aspectRatio
-         * @param fieldOfView
-         */
-        void setProjectionMatrix(float aspectRatio, float fieldOfView);
+    /**
+     * Sets the projection matrix given an aspect ratio and a field of view (if perspective camera, orthographic camera otherwise).
+     * @brief setProjectionMatrix
+     * @param aspectRatio
+     * @param fieldOfView
+     */
+    void setProjectionMatrix(float aspectRatio, float fieldOfView);
 
-        /**
-         * Sets the projection matrix to a given value.
-         * @brief setProjectionMatrix
-         * @param aspectRatio
-         * @param fieldOfView
-         */
-        void setProjectionMatrix(QMatrix4x4 &viewMatrix);
+    /**
+     * Sets the projection matrix to a given value.
+     * @brief setProjectionMatrix
+     * @param aspectRatio
+     * @param fieldOfView
+     */
+    void setProjectionMatrix(QMatrix4x4 &viewMatrix);
 
-        /**
-         * Changes the camera type between perspective and orthographic.
-         * @brief changeCameraType
-         * @param cameraType
-         */
-        void changeCameraType(QString cameraType);
+    /**
+     * Changes the camera type between perspective and orthographic.
+     * @brief changeCameraType
+     * @param cameraType
+     */
+    void changeCameraType(QString cameraType);
 
-        /**
-         * Rotates the camera along the X axis
-         * @brief rotateX
-         * @param xRotation
-         */
-        void rotateX(float xRotation);
+    /**
+     * Rotates the camera along the X axis
+     * @brief rotateX
+     * @param xRotation
+     */
+    void rotateX(float xRotation);
 
-        /**
-         * Rotates the camera along the Y axis
-         * @brief rotateY
-         * @param yRotation
-         */
-        void rotateY(float yRotation);
+    /**
+     * Rotates the camera along the Y axis
+     * @brief rotateY
+     * @param yRotation
+     */
+    void rotateY(float yRotation);
 
-        /**
-         * Rotates the camera along the X and Y axis
-         * @brief rotateXY
-         * @param xRotation
-         * @param yRotation
-         */
-        void rotateXY(float xRotation, float yRotation);
+    /**
+     * Rotates the camera along the X and Y axis
+     * @brief rotateXY
+     * @param xRotation
+     * @param yRotation
+     */
+    void rotateXY(float xRotation, float yRotation);
 
-		/**
-		* Translation along the axis cameraPosition-ViewCenter
-		* @brief translateAlongViewAxis
-		* @param zTranslation
-		*/
-		void translateAlongViewAxis(float zTranslation);
+    /**
+    * Translation along the axis cameraPosition-ViewCenter
+    * @brief translateAlongViewAxis
+    * @param zTranslation
+    */
+    void translateAlongViewAxis(float zTranslation);
 
-        /**
-         * Translate the camera along the X axis.
-         * @brief translateX
-         * @param translation
-         */
-        void translateX(float translation);
+    /**
+     * Translate the camera along the X axis.
+     * @brief translateX
+     * @param translation
+     */
+    void translateX(float translation);
 
-        /**
-         * Translate the camera along the Y axis.
-         * @brief translateY
-         * @param translation
-         */
-        void translateY(float translation);
+    /**
+     * Translate the camera along the Y axis.
+     * @brief translateY
+     * @param translation
+     */
+    void translateY(float translation);
 
-		/**
-		* Translate the camera along the Z axis.
-		* @brief translateZ
-		* @param translation
-		*/
-		void translateZ(float translation);
+    /**
+    * Translate the camera along the Z axis.
+    * @brief translateZ
+    * @param translation
+    */
+    void translateZ(float translation);
 
-        /**
-         * Resets the camera position.
-         * @brief resetCamera
-         */
-        void resetCamera();
+    /**
+     * Resets the camera position.
+     * @brief resetCamera
+     */
+    void resetCamera();
 
-        QMatrix4x4 getViewMatrix();
-        QMatrix4x4 getProjectionMatrix();
+    QMatrix4x4 getViewMatrix();
+    QMatrix4x4 getProjectionMatrix();
 
-        /**
-         * Returns true if the camera is a perspective camera.
-         * @brief isPerspective
-         * @return
-         */
-        bool isPerspective();
+    /**
+     * Returns true if the camera is a perspective camera.
+     * @brief isPerspective
+     * @return
+     */
+    bool isPerspective();
 
-    private:
-        float m_fieldOfView;
+private:
+    float m_fieldOfView;
 
-        bool m_perspectiveCamera;
-        float m_aspectRatio;
+    bool m_perspectiveCamera;
+    float m_aspectRatio;
 
-        QMatrix4x4 m_viewMatrix;
-        QMatrix4x4 m_projectionMatrix;
+    QMatrix4x4 m_viewMatrix;
+    QMatrix4x4 m_projectionMatrix;
 
 };
 

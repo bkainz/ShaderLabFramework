@@ -34,21 +34,21 @@
 #include <QOpenGLContext>
 #include <QGLFunctions>
 
-UniformEditorWidget::UniformEditorWidget(QGLShaderProgram* sProgram, QGLShaderProgram* dsProgram, 
-	QGLContext* glContext, QWidget *parent) : QWidget(parent), ui(new Ui::UniformEditorWidget)
+UniformEditorWidget::UniformEditorWidget(QGLShaderProgram* sProgram, QGLShaderProgram* dsProgram,
+    QGLContext* glContext, QWidget *parent) : QWidget(parent), ui(new Ui::UniformEditorWidget)
 {
-	ui->setupUi(this);
-	m_glContext = glContext;
-	updateShaderPrograms(sProgram, dsProgram, glContext);
-	QObject::connect(ui->m_uniformComboBox, SIGNAL(activated(int)),
-		this, SLOT(uniformComboBoxActivated(int)));
+    ui->setupUi(this);
+    m_glContext = glContext;
+    updateShaderPrograms(sProgram, dsProgram, glContext);
+    QObject::connect(ui->m_uniformComboBox, SIGNAL(activated(int)),
+        this, SLOT(uniformComboBoxActivated(int)));
 
-    if(m_shaderProgramUserUniforms.length() > 0)
-	{ 
+    if (m_shaderProgramUserUniforms.length() > 0)
+    {
         uniformComboBoxActivated(0); // init to first one.
-	}
+    }
 
-    if(m_displayShaderUserUniforms.length() > 0)
+    if (m_displayShaderUserUniforms.length() > 0)
     {
         uniformComboBoxActivated(0); // init to first one.
     }
@@ -56,47 +56,47 @@ UniformEditorWidget::UniformEditorWidget(QGLShaderProgram* sProgram, QGLShaderPr
 
 UniformEditorWidget::~UniformEditorWidget()
 {
-	delete ui;
+    delete ui;
 }
 
 void UniformEditorWidget::updateShaderPrograms(QGLShaderProgram* sProgram, QGLShaderProgram* dsProgram, QGLContext* glContext)
 {
-	//qDebug() << "updateShaderPrograms";
-	m_shaderProgram = sProgram;
-	m_shaderProgramDisplay = dsProgram;
-	m_glContext = glContext;
-	updateEditorWidget();
+    //qDebug() << "updateShaderPrograms";
+    m_shaderProgram = sProgram;
+    m_shaderProgramDisplay = dsProgram;
+    m_glContext = glContext;
+    updateEditorWidget();
 }
 
 void UniformEditorWidget::updateEditorWidget()
 {
-	//qDebug() << "updateEditorWidget() " << m_shaderProgram->shaders().length();
-    //Clear the vectors
+    //qDebug() << "updateEditorWidget() " << m_shaderProgram->shaders().length();
+      //Clear the vectors
     m_shaderProgramUserUniforms.clear();
     m_displayShaderUserUniforms.clear();
 
-	if (m_shaderProgram->isLinked())
-	{
-		for (int i = 0; i < m_shaderProgram->shaders().length(); i++) //if linked? e.g. geometry shader
-		{		
+    if (m_shaderProgram->isLinked())
+    {
+        for (int i = 0; i < m_shaderProgram->shaders().length(); i++) //if linked? e.g. geometry shader
+        {
             m_shaderProgramUserUniforms.append(parseUniformsFromSource(m_shaderProgram->shaders().at(i)->sourceCode()));
         }
-	}
+    }
 
-	if (m_shaderProgramDisplay->isLinked())
-	{
-		for (int i = 0; i < m_shaderProgramDisplay->shaders().length(); i++) //if linked? e.g. geometry shader
-		{
+    if (m_shaderProgramDisplay->isLinked())
+    {
+        for (int i = 0; i < m_shaderProgramDisplay->shaders().length(); i++) //if linked? e.g. geometry shader
+        {
             m_displayShaderUserUniforms.append(parseUniformsFromSource(m_shaderProgramDisplay->shaders().at(i)->sourceCode()));
-		}
-	}
+        }
+    }
 
     //Add the items in the combo box
-	ui->m_uniformComboBox->clear();
+    ui->m_uniformComboBox->clear();
     for (int i = 0; i < m_shaderProgramUserUniforms.size(); i++)
-	{
+    {
         ui->m_uniformComboBox->addItem(m_shaderProgramUserUniforms.at(i).name);
-	}
+    }
 
     for (int i = 0; i < m_displayShaderUserUniforms.size(); i++)
     {
@@ -104,45 +104,45 @@ void UniformEditorWidget::updateEditorWidget()
     }
 
     if (m_shaderProgramUserUniforms.length() > 0)
-	{
-		uniformComboBoxActivated(0); // init to fist one.
-	}
+    {
+        uniformComboBoxActivated(0); // init to fist one.
+    }
 
     if (m_displayShaderUserUniforms.length() > 0)
     {
         uniformComboBoxActivated(0); // init to fist one.
     }
 
-	//TODO
-	//this is not stable due to some obscure Qt 5 reasons!
-	//works in Qt 4 though
-	//we need to parse manually
-	/*
-	m_glContext->makeCurrent();
-	QGLFunctions fncs(m_glContext);
+    //TODO
+    //this is not stable due to some obscure Qt 5 reasons!
+    //works in Qt 4 though
+    //we need to parse manually
+    /*
+    m_glContext->makeCurrent();
+    QGLFunctions fncs(m_glContext);
 
-	if (m_shaderProgram->isLinked())
-	{
-		//TODO get list of uniforms
-		//m_shaderProgram->programId();
-		int total = -1;
-		fncs.glGetProgramiv(m_shaderProgram->programId(), GL_ACTIVE_UNIFORMS, &total);
-		qDebug() << total;
-		for (int i = 0; i < total; ++i)
-		{
-			GLsizei nameLen = -1;
-			int num = -1;
-			GLenum type = GL_ZERO;
-			char name[100];
-			fncs->glGetActiveUniform(m_shaderProgram->programId(), i, sizeof(name) - 1,
-				&nameLen, &num, &type, name);
+    if (m_shaderProgram->isLinked())
+    {
+      //TODO get list of uniforms
+      //m_shaderProgram->programId();
+      int total = -1;
+      fncs.glGetProgramiv(m_shaderProgram->programId(), GL_ACTIVE_UNIFORMS, &total);
+      qDebug() << total;
+      for (int i = 0; i < total; ++i)
+      {
+        GLsizei nameLen = -1;
+        int num = -1;
+        GLenum type = GL_ZERO;
+        char name[100];
+        fncs->glGetActiveUniform(m_shaderProgram->programId(), i, sizeof(name) - 1,
+          &nameLen, &num, &type, name);
 
-			name[nameLen] = 0;
+        name[nameLen] = 0;
 
-			qDebug() << name;//glsl_var_type(shaderParamType(type), name, num);
-		}
-	}
-*/
+        qDebug() << name;//glsl_var_type(shaderParamType(type), name, num);
+      }
+    }
+  */
 
 }
 
@@ -153,39 +153,39 @@ void UniformEditorWidget::uniformComboBoxActivated(int index)
     bool isAShaderProgramUniform = false;
 
     //Find if it is a shader program uniform or a display program uniform
-    for(int i = 0 ; i<m_shaderProgramUserUniforms.size() ; ++i)
+    for (int i = 0; i < m_shaderProgramUserUniforms.size(); ++i)
     {
         //index==i to take into account that the same name can be used in both the shaderProgram and the display program
-        if(m_shaderProgramUserUniforms[i].name == currentText && index==i)
+        if (m_shaderProgramUserUniforms[i].name == currentText && index == i)
         {
             isAShaderProgramUniform = true;
             break;
         }
     }
 
-	//qDebug("activated(%d), currentIndex() = %d, uniform %s", index, currentIndex, m_allUserUniforms.at(index).name.toStdString().c_str());
-	
-	if (ui->m_UniformEditFrame->layout() != NULL)
-	{
-		QLayoutItem* item;
-		while ((item = ui->m_UniformEditFrame->layout()->takeAt(0)) != NULL)
-		{
-			delete item->widget();
-			delete item;
-		}
-	}
+    //qDebug("activated(%d), currentIndex() = %d, uniform %s", index, currentIndex, m_allUserUniforms.at(index).name.toStdString().c_str());
+
+    if (ui->m_UniformEditFrame->layout() != NULL)
+    {
+        QLayoutItem* item;
+        while ((item = ui->m_UniformEditFrame->layout()->takeAt(0)) != NULL)
+        {
+            delete item->widget();
+            delete item;
+        }
+    }
 
     //Set the uniform widgets corresponding ot the uniforms in the list.
     //Relative index assumes that the display program uniforms come at the end of the QComboBox
     int relativeIndex = 0;
-    if(isAShaderProgramUniform)
+    if (isAShaderProgramUniform)
     {
         relativeIndex = index;
         this->setUniformEditorWidgets(m_shaderProgramUserUniforms, relativeIndex, isAShaderProgramUniform);
     }
     else
     {
-        relativeIndex = index-m_shaderProgramUserUniforms.size();
+        relativeIndex = index - m_shaderProgramUserUniforms.size();
         this->setUniformEditorWidgets(m_displayShaderUserUniforms, relativeIndex, isAShaderProgramUniform);
     }
 }
@@ -199,7 +199,7 @@ void UniformEditorWidget::setUniformEditorWidgets(QList<mUniform> &uniformList, 
         static_cast<QGridLayout*>(ui->m_UniformEditFrame->layout())->addWidget(textLabel, 0, 0);
     }
 
-	QGLFunctions fncs(m_glContext);
+    QGLFunctions fncs(m_glContext);
 
     //TODO nicify this
     if (uniformList.at(index).type == QString("bool"))
@@ -207,7 +207,7 @@ void UniformEditorWidget::setUniformEditorWidgets(QList<mUniform> &uniformList, 
         QCheckBox* cbox = new QCheckBox(ui->m_UniformEditFrame);
         static_cast<QGridLayout*>(ui->m_UniformEditFrame->layout())->addWidget(cbox, 0, 1);
 
-        if(isAShaderProgramUniform)
+        if (isAShaderProgramUniform)
         {
             connect(cbox, SIGNAL(stateChanged(int)), this, SLOT(updateUniform(int)));
         }
@@ -223,7 +223,7 @@ void UniformEditorWidget::setUniformEditorWidgets(QList<mUniform> &uniformList, 
         sBox->setRange(INT_MIN, INT_MAX);
         static_cast<QGridLayout*>(ui->m_UniformEditFrame->layout())->addWidget(sBox, 0, 1);
 
-        if(isAShaderProgramUniform)
+        if (isAShaderProgramUniform)
         {
             connect(sBox, SIGNAL(valueChanged(int)), this, SLOT(updateUniform(int)));
         }
@@ -239,7 +239,7 @@ void UniformEditorWidget::setUniformEditorWidgets(QList<mUniform> &uniformList, 
         sBox->setRange(0, INT_MAX); //to comply with Qt signals no UINT_MAX
         static_cast<QGridLayout*>(ui->m_UniformEditFrame->layout())->addWidget(sBox, 0, 1);
 
-        if(isAShaderProgramUniform)
+        if (isAShaderProgramUniform)
         {
             connect(sBox, SIGNAL(valueChanged(int)), this, SLOT(updateUniform(int)));
         }
@@ -256,7 +256,7 @@ void UniformEditorWidget::setUniformEditorWidgets(QList<mUniform> &uniformList, 
         sBox->setDecimals(4);
         static_cast<QGridLayout*>(ui->m_UniformEditFrame->layout())->addWidget(sBox, 0, 1);
 
-        if(isAShaderProgramUniform)
+        if (isAShaderProgramUniform)
         {
             connect(sBox, SIGNAL(valueChanged(double)), this, SLOT(updateUniform(double)));
         }
@@ -273,7 +273,7 @@ void UniformEditorWidget::setUniformEditorWidgets(QList<mUniform> &uniformList, 
         v2Box->set2D();
         static_cast<QGridLayout*>(ui->m_UniformEditFrame->layout())->addWidget(v2Box, 1, 0);
 
-        if(isAShaderProgramUniform)
+        if (isAShaderProgramUniform)
         {
             connect(v2Box, SIGNAL(vectorChanged(QVector4D)), this, SLOT(updateUniformVector2D(QVector4D)));
         }
@@ -289,7 +289,7 @@ void UniformEditorWidget::setUniformEditorWidgets(QList<mUniform> &uniformList, 
         v3Box->set3D();
         static_cast<QGridLayout*>(ui->m_UniformEditFrame->layout())->addWidget(v3Box, 1, 0);
 
-        if(isAShaderProgramUniform)
+        if (isAShaderProgramUniform)
         {
             connect(v3Box, SIGNAL(vectorChanged(QVector4D)), this, SLOT(updateUniformVector3D(QVector4D)));
         }
@@ -305,21 +305,21 @@ void UniformEditorWidget::setUniformEditorWidgets(QList<mUniform> &uniformList, 
         v4Box->set4D();
         static_cast<QGridLayout*>(ui->m_UniformEditFrame->layout())->addWidget(v4Box, 1, 0);
 
-		//TODO -- with separate material editor we don't need to sync. Only user uniforms are processed here
+        //TODO -- with separate material editor we don't need to sync. Only user uniforms are processed here
 #if 0
-		if (m_shaderProgram->isLinked())
-		{
-			QVector4D temp;
-			fncs.glGetUniformfv(m_shaderProgram->programId(), 
-				m_shaderProgram->uniformLocation(uniformList.at(index).name.toStdString().c_str()), &temp[0]);
-			qDebug() << uniformList.at(index).name << ": " << temp;
-			v4Box->updateSpinBoxes(temp);
-		}
+        if (m_shaderProgram->isLinked())
+        {
+            QVector4D temp;
+            fncs.glGetUniformfv(m_shaderProgram->programId(),
+                m_shaderProgram->uniformLocation(uniformList.at(index).name.toStdString().c_str()), &temp[0]);
+            qDebug() << uniformList.at(index).name << ": " << temp;
+            v4Box->updateSpinBoxes(temp);
+        }
 
 #endif
 
-        if(isAShaderProgramUniform)
-       {
+        if (isAShaderProgramUniform)
+        {
             connect(v4Box, SIGNAL(vectorChanged(QVector4D)), this, SLOT(updateUniformVector4D(QVector4D)));
         }
         else
@@ -334,7 +334,7 @@ void UniformEditorWidget::setUniformEditorWidgets(QList<mUniform> &uniformList, 
         m3Box->set3x3();
         static_cast<QGridLayout*>(ui->m_UniformEditFrame->layout())->addWidget(m3Box, 1, 0);
 
-        if(isAShaderProgramUniform)
+        if (isAShaderProgramUniform)
         {
             connect(m3Box, SIGNAL(matrixChanged(QMatrix4x4)), this, SLOT(updateUniformMatrix3x3(QMatrix4x4)));
         }
@@ -350,7 +350,7 @@ void UniformEditorWidget::setUniformEditorWidgets(QList<mUniform> &uniformList, 
         m4Box->set4x4();
         static_cast<QGridLayout*>(ui->m_UniformEditFrame->layout())->addWidget(m4Box, 1, 0);
 
-        if(isAShaderProgramUniform)
+        if (isAShaderProgramUniform)
         {
             connect(m4Box, SIGNAL(matrixChanged(QMatrix4x4)), this, SLOT(updateUniformMatrix4x4(QMatrix4x4)));
         }
@@ -363,7 +363,7 @@ void UniformEditorWidget::setUniformEditorWidgets(QList<mUniform> &uniformList, 
     if (uniformList.at(index).type == QString("sampler2D"))
     {
         TextureWidget* textureWidget = new TextureWidget(ui->m_UniformEditFrame, uniformList.at(index).name,
-                                                         isAShaderProgramUniform);
+            isAShaderProgramUniform);
 
         static_cast<QGridLayout*>(ui->m_UniformEditFrame->layout())->addWidget(textureWidget, 1, 0);
         connect(textureWidget, SIGNAL(sendTextureName(QString, bool)), this, SIGNAL(textureBrowse(QString, bool)));
@@ -381,77 +381,77 @@ void UniformEditorWidget::setUniformEditorWidgets(QList<mUniform> &uniformList, 
 //Qt does not allow templates for slots
 void UniformEditorWidget::updateUniform(double value)
 {
-	//qDebug() << "updateUniformFloatDouble(double value) " <<
-	//	m_allUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str() << " " << value;
+    //qDebug() << "updateUniformFloatDouble(double value) " <<
+    //	m_allUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str() << " " << value;
 
-	m_shaderProgram->bind();
+    m_shaderProgram->bind();
     m_shaderProgram->setUniformValue(m_shaderProgramUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str(),
-		(GLfloat)value);
-	m_shaderProgram->release();
+        (GLfloat)value);
+    m_shaderProgram->release();
 
-	emit(updateGL());
+    emit(updateGL());
 }
 
 void UniformEditorWidget::updateUniform(int value)
 {
-	m_shaderProgram->bind();
+    m_shaderProgram->bind();
     m_shaderProgram->setUniformValue(m_shaderProgramUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str(), (GLint)value);
-	m_shaderProgram->release();
-	emit(updateGL());
+    m_shaderProgram->release();
+    emit(updateGL());
 }
 
 
 void UniformEditorWidget::updateUniformVector2D(QVector4D value)
 {
-	m_shaderProgram->bind();
+    m_shaderProgram->bind();
     m_shaderProgram->setUniformValue(m_shaderProgramUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str(), value.toVector2D());
-	m_shaderProgram->release();
-	emit(updateGL());
+    m_shaderProgram->release();
+    emit(updateGL());
 }
 
 void UniformEditorWidget::updateUniformVector3D(QVector4D value)
 {
-	m_shaderProgram->bind();
+    m_shaderProgram->bind();
     m_shaderProgram->setUniformValue(m_shaderProgramUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str(), value.toVector3D());
-	m_shaderProgram->release();
-	emit(updateGL());
+    m_shaderProgram->release();
+    emit(updateGL());
 }
 
 void UniformEditorWidget::updateUniformVector4D(QVector4D value)
 {
-	//qDebug() << "updateUniformVector4D " << value;
-	m_shaderProgram->bind();
+    //qDebug() << "updateUniformVector4D " << value;
+    m_shaderProgram->bind();
     m_shaderProgram->setUniformValue(m_shaderProgramUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str(), value);
-	m_shaderProgram->release();
-	emit(updateGL());
+    m_shaderProgram->release();
+    emit(updateGL());
 }
 
 
 void UniformEditorWidget::updateUniformMatrix3x3(QMatrix4x4 value)
 {
-	QMatrix3x3 mat;
-	mat.setToIdentity();
-	for (int col = 0; col < 3; col++)
-	{
-		for (int row = 0; row < 3; row++)
-		{
-			mat(row, col) = value(row, col);
-		}
-	}
+    QMatrix3x3 mat;
+    mat.setToIdentity();
+    for (int col = 0; col < 3; col++)
+    {
+        for (int row = 0; row < 3; row++)
+        {
+            mat(row, col) = value(row, col);
+        }
+    }
 
-	m_shaderProgram->bind();
+    m_shaderProgram->bind();
     m_shaderProgram->setUniformValue(m_shaderProgramUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str(), value);
-	m_shaderProgram->release();
-	emit(updateGL());
+    m_shaderProgram->release();
+    emit(updateGL());
 }
 
 
 void UniformEditorWidget::updateUniformMatrix4x4(QMatrix4x4 value)
 {
-	m_shaderProgram->bind();
+    m_shaderProgram->bind();
     m_shaderProgram->setUniformValue(m_shaderProgramUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str(), value);
-	m_shaderProgram->release();
-	emit(updateGL());
+    m_shaderProgram->release();
+    emit(updateGL());
 
 }
 
@@ -461,9 +461,9 @@ void UniformEditorWidget::updateUniformDisplay(double value)
     //	m_allUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str() << " " << value;
 
     //Relative index assumes that the display program uniforms come at the end of the QComboBox
-    int relativeIndex = ui->m_uniformComboBox->currentIndex()-m_shaderProgramUserUniforms.size();
+    int relativeIndex = ui->m_uniformComboBox->currentIndex() - m_shaderProgramUserUniforms.size();
     m_shaderProgramDisplay->bind();
-    m_shaderProgramDisplay->setUniformValue(m_displayShaderUserUniforms.at(relativeIndex).name.toStdString().c_str(),(GLfloat)value);
+    m_shaderProgramDisplay->setUniformValue(m_displayShaderUserUniforms.at(relativeIndex).name.toStdString().c_str(), (GLfloat)value);
     m_shaderProgramDisplay->release();
 
     emit(updateGL());
@@ -472,10 +472,10 @@ void UniformEditorWidget::updateUniformDisplay(double value)
 void UniformEditorWidget::updateUniformDisplay(int value)
 {
     //Relative index assumes that the display program uniforms come at the end of the QComboBox
-    int relativeIndex = ui->m_uniformComboBox->currentIndex()-m_shaderProgramUserUniforms.size();
+    int relativeIndex = ui->m_uniformComboBox->currentIndex() - m_shaderProgramUserUniforms.size();
 
     m_shaderProgramDisplay->bind();
-    m_shaderProgramDisplay->setUniformValue(m_displayShaderUserUniforms.at(relativeIndex).name.toStdString().c_str(),(GLint)value);
+    m_shaderProgramDisplay->setUniformValue(m_displayShaderUserUniforms.at(relativeIndex).name.toStdString().c_str(), (GLint)value);
     m_shaderProgramDisplay->release();
     emit(updateGL());
 }
@@ -484,7 +484,7 @@ void UniformEditorWidget::updateUniformDisplay(int value)
 void UniformEditorWidget::updateUniformDisplayVector2D(QVector4D value)
 {
     //Relative index assumes that the display program uniforms come at the end of the QComboBox
-    int relativeIndex = ui->m_uniformComboBox->currentIndex()-m_shaderProgramUserUniforms.size();
+    int relativeIndex = ui->m_uniformComboBox->currentIndex() - m_shaderProgramUserUniforms.size();
 
     m_shaderProgramDisplay->bind();
     m_shaderProgramDisplay->setUniformValue(m_displayShaderUserUniforms.at(relativeIndex).name.toStdString().c_str(), value.toVector2D());
@@ -495,7 +495,7 @@ void UniformEditorWidget::updateUniformDisplayVector2D(QVector4D value)
 void UniformEditorWidget::updateUniformDisplayVector3D(QVector4D value)
 {
     //Relative index assumes that the display program uniforms come at the end of the QComboBox
-    int relativeIndex = ui->m_uniformComboBox->currentIndex()-m_shaderProgramUserUniforms.size();
+    int relativeIndex = ui->m_uniformComboBox->currentIndex() - m_shaderProgramUserUniforms.size();
 
     m_shaderProgramDisplay->bind();
     m_shaderProgramDisplay->setUniformValue(m_displayShaderUserUniforms.at(relativeIndex).name.toStdString().c_str(), value.toVector3D());
@@ -506,7 +506,7 @@ void UniformEditorWidget::updateUniformDisplayVector3D(QVector4D value)
 void UniformEditorWidget::updateUniformDisplayVector4D(QVector4D value)
 {
     //Relative index assumes that the display program uniforms come at the end of the QComboBox
-    int relativeIndex = ui->m_uniformComboBox->currentIndex()-m_shaderProgramUserUniforms.size();
+    int relativeIndex = ui->m_uniformComboBox->currentIndex() - m_shaderProgramUserUniforms.size();
 
     m_shaderProgramDisplay->bind();
     m_shaderProgramDisplay->setUniformValue(m_displayShaderUserUniforms.at(relativeIndex).name.toStdString().c_str(), value);
@@ -528,7 +528,7 @@ void UniformEditorWidget::updateUniformDisplayMatrix3x3(QMatrix4x4 value)
     }
 
     //Relative index assumes that the display program uniforms come at the end of the QComboBox
-    int relativeIndex = ui->m_uniformComboBox->currentIndex()-m_shaderProgramUserUniforms.size();
+    int relativeIndex = ui->m_uniformComboBox->currentIndex() - m_shaderProgramUserUniforms.size();
 
     m_shaderProgramDisplay->bind();
     m_shaderProgramDisplay->setUniformValue(m_displayShaderUserUniforms.at(relativeIndex).name.toStdString().c_str(), value);
@@ -540,7 +540,7 @@ void UniformEditorWidget::updateUniformDisplayMatrix3x3(QMatrix4x4 value)
 void UniformEditorWidget::updateUniformDisplayMatrix4x4(QMatrix4x4 value)
 {
     //Relative index assumes that the display program uniforms come at the end of the QComboBox
-    int relativeIndex = ui->m_uniformComboBox->currentIndex()-m_shaderProgramUserUniforms.size();
+    int relativeIndex = ui->m_uniformComboBox->currentIndex() - m_shaderProgramUserUniforms.size();
 
     m_shaderProgramDisplay->bind();
     m_shaderProgramDisplay->setUniformValue(m_displayShaderUserUniforms.at(relativeIndex).name.toStdString().c_str(), value);
@@ -551,55 +551,55 @@ void UniformEditorWidget::updateUniformDisplayMatrix4x4(QMatrix4x4 value)
 
 QList<UniformEditorWidget::mUniform> UniformEditorWidget::parseUniformsFromSource(QString sourceCode)
 {
-	QList<mUniform> uniforms;
+    QList<mUniform> uniforms;
 
-	//TODO
-	//this is a workaround for unstable direkt GL access in Qt 5
-	//we get the uniform names directly from the source code
+    //TODO
+    //this is a workaround for unstable direkt GL access in Qt 5
+    //we get the uniform names directly from the source code
 
-	//remove all comments from code
-    //This line does not work for :  uniform matrix4x4 a //My comment
-    //Every uniform after that will be removed!
-    //QString cleanCode =  sourceCode.remove(QRegExp("/\\*.*\\*/")).remove(QRegExp("/\\/.*\\\n"));
+    //remove all comments from code
+      //This line does not work for :  uniform matrix4x4 a //My comment
+      //Every uniform after that will be removed!
+      //QString cleanCode =  sourceCode.remove(QRegExp("/\\*.*\\*/")).remove(QRegExp("/\\/.*\\\n"));
 
-	//qDebug() << sourceCode;
-	//extract uniforms
+    //qDebug() << sourceCode;
+    //extract uniforms
     QStringList  list = sourceCode.split(QRegExp("\n|\r|;")).filter("uniform");
 
-	//handle uniforms
-	for (int i = 0; i < list.length(); i++)
-	{
-		QStringList lineList =  list.at(i).split(" ");
-		mUniform uniform;
-		uniform.type = lineList.at(1);
-		uniform.name = lineList.at(2);
-		//sort out the fixed uniforms and only leave user-variables
-		if (uniform.name == QString("mvMatrix") || uniform.name == QString("pMatrix") ||
-			uniform.name == QString("normalMatrix") || uniform.name == QString("lightPosition_camSpace") ||
-			uniform.name == QString("diffuseColor") || uniform.name == QString("specularColor") || 
-			uniform.name == QString("diffuseCoefficient") || uniform.name == QString("specularCoefficient") || 
-			uniform.name == QString("textureRendered") || uniform.name == QString("ambient") || 
-			uniform.name == QString("diffuse") || uniform.name == QString("specular") ||
-			uniform.name == QString("shininess") || uniform.name == QString("time"))
-		{
-			continue;
-		}
+    //handle uniforms
+    for (int i = 0; i < list.length(); i++)
+    {
+        QStringList lineList = list.at(i).split(" ");
+        mUniform uniform;
+        uniform.type = lineList.at(1);
+        uniform.name = lineList.at(2);
+        //sort out the fixed uniforms and only leave user-variables
+        if (uniform.name == QString("mvMatrix") || uniform.name == QString("pMatrix") ||
+            uniform.name == QString("normalMatrix") || uniform.name == QString("lightPosition_camSpace") ||
+            uniform.name == QString("diffuseColor") || uniform.name == QString("specularColor") ||
+            uniform.name == QString("diffuseCoefficient") || uniform.name == QString("specularCoefficient") ||
+            uniform.name == QString("textureRendered") || uniform.name == QString("ambient") ||
+            uniform.name == QString("diffuse") || uniform.name == QString("specular") ||
+            uniform.name == QString("shininess") || uniform.name == QString("time"))
+        {
+            continue;
+        }
 
-		uniforms.push_back(uniform);
+        uniforms.push_back(uniform);
 
-		//qDebug() << lineList.at(1);
-		//qDebug() << lineList.at(2);
-	}
+        //qDebug() << lineList.at(1);
+        //qDebug() << lineList.at(2);
+    }
 
-	//qDebug() << "\n";
+    //qDebug() << "\n";
 
-	return uniforms;
+    return uniforms;
 }
 
 
 void UniformEditorWidget::updateTexturePath(QString filePath)
 {
-    TextureWidget* textureWidget = static_cast<TextureWidget*>( static_cast<QGridLayout*>(ui->m_UniformEditFrame->layout())->itemAtPosition(1,0)->widget());
+    TextureWidget* textureWidget = static_cast<TextureWidget*>(static_cast<QGridLayout*>(ui->m_UniformEditFrame->layout())->itemAtPosition(1, 0)->widget());
     textureWidget->updatePath(filePath);
 
     emit(updateGL());

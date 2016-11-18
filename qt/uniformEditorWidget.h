@@ -39,54 +39,54 @@
 
 class UniformEditorWidget : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	UniformEditorWidget(QGLShaderProgram* sProgram, QGLShaderProgram* dsProgram, 
-		QGLContext* glContext, QWidget *parent);
-	~UniformEditorWidget();
+    UniformEditorWidget(QGLShaderProgram* sProgram, QGLShaderProgram* dsProgram,
+        QGLContext* glContext, QWidget *parent);
+    ~UniformEditorWidget();
 
-	//enum uniformType { BOOL, INT, UINT, FLOAT, DOUBLE, VEC2, VEC3, VEC4, MAT3, MAT4, SAMPLER};
-	struct mUniform
-	{
-		QString type;
-		QString name;
-	};
+    //enum uniformType { BOOL, INT, UINT, FLOAT, DOUBLE, VEC2, VEC3, VEC4, MAT3, MAT4, SAMPLER};
+    struct mUniform
+    {
+        QString type;
+        QString name;
+    };
 
-	void updateShaderPrograms(QGLShaderProgram* sProgram, QGLShaderProgram* dsProgram, QGLContext* glContext);
+    void updateShaderPrograms(QGLShaderProgram* sProgram, QGLShaderProgram* dsProgram, QGLContext* glContext);
 
-	//TODO documentation
+    //TODO documentation
 
-	// it would have been nice to read the uniforms directly from the program
-	// but this seems to be broken in Qt 5
-	// need to parse source code manually
-	// Qt has some restirctions here, thus this is just a simple Uniform editor
+    // it would have been nice to read the uniforms directly from the program
+    // but this seems to be broken in Qt 5
+    // need to parse source code manually
+    // Qt has some restirctions here, thus this is just a simple Uniform editor
 
-    /**
-     * Creates the widgets that are necessary in the uniform editor depending on the type of uniform.
-     * index must be a value relative to the uniform list and NOT the QComboBox of the uniform editor.
-     * The uniforms are also bound to the correct program shader : the render program shader or the display program (Render to Texture).
-     * Sets the connection between a uniform widget and the updateUniform SLOT.
-     * @brief setUniformEditorWidgets
-     * @param uniformList
-     * @param index
-     * @param isAShaderProgramUniform
-     */
+      /**
+       * Creates the widgets that are necessary in the uniform editor depending on the type of uniform.
+       * index must be a value relative to the uniform list and NOT the QComboBox of the uniform editor.
+       * The uniforms are also bound to the correct program shader : the render program shader or the display program (Render to Texture).
+       * Sets the connection between a uniform widget and the updateUniform SLOT.
+       * @brief setUniformEditorWidgets
+       * @param uniformList
+       * @param index
+       * @param isAShaderProgramUniform
+       */
     void setUniformEditorWidgets(QList<mUniform> &uniformList, int index, bool isAShaderProgramUniform);
 
-public slots:
-	void uniformComboBoxActivated(int index);
+    public slots:
+    void uniformComboBoxActivated(int index);
 
     //This could probably be simplified to take into account the two shader programs
-	//TODO any way to templetize this (GLtype is used for overloads)?
-	//Qt does not allow templates for slots
-	void updateUniform(double value);
-	void updateUniform(int value);
-	void updateUniformVector2D(QVector4D value);
-	void updateUniformVector3D(QVector4D value);
-	void updateUniformVector4D(QVector4D value);
-	void updateUniformMatrix3x3(QMatrix4x4 value);
-	void updateUniformMatrix4x4(QMatrix4x4 value);
+  //TODO any way to templetize this (GLtype is used for overloads)?
+  //Qt does not allow templates for slots
+    void updateUniform(double value);
+    void updateUniform(int value);
+    void updateUniformVector2D(QVector4D value);
+    void updateUniformVector3D(QVector4D value);
+    void updateUniformVector4D(QVector4D value);
+    void updateUniformMatrix3x3(QMatrix4x4 value);
+    void updateUniformMatrix4x4(QMatrix4x4 value);
 
     void updateUniformDisplay(double value);
     void updateUniformDisplay(int value);
@@ -104,7 +104,7 @@ public slots:
     void updateTexturePath(QString filePath);
 
 signals:
-	void updateGL();
+    void updateGL();
 
     /**
      * Sends a signal to open a QFileDialog to look for the texture.
@@ -114,15 +114,15 @@ signals:
      */
     void textureBrowse(QString, bool);
 private:
-	void updateEditorWidget();
-	QList<mUniform> parseUniformsFromSource(QString sourceCode);
+    void updateEditorWidget();
+    QList<mUniform> parseUniformsFromSource(QString sourceCode);
 
-	Ui::UniformEditorWidget* ui;
-	QGLShaderProgram* m_shaderProgram;
-	QGLShaderProgram* m_shaderProgramDisplay;
+    Ui::UniformEditorWidget* ui;
+    QGLShaderProgram* m_shaderProgram;
+    QGLShaderProgram* m_shaderProgramDisplay;
     QList<mUniform> m_shaderProgramUserUniforms; //List of uniforms in the shader program
     QList<mUniform> m_displayShaderUserUniforms; //List of uniforms in the display shader program
-	QGLContext* m_glContext;
+    QGLContext* m_glContext;
 };
 
 #endif

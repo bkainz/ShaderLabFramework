@@ -28,14 +28,14 @@
 
 using namespace std;
 
-Object::Object(): m_objectName(), m_mesh(Mesh()), m_material(Material()),
-    m_modelMatrix(QMatrix4x4()), m_rotationX(0), m_rotationY(0), m_rotationZ(0)
+Object::Object() : m_objectName(), m_mesh(Mesh()), m_material(Material()),
+m_modelMatrix(QMatrix4x4()), m_rotationX(0), m_rotationY(0), m_rotationZ(0)
 {
 
 }
 
-Object::Object(string objectName): m_objectName(objectName), m_mesh(Mesh()), m_material(Material()),
-    m_modelMatrix(QMatrix4x4()),  m_rotationX(0), m_rotationY(0), m_rotationZ(0)
+Object::Object(string objectName) : m_objectName(objectName), m_mesh(Mesh()), m_material(Material()),
+m_modelMatrix(QMatrix4x4()), m_rotationX(0), m_rotationY(0), m_rotationZ(0)
 {
 
     string objectPath = loadPath(objectName);
@@ -45,7 +45,7 @@ Object::Object(string objectName): m_objectName(objectName), m_mesh(Mesh()), m_m
     m_modelMatrix = QMatrix4x4();
     m_modelMatrix.setToIdentity();
 
-    m_material = Material(QColor(128,0,0),QColor(255,0,0), QColor(255,255,255), 1.0,1.0,1.0,10.0);
+    m_material = Material(QColor(128, 0, 0), QColor(255, 0, 0), QColor(255, 255, 255), 1.0, 1.0, 1.0, 10.0);
 
 }
 
@@ -56,15 +56,15 @@ Object::~Object()
 
 void Object::resetModelMatrix()
 {
-     m_modelMatrix.setToIdentity();
-     m_rotationX = 0.0;
-     m_rotationY = 0.0;
-     m_rotationZ = 0.0;
+    m_modelMatrix.setToIdentity();
+    m_rotationX = 0.0;
+    m_rotationY = 0.0;
+    m_rotationZ = 0.0;
 }
 
 void Object::setAspectRatio(float aspectRatio)
 {
-    m_modelMatrix.scale(1.0, 1.0/aspectRatio);
+    m_modelMatrix.scale(1.0, 1.0 / aspectRatio);
 }
 
 void Object::scale(float scalingFactor)
@@ -74,12 +74,12 @@ void Object::scale(float scalingFactor)
 
 void Object::rotateX(int angleX)
 {
-   angleX %= 360;
+    angleX %= 360;
 
-   m_rotationX += angleX;
-   m_rotationX %= 360;
+    m_rotationX += angleX;
+    m_rotationX %= 360;
 
-   m_modelMatrix.rotate(angleX, QVector3D(1.0,0.0,0.0));
+    m_modelMatrix.rotate(angleX, QVector3D(1.0, 0.0, 0.0));
 }
 
 void Object::rotateY(int angleY)
@@ -89,7 +89,7 @@ void Object::rotateY(int angleY)
     m_rotationY += angleY;
     m_rotationY %= 360;
 
-    m_modelMatrix.rotate(angleY, QVector3D(0.0,1.0,0.0));
+    m_modelMatrix.rotate(angleY, QVector3D(0.0, 1.0, 0.0));
 }
 
 void Object::rotateZ(int angleZ)
@@ -99,94 +99,94 @@ void Object::rotateZ(int angleZ)
     m_rotationZ += angleZ;
     m_rotationZ %= 360;
 
-    m_modelMatrix.rotate(angleZ, QVector3D(0.0,0.0,1.0));
+    m_modelMatrix.rotate(angleZ, QVector3D(0.0, 0.0, 1.0));
 }
 
 string Object::loadPath(string &objectName)
 {
     string objectPath;
 
-     if(objectName == "square")
-     {
-        #ifdef _WIN32
-                objectPath = string(QDir::currentPath().toStdString()+ "\\off\\square.off");
-        #endif
-
-        #ifdef __gnu_linux__
-                objectPath = QDir::currentPath().toStdString()+string( "/off/square.off");
-        #endif
-
-        #if defined(__APPLE__) && defined(__MACH__)
-                objectPath = QDir::currentPath().toStdString()+string( "/../../../off/square.off");
-        #endif
-     }
-     else if(objectName == "monkey")
-     {
-        #ifdef _WIN32
-                objectPath = string(QDir::currentPath().toStdString()+ "\\off\\monkey.off");
-        #endif
-
-        #ifdef __gnu_linux__
-                objectPath = QDir::currentPath().toStdString()+string( "/off/monkey.off");
-        #endif
-
-        #if defined(__APPLE__) && defined(__MACH__)
-                objectPath = QDir::currentPath().toStdString()+string( "/../../../off/monkey.off");
-        #endif
-    }
-    else if(objectName == "cube")
+    if (objectName == "square")
     {
-       #ifdef _WIN32
-               objectPath = string(QDir::currentPath().toStdString()+ "\\off\\cube.off");
-       #endif
+#ifdef _WIN32
+        objectPath = string(QDir::currentPath().toStdString() + "\\off\\square.off");
+#endif
 
-       #ifdef __gnu_linux__
-               objectPath = QDir::currentPath().toStdString()+string( "/off/cube.off");
-       #endif
+#ifdef __gnu_linux__
+        objectPath = QDir::currentPath().toStdString() + string("/off/square.off");
+#endif
 
-       #if defined(__APPLE__) && defined(__MACH__)
-               objectPath = QDir::currentPath().toStdString()+string( "/../../../off/cube.off");
-       #endif
-     }
-     else if(objectName == "teapot")
-     {
-        #ifdef _WIN32
-                objectPath = string(QDir::currentPath().toStdString()+ "\\obj\\teapotR90.obj");
-        #endif
+#if defined(__APPLE__) && defined(__MACH__)
+        objectPath = QDir::currentPath().toStdString() + string("/../../../off/square.off");
+#endif
+    }
+    else if (objectName == "monkey")
+    {
+#ifdef _WIN32
+        objectPath = string(QDir::currentPath().toStdString() + "\\off\\monkey.off");
+#endif
 
-        #ifdef __gnu_linux__
-                objectPath = QDir::currentPath().toStdString()+string( "/obj/teapotR90.obj");
-        #endif
+#ifdef __gnu_linux__
+        objectPath = QDir::currentPath().toStdString() + string("/off/monkey.off");
+#endif
 
-        #if defined(__APPLE__) && defined(__MACH__)
-                objectPath = QDir::currentPath().toStdString()+string( "/../../../obj/teapotR90.obj");
-        #endif
-     }
-     else if(objectName == "teapot-low")
-     {
-        #ifdef _WIN32
-                objectPath = string(QDir::currentPath().toStdString()+ "\\obj\\teapot-lowR90.obj");
-        #endif
+#if defined(__APPLE__) && defined(__MACH__)
+        objectPath = QDir::currentPath().toStdString() + string("/../../../off/monkey.off");
+#endif
+    }
+    else if (objectName == "cube")
+    {
+#ifdef _WIN32
+        objectPath = string(QDir::currentPath().toStdString() + "\\off\\cube.off");
+#endif
 
-        #ifdef __gnu_linux__
-                objectPath = QDir::currentPath().toStdString()+string( "/obj/teapot-lowR90.obj");
-        #endif
+#ifdef __gnu_linux__
+        objectPath = QDir::currentPath().toStdString() + string("/off/cube.off");
+#endif
 
-        #if defined(__APPLE__) && defined(__MACH__)
-                objectPath = QDir::currentPath().toStdString()+string( "/../../../obj/teapot-lowR90.obj");
-        #endif
-     }
-     else
-     {
-         cerr << objectName << ".off does not exist";
-     }
+#if defined(__APPLE__) && defined(__MACH__)
+        objectPath = QDir::currentPath().toStdString() + string("/../../../off/cube.off");
+#endif
+    }
+    else if (objectName == "teapot")
+    {
+#ifdef _WIN32
+        objectPath = string(QDir::currentPath().toStdString() + "\\obj\\teapotR90.obj");
+#endif
+
+#ifdef __gnu_linux__
+        objectPath = QDir::currentPath().toStdString() + string("/obj/teapotR90.obj");
+#endif
+
+#if defined(__APPLE__) && defined(__MACH__)
+        objectPath = QDir::currentPath().toStdString() + string("/../../../obj/teapotR90.obj");
+#endif
+    }
+    else if (objectName == "teapot-low")
+    {
+#ifdef _WIN32
+        objectPath = string(QDir::currentPath().toStdString() + "\\obj\\teapot-lowR90.obj");
+#endif
+
+#ifdef __gnu_linux__
+        objectPath = QDir::currentPath().toStdString() + string("/obj/teapot-lowR90.obj");
+#endif
+
+#if defined(__APPLE__) && defined(__MACH__)
+        objectPath = QDir::currentPath().toStdString() + string("/../../../obj/teapot-lowR90.obj");
+#endif
+    }
+    else
+    {
+        cerr << objectName << ".off does not exist";
+    }
 
     return objectPath;
 }
 
 void Object::loadMesh()
 {
-    if(m_objectName == "teapot" || m_objectName == "teapot-low")
+    if (m_objectName == "teapot" || m_objectName == "teapot-low")
     {
         m_mesh.objReader();
     }
@@ -206,17 +206,17 @@ void Object::setModelMatrix(QMatrix4x4 modelMatrix)
 
 Material Object::getMaterial() const
 {
-   return m_material;
+    return m_material;
 }
 
 void Object::setMaterial(Material material)
 {
-	m_material = material;
+    m_material = material;
 }
 
 Mesh Object::getMesh() const
 {
-   return m_mesh;
+    return m_mesh;
 }
 
 QMatrix4x4 Object::getModelMatrix() const

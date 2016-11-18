@@ -39,27 +39,27 @@
 class TextureWidget : public QWidget
 {
     Q_OBJECT
-    public:
-        explicit TextureWidget(QWidget *parent = 0);
-        TextureWidget(QWidget *parent, QString textureName, bool isAShaderProgramUniform);
-        ~TextureWidget();
-        void setTextureIcon(QString &filePath);
+public:
+    explicit TextureWidget(QWidget *parent = 0);
+    TextureWidget(QWidget *parent, QString textureName, bool isAShaderProgramUniform);
+    ~TextureWidget();
+    void setTextureIcon(QString &filePath);
 
-    signals:
-        void textUpdated(QString);
-        void sendTextureName(QString, bool);
+signals:
+    void textUpdated(QString);
+    void sendTextureName(QString, bool);
 
     public slots:
-        void updatePath(QString path);
-        void buttonClicked();
+    void updatePath(QString path);
+    void buttonClicked();
 
-    private:
-        QVBoxLayout *m_verticalLayout;
-        QGroupBox *m_groupBox;
-        QLineEdit *m_lineEdit;
-        QPushButton *m_pushButton;
-        QString m_textureName;
-        bool m_isAShaderProgramUniform;
+private:
+    QVBoxLayout *m_verticalLayout;
+    QGroupBox *m_groupBox;
+    QLineEdit *m_lineEdit;
+    QPushButton *m_pushButton;
+    QString m_textureName;
+    bool m_isAShaderProgramUniform;
 };
 
 #endif // TEXTUREWIDGET_H

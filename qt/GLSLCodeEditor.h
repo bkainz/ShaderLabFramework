@@ -90,90 +90,90 @@
 */
 class GLSLCodeEditor : public CodeEditor
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	/** Constructs a GLSLCodeEditor object.
-	* A shader type must be specified that controls some aspects of the editor,
-	* like filters in open/save dialogs.
-	* @param shaderType Shader type from IShader.
-	*/
-	GLSLCodeEditor(QGLShader::ShaderType shaderType);
+    /** Constructs a GLSLCodeEditor object.
+    * A shader type must be specified that controls some aspects of the editor,
+    * like filters in open/save dialogs.
+    * @param shaderType Shader type from IShader.
+    */
+    GLSLCodeEditor(QGLShader::ShaderType shaderType);
 
-	/** Load the initial source code for the assigned shader type.
-	* The source code loaded is based on the shaderType argument passed to the constructor.
-	*/
-	void loadInitialShaderSource(void);
+    /** Load the initial source code for the assigned shader type.
+    * The source code loaded is based on the shaderType argument passed to the constructor.
+    */
+    void loadInitialShaderSource(void);
 
-	/** Returns the shader type assigned to this source editor.
-	*/
-	QGLShader::ShaderType shaderType(void) const;
+    /** Returns the shader type assigned to this source editor.
+    */
+    QGLShader::ShaderType shaderType(void) const;
 
-	/** Clears the content to an empty string.
-	* Pops up a 'save changes' dialog if necessary.
-	*/
-	void newFile(void);
+    /** Clears the content to an empty string.
+    * Pops up a 'save changes' dialog if necessary.
+    */
+    void newFile(void);
 
-	/** Asks the user to open a file.
-	* Pops up a 'save changes' dialog if necessary.
-	*/
-	void open(void);
+    /** Asks the user to open a file.
+    * Pops up a 'save changes' dialog if necessary.
+    */
+    void open(void);
 
-	/** Saves the currently opened file.
-	* If no filename is stored, the uses is asked for a file name.
-	*/
-	bool save(void);
+    /** Saves the currently opened file.
+    * If no filename is stored, the uses is asked for a file name.
+    */
+    bool save(void);
 
-	/** Asks the user for a file name and saves the content in that file.
-	*/
-	bool saveAs(void);
+    /** Asks the user for a file name and saves the content in that file.
+    */
+    bool saveAs(void);
 
-	/** Asks the user to save changes, if necessary.
-	* @return True if the data is saved and the calling operation can be continued.
-	*         False if the calling operation should be aborded.
-	*/
-	bool maybeSave(void);
+    /** Asks the user to save changes, if necessary.
+    * @return True if the data is saved and the calling operation can be continued.
+    *         False if the calling operation should be aborded.
+    */
+    bool maybeSave(void);
 
-	/** Returns the filename of the currently opened file.
-	* An empty string indicates that no file name is assigned to the current content.
-	*/
-	QString fileName(void) const;
+    /** Returns the filename of the currently opened file.
+    * An empty string indicates that no file name is assigned to the current content.
+    */
+    QString fileName(void) const;
 
-	/** Tells the widget to directly load a named file.
-	* @param fileName Name of the file to load.
-	*/
-	void loadFile(const QString & fileName);
+    /** Tells the widget to directly load a named file.
+    * @param fileName Name of the file to load.
+    */
+    void loadFile(const QString & fileName);
 
 signals:
-	/** Emitted every time the owner of this widget needs to update.
-	* For example, this happens when the documents modified flag changed.
-	*/
-	void updateMainWindow(void);
+    /** Emitted every time the owner of this widget needs to update.
+    * For example, this happens when the documents modified flag changed.
+    */
+    void updateMainWindow(void);
 
-	/** Indicates that the used opened an existing or created a new shader.
-	* It is emitted every time a document was successfully loaded from disk.
-	*/
-	void shaderChangedCompletely(void);
+    /** Indicates that the used opened an existing or created a new shader.
+    * It is emitted every time a document was successfully loaded from disk.
+    */
+    void shaderChangedCompletely(void);
 
-	private slots:
-	void documentContentsChanged(void);
+    private slots:
+    void documentContentsChanged(void);
 
 private:
-	bool saveFile(const QString & fileName);
-	void setFileName(const QString & fileName);
-	QString fileTypeFilter(void);
+    bool saveFile(const QString & fileName);
+    void setFileName(const QString & fileName);
+    QString fileTypeFilter(void);
 
-	// auto sizing
-	QSize minimumSizeHint(void) const { return QSize(200, 100); }
-	QSize        sizeHint(void) const { return QSize(800, 600); }
+    // auto sizing
+    QSize minimumSizeHint(void) const { return QSize(200, 100); }
+    QSize        sizeHint(void) const { return QSize(800, 600); }
 
 
-	// creates the syntax highlighter for GLSL
-	// and assigns it to this GLSLCodeEditor.
-	void createSyntaxHighlighter(void);
-	QSyntaxHighlighter* m_highlighter;
+    // creates the syntax highlighter for GLSL
+    // and assigns it to this GLSLCodeEditor.
+    void createSyntaxHighlighter(void);
+    QSyntaxHighlighter* m_highlighter;
 
-	QGLShader::ShaderType m_shaderType;
-	QString	m_fileName; // empty string == untitled document
+    QGLShader::ShaderType m_shaderType;
+    QString	m_fileName; // empty string == untitled document
 };
 
 #endif	// __SOURCEEDITOR_HPP_INCLUDED__

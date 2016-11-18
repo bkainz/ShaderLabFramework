@@ -27,24 +27,24 @@
 
 using namespace std;
 
-Scene::Scene(): m_objects(QVector<Object>()), m_pointLights(QVector<Light>())
+Scene::Scene() : m_objects(QVector<Object>()), m_pointLights(QVector<Light>())
 {
 
 
 }
 
-Scene::Scene(string object): m_objects(QVector<Object>()), m_pointLights(QVector<Light>())
+Scene::Scene(string object) : m_objects(QVector<Object>()), m_pointLights(QVector<Light>())
 {
     buildScene(object);
 }
 
 
-Scene::Scene(QVector<string>& listOfObjectNames, const QVector<Light> &listOfPointLights):
-    m_objects(QVector<Object>()),  m_pointLights(listOfPointLights)
+Scene::Scene(QVector<string>& listOfObjectNames, const QVector<Light> &listOfPointLights) :
+    m_objects(QVector<Object>()), m_pointLights(listOfPointLights)
 {
-    for(int i = 0 ; i<listOfObjectNames.size() ; i++)
+    for (int i = 0; i < listOfObjectNames.size(); i++)
     {
-       m_objects.push_back(Object(listOfObjectNames[i]));
+        m_objects.push_back(Object(listOfObjectNames[i]));
     }
 }
 
@@ -56,16 +56,16 @@ Scene::~Scene()
 
 void Scene::updateObjectMaterial(int objectID, Material material)
 {
-	if (!m_objects.empty())
-	{
-		m_objects[objectID].setMaterial(material);
-	}
+    if (!m_objects.empty())
+    {
+        m_objects[objectID].setMaterial(material);
+    }
 
 }
 
 void Scene::translateLightSourceX(int lightNumber, float translationX)
 {
-    if(lightNumber<m_pointLights.size())
+    if (lightNumber < m_pointLights.size())
     {
         m_pointLights[lightNumber].translateX(translationX);
     }
@@ -73,7 +73,7 @@ void Scene::translateLightSourceX(int lightNumber, float translationX)
 
 void Scene::translateLightSourceY(int lightNumber, float translationY)
 {
-    if(lightNumber<m_pointLights.size())
+    if (lightNumber < m_pointLights.size())
     {
         m_pointLights[lightNumber].translateY(translationY);
     }
@@ -81,7 +81,7 @@ void Scene::translateLightSourceY(int lightNumber, float translationY)
 
 void Scene::translateLightSourceZ(int lightNumber, float translationZ)
 {
-    if(lightNumber<m_pointLights.size())
+    if (lightNumber < m_pointLights.size())
     {
         m_pointLights[lightNumber].translateZ(translationZ);
     }
@@ -89,15 +89,15 @@ void Scene::translateLightSourceZ(int lightNumber, float translationZ)
 
 void Scene::setLightSourcePosition(int lightNumber, float x, float y, float z)
 {
-    if(lightNumber<m_pointLights.size())
+    if (lightNumber < m_pointLights.size())
     {
-        m_pointLights[lightNumber].setPosition(x,y,z);
+        m_pointLights[lightNumber].setPosition(x, y, z);
     }
 }
 
 void Scene::rotateObjectX(int objectNumber, int rotationX)
 {
-    if(objectNumber<m_objects.size())
+    if (objectNumber < m_objects.size())
     {
         m_objects[objectNumber].rotateX(rotationX);
     }
@@ -105,7 +105,7 @@ void Scene::rotateObjectX(int objectNumber, int rotationX)
 
 void Scene::rotateObjectY(int objectNumber, int rotationY)
 {
-    if(objectNumber<m_objects.size())
+    if (objectNumber < m_objects.size())
     {
         m_objects[objectNumber].rotateY(rotationY);
     }
@@ -113,7 +113,7 @@ void Scene::rotateObjectY(int objectNumber, int rotationY)
 
 void Scene::rotateObjectZ(int objectNumber, int rotationZ)
 {
-    if(objectNumber<m_objects.size())
+    if (objectNumber < m_objects.size())
     {
         m_objects[objectNumber].rotateZ(rotationZ);
     }
@@ -126,7 +126,7 @@ void Scene::setModelMatrix(int objectNumber, QMatrix4x4 &matrix)
 
 void Scene::resetTransformationsObjects()
 {
-    for(int k = 0 ; k<m_objects.size() ; k++)
+    for (int k = 0; k < m_objects.size(); k++)
     {
         //Set the aspect ratio after loading the texture
         m_objects[k].resetModelMatrix();
@@ -143,7 +143,7 @@ void Scene::buildScene(string object)
     this->addObject(object);
 
     //Be careful not to put the light inside the object
-    m_pointLights.push_back(Light(QVector4D(-10.0,0.0,30.0, 1.0), QVector3D(1.0,1.0,1.0), 1.0));
+    m_pointLights.push_back(Light(QVector4D(-10.0, 0.0, 30.0, 1.0), QVector3D(1.0, 1.0, 1.0), 1.0));
 }
 
 
@@ -162,9 +162,9 @@ void Scene::resetScene()
 {
     //Reset the lights
     //Be careful not to put the light inside the object
-    for(int k = 0 ; k<m_objects.size() ; k++)
+    for (int k = 0; k < m_objects.size(); k++)
     {
-       m_pointLights[k].setPosition(0.0, 0.0, 30.0);
+        m_pointLights[k].setPosition(0.0, 0.0, 30.0);
     }
 }
 
@@ -177,11 +177,11 @@ int Scene::getObjectRotation(int objectNumber, string rotationAxis)
 {
     int rotation = 0;
 
-    if(rotationAxis == "X")
+    if (rotationAxis == "X")
         rotation = m_objects[objectNumber].getRotationX();
-    else if(rotationAxis == "Y")
+    else if (rotationAxis == "Y")
         rotation = m_objects[objectNumber].getRotationY();
-    else if(rotationAxis == "Z")
+    else if (rotationAxis == "Z")
         rotation = m_objects[objectNumber].getRotationZ();
     else
         cerr << "No rotation axis called : " << rotationAxis << endl;

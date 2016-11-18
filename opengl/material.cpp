@@ -33,80 +33,80 @@ Material::Material() : m_ambientColor(QColor()), m_diffuseColor(QColor()), m_spe
 }
 
 Material::Material(QColor ambient, QColor diffuseColor, QColor specularColor, float ambientCoefficient, float diffuseCoefficient, float specularCoefficient, float shininess) :
-	m_ambientColor(QColor(ambient)), m_diffuseColor(QColor(diffuseColor)), m_specularColor(QColor(specularColor)),
-	m_ambientCoefficient(ambientCoefficient), m_diffuseCoefficient(diffuseCoefficient), m_specularCoefficient(specularCoefficient), m_shininess(shininess)
+    m_ambientColor(QColor(ambient)), m_diffuseColor(QColor(diffuseColor)), m_specularColor(QColor(specularColor)),
+    m_ambientCoefficient(ambientCoefficient), m_diffuseCoefficient(diffuseCoefficient), m_specularCoefficient(specularCoefficient), m_shininess(shininess)
 {
 
 }
 
 QColor Material::getAmbientColor()
 {
-	return m_ambientColor;
+    return m_ambientColor;
 }
 
 QColor Material::getDiffuseColor()
 {
-	return m_diffuseColor;
+    return m_diffuseColor;
 }
 
 QColor Material::getSpecularColor()
 {
-	return m_specularColor;
+    return m_specularColor;
 }
 
 float Material::getAmbientCoefficient()
 {
-	return m_ambientCoefficient;
+    return m_ambientCoefficient;
 }
 
 float Material::getDiffuseCoefficient()
 {
-	return m_diffuseCoefficient;
+    return m_diffuseCoefficient;
 }
 
 float Material::getSpecularCoefficient()
 {
-	return m_specularCoefficient;
+    return m_specularCoefficient;
 }
 
 float Material::getShininess()
 {
-	return m_shininess;
+    return m_shininess;
 }
 
 
 void Material::setAmbientColor(QColor color)
 {
-	m_ambientColor = color;
+    m_ambientColor = color;
 }
 
 void Material::setDiffuseColor(QColor color)
 {
-	m_diffuseColor = color;
+    m_diffuseColor = color;
 }
 
 void Material::setSpecularColor(QColor color)
 {
-	m_specularColor = color;
+    m_specularColor = color;
 }
 
 void Material::setAmbientCoefficient(float val)
 {
-	m_ambientCoefficient = val;
+    m_ambientCoefficient = val;
 }
 
 void Material::setDiffuseCoefficient(float val)
 {
-	m_diffuseCoefficient = val;
+    m_diffuseCoefficient = val;
 }
 
 void Material::setSpecularCoefficient(float val)
 {
-	m_specularCoefficient = val;
+    m_specularCoefficient = val;
 }
 
 void Material::setShininess(float val)
 {
-	m_shininess = val;
+    m_shininess = val;
 }
 

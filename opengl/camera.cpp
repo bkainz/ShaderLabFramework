@@ -27,16 +27,16 @@
 
 using namespace std;
 
-Camera::Camera():
+Camera::Camera() :
     m_fieldOfView(0.0),
-    m_perspectiveCamera(false), m_aspectRatio(1.0),  m_viewMatrix(QMatrix4x4()), m_projectionMatrix(QMatrix4x4())
+    m_perspectiveCamera(false), m_aspectRatio(1.0), m_viewMatrix(QMatrix4x4()), m_projectionMatrix(QMatrix4x4())
 {
     m_viewMatrix.setToIdentity();
     m_projectionMatrix.setToIdentity();
 }
 
 Camera::Camera(QVector4D position, QVector4D upVector, QVector4D center,
-               bool perspectiveCamera, float aspectRatio , float fieldOfView):
+    bool perspectiveCamera, float aspectRatio, float fieldOfView) :
     m_fieldOfView(fieldOfView),
     m_perspectiveCamera(perspectiveCamera), m_aspectRatio(aspectRatio), m_viewMatrix(QMatrix4x4()), m_projectionMatrix(QMatrix4x4())
 {
@@ -46,7 +46,7 @@ Camera::Camera(QVector4D position, QVector4D upVector, QVector4D center,
 
     m_viewMatrix.lookAt(position.toVector3D(), center.toVector3D(), upVector.toVector3D());
 
-    if(m_perspectiveCamera)//If it is a perspective camera
+    if (m_perspectiveCamera)//If it is a perspective camera
         m_projectionMatrix.perspective(fieldOfView, aspectRatio, (float)0.001, (float)10000.0);
     else
         m_projectionMatrix.ortho(-1.0, 1.0, -1.0, 1.0, 0.001, 10000.0);
@@ -72,7 +72,7 @@ void Camera::setProjectionMatrix(float aspectRatio, float fieldOfView)
     //Perspective function multiplies by a matrix : need to reinitialize the matrix to identity first
     m_projectionMatrix.setToIdentity();
 
-    if(m_perspectiveCamera)//If it is a perspective camera
+    if (m_perspectiveCamera)//If it is a perspective camera
         m_projectionMatrix.perspective(fieldOfView, aspectRatio, (float)0.001, (float)10000.0);
     else
         m_projectionMatrix.ortho(-1.0, 1.0, -1.0, 1.0, 0.001, 10000.0);
@@ -89,7 +89,7 @@ void Camera::changeCameraType(QString cameraType)
     //Resets the projection matrix
     m_projectionMatrix.setToIdentity();
 
-    if(cameraType == "Perspective")
+    if (cameraType == "Perspective")
     {
         m_projectionMatrix.perspective(m_fieldOfView, m_aspectRatio, (float)0.001, (float)10000.0);
         m_perspectiveCamera = true;
@@ -119,7 +119,7 @@ void Camera::rotateXY(float xRotation, float yRotation)
 
 void Camera::translateAlongViewAxis(float translation)
 {
-	  m_viewMatrix(2, 3) += translation;
+    m_viewMatrix(2, 3) += translation;
 }
 
 
@@ -137,7 +137,7 @@ void Camera::translateY(float translation)
 
 void Camera::translateZ(float translation)
 {
-	m_viewMatrix.translate(0.0, 0.0, translation);
+    m_viewMatrix.translate(0.0, 0.0, translation);
 }
 
 void Camera::resetCamera()

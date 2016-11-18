@@ -67,165 +67,165 @@ class GLDisplay : public QGLWidget
 {
     Q_OBJECT
 
-    public:
-        GLDisplay(QWidget *parent);
-        GLDisplay(const QGLFormat& glFormat, QWidget *parent);
-        ~GLDisplay();
+public:
+    GLDisplay(QWidget *parent);
+    GLDisplay(const QGLFormat& glFormat, QWidget *parent);
+    ~GLDisplay();
 
-        /**
-         * Sets the opengl parameters (e.g wireframe rendering ...)
-         * @brief setOpenGLRenderingState
-         */
-        void setOpenGLRenderingState();
-		void setOpenGLWireframeState(bool activateWireframeMode);
+    /**
+     * Sets the opengl parameters (e.g wireframe rendering ...)
+     * @brief setOpenGLRenderingState
+     */
+    void setOpenGLRenderingState();
+    void setOpenGLWireframeState(bool activateWireframeMode);
 
-        /**
-         * Render the coordinate frame
-         * @brief renderCoordinateFrame
-         */
-        void renderCoordinateFrame();
+    /**
+     * Render the coordinate frame
+     * @brief renderCoordinateFrame
+     */
+    void renderCoordinateFrame();
 
-        /**
-         * Renders the scene to a FBO.
-         * @brief renderScene
-         */
-        void renderScene();
+    /**
+     * Renders the scene to a FBO.
+     * @brief renderScene
+     */
+    void renderScene();
 
-        /**
-         * Renders the textureID on a quad.
-         * @brief renderToTexture
-         * @param textureID
-         */
-        void renderToTexture(const int textureID, bool simplifiedPipeline);
+    /**
+     * Renders the textureID on a quad.
+     * @brief renderToTexture
+     * @param textureID
+     */
+    void renderToTexture(const int textureID, bool simplifiedPipeline);
 
-        /**
-         * Function to load textures and the framebuffers.
-         * @brief loadTexturesAndFramebuffers
-         */
-        void loadTexturesAndFramebuffers();
+    /**
+     * Function to load textures and the framebuffers.
+     * @brief loadTexturesAndFramebuffers
+     */
+    void loadTexturesAndFramebuffers();
 
-        /**
-         * Sends object properties to shaders.
-         * @brief sendObjectDataToShaders
-         * @param object
-         */
-        void sendObjectDataToShaders(Object &object);
+    /**
+     * Sends object properties to shaders.
+     * @brief sendObjectDataToShaders
+     * @param object
+     */
+    void sendObjectDataToShaders(Object &object);
 
-        /**
-         * Counts and draw the FPS on the screen.
-         * @brief drawFPS
-         */
-        void drawFPS();
+    /**
+     * Counts and draw the FPS on the screen.
+     * @brief drawFPS
+     */
+    void drawFPS();
 
-		//test
-		QGLShaderProgram* getShaderProgram() { return m_shaderProgram; };
-		QGLShaderProgram* getShaderDisplayProgram() { return m_shaderProgramDisplay; };
-		Scene* getScene() { return m_scene; };
+    //test
+    QGLShaderProgram* getShaderProgram() { return m_shaderProgram; };
+    QGLShaderProgram* getShaderDisplayProgram() { return m_shaderProgramDisplay; };
+    Scene* getScene() { return m_scene; };
 
-  signals:
-        /**
-         * Appends text to the log tab
-         * @brief updateLog
-         */
-        void updateLog(QString);
+signals:
+    /**
+     * Appends text to the log tab
+     * @brief updateLog
+     */
+    void updateLog(QString);
 
-        /**
-         * Displays the log tab.
-         * @brief displayLog
-         */
-        void displayLog();
+    /**
+     * Displays the log tab.
+     * @brief displayLog
+     */
+    void displayLog();
 
-        /**
-         * Update the GLInfo tab.
-         * @brief updateGLInfo
-         */
-        void updateGLInfo(QString);
+    /**
+     * Update the GLInfo tab.
+     * @brief updateGLInfo
+     */
+    void updateGLInfo(QString);
 
-        void updateModelMatrix(QMatrix4x4);
-        void updateViewMatrix(QMatrix4x4);
-        void updateProjectionMatrix(QMatrix4x4);
-        void updateTexturePath(QString);
+    void updateModelMatrix(QMatrix4x4);
+    void updateViewMatrix(QMatrix4x4);
+    void updateProjectionMatrix(QMatrix4x4);
+    void updateTexturePath(QString);
 
-		void updateUniformTab();
-		void updateMaterialTab();
-
-
-  public slots:
-        void updateCameraType(QString cameraType);
-        void updateCameraFieldOfView(double fieldOfView);
-        void updateObject(QString object);
-        void updateWireframeRendering(bool wireframe);
-        void updateBackfaceCulling(bool backface);
-        void updateRenderCoordinateFrame(bool renderCoordFrame);
-        void modelMatrixUpdated(QMatrix4x4 modelMatrix);
-        void viewMatrixUpdated(QMatrix4x4 viewMatrix);
-        void projectionMatrixUpdated(QMatrix4x4 projectionMatrix);
-        void takeScreenshot();
-        void resetMatrices();
-		void updateMaterial(int objectID, Material material);
-
-        /**
-         * Slot to select a texture file and use it in a shader.
-         * @brief setTexture
-         * @param name
-         */
-        void setTexture(QString name, bool isAShaderProgramUniform);
-
-        /**
-         * Update the openGL window when the timer reaches the end and restarts the timer.
-         * @brief updateOpenGL
-         */
-        void updateOpenGL();
-
-   protected:
-       void initializeGL();
-       void resizeGL(int width, int height);
-       void paintGL();
-       void wheelEvent(QWheelEvent* event);
-       void mousePressEvent(QMouseEvent *event);
-       void mouseMoveEvent(QMouseEvent *event);
-       void keyPressEvent(QKeyEvent *event);
+    void updateUniformTab();
+    void updateMaterialTab();
 
 
-   private:
-        //Framebuffer for highres rendering
-        FrameBuffer m_framebuffer;
-        FrameBuffer m_framebufferFinalResult;
+    public slots:
+    void updateCameraType(QString cameraType);
+    void updateCameraFieldOfView(double fieldOfView);
+    void updateObject(QString object);
+    void updateWireframeRendering(bool wireframe);
+    void updateBackfaceCulling(bool backface);
+    void updateRenderCoordinateFrame(bool renderCoordFrame);
+    void modelMatrixUpdated(QMatrix4x4 modelMatrix);
+    void viewMatrixUpdated(QMatrix4x4 viewMatrix);
+    void projectionMatrixUpdated(QMatrix4x4 projectionMatrix);
+    void takeScreenshot();
+    void resetMatrices();
+    void updateMaterial(int objectID, Material material);
 
-        //Camera
-        Camera m_cameraScene;
-        Camera m_cameraQuad;
+    /**
+     * Slot to select a texture file and use it in a shader.
+     * @brief setTexture
+     * @param name
+     */
+    void setTexture(QString name, bool isAShaderProgramUniform);
 
-        //Mouse events
-        QVector2D m_mousePos;
+    /**
+     * Update the openGL window when the timer reaches the end and restarts the timer.
+     * @brief updateOpenGL
+     */
+    void updateOpenGL();
 
-        //Frame per second
-        QTime m_timeFPS;
-        int m_lastFPSUpdate;
-        int m_frameCounter;
-        int m_FPS;
-        QTimer m_timer;
+protected:
+    void initializeGL();
+    void resizeGL(int width, int height);
+    void paintGL();
+    void wheelEvent(QWheelEvent* event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void keyPressEvent(QKeyEvent *event);
 
-        //Shaders
-        QGLShaderProgram* m_shaderProgram;
-        QGLShaderProgram* m_shaderProgramDisplay;
 
-        //Scene
-        Scene* m_scene;
+private:
+    //Framebuffer for highres rendering
+    FrameBuffer m_framebuffer;
+    FrameBuffer m_framebufferFinalResult;
 
-        //Textures
-        QVector<Texture> m_texturesShaderProgram;
-        QVector<std::string> m_textureNamesShaderProgram;
-        QVector<Texture> m_texturesDisplayProgram;
-        QVector<std::string> m_textureNamesDisplayProgram;
+    //Camera
+    Camera m_cameraScene;
+    Camera m_cameraQuad;
 
-        //Rendering
-        bool m_wireframe;
-        bool m_backFaceCulling;
-        bool m_renderCoordinateFrame;
+    //Mouse events
+    QVector2D m_mousePos;
 
-		//Editor
-		GLSLEditorWindow* shaderEditor;
+    //Frame per second
+    QTime m_timeFPS;
+    int m_lastFPSUpdate;
+    int m_frameCounter;
+    int m_FPS;
+    QTimer m_timer;
+
+    //Shaders
+    QGLShaderProgram* m_shaderProgram;
+    QGLShaderProgram* m_shaderProgramDisplay;
+
+    //Scene
+    Scene* m_scene;
+
+    //Textures
+    QVector<Texture> m_texturesShaderProgram;
+    QVector<std::string> m_textureNamesShaderProgram;
+    QVector<Texture> m_texturesDisplayProgram;
+    QVector<std::string> m_textureNamesDisplayProgram;
+
+    //Rendering
+    bool m_wireframe;
+    bool m_backFaceCulling;
+    bool m_renderCoordinateFrame;
+
+    //Editor
+    GLSLEditorWindow* shaderEditor;
 };
 
 #endif // GLDISPLAY_H

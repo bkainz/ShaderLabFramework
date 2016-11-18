@@ -29,38 +29,38 @@
 
 GLSLEditorWidget::GLSLEditorWidget(QGLShader* shader, QWidget *parent) : QWidget(parent), ui(new Ui::GLSLEditorWidget)
 {
-	m_shader = shader;
-	ui->setupUi(this);
+    m_shader = shader;
+    ui->setupUi(this);
 
-	sEditor = new GLSLCodeEditor(shader->shaderType());
+    sEditor = new GLSLCodeEditor(shader->shaderType());
 
     sEditor->setPlainText(removeQtDefines(shader->sourceCode()));
-	
-	ui->mainVLayout->insertWidget(0, sEditor);
-	connect(ui->compileAndLinkButton, SIGNAL(clicked()), this, SLOT(updateShaderSource()));
+
+    ui->mainVLayout->insertWidget(0, sEditor);
+    connect(ui->compileAndLinkButton, SIGNAL(clicked()), this, SLOT(updateShaderSource()));
 }
 
 GLSLEditorWidget::~GLSLEditorWidget()
 {
-	delete ui;
+    delete ui;
 }
 
 QString GLSLEditorWidget::removeQtDefines(QString sourceCode)
 {
-    QString defines[3] = {QString("#define lowp") , QString("#define mediump") , QString("#define highp")};
+    QString defines[3] = { QString("#define lowp") , QString("#define mediump") , QString("#define highp") };
 
-    for(int i = 0 ; i<3 ; ++i)
+    for (int i = 0; i < 3; ++i)
     {
         int pos = sourceCode.indexOf(defines[i]);
 
-        if(pos != -1)
+        if (pos != -1)
         {
             sourceCode.remove(pos, defines[i].length());
         }
 
         pos = sourceCode.indexOf('\n');
 
-        if(pos != -1)
+        if (pos != -1)
         {
             sourceCode.remove(pos, 1);
         }
@@ -72,43 +72,43 @@ QString GLSLEditorWidget::removeQtDefines(QString sourceCode)
 
 void GLSLEditorWidget::setLinkToProgram(bool val)
 {
-	ui->linkToProgramCheckBox->setChecked(val);
+    ui->linkToProgramCheckBox->setChecked(val);
 }
 
 bool GLSLEditorWidget::getLinkToProgram()
 {
-	return ui->linkToProgramCheckBox->isChecked();
+    return ui->linkToProgramCheckBox->isChecked();
 }
 
-QGLShader* GLSLEditorWidget::getShader() 
-{ 
-	return m_shader; 
+QGLShader* GLSLEditorWidget::getShader()
+{
+    return m_shader;
 };
 
 void GLSLEditorWidget::updateShaderSource()
 {
-	if (!m_shader->compileSourceCode(sEditor->toPlainText()))
-	{
-		QString error = m_shader->log();
-		emit updateLog(error);
-		emit displayLog();
-	}
-	else
-	{
-		QString text = QString("Compilation of %1 successfull.").arg(this->objectName());
-		emit updateLog(text);
-		emit displayLog();
-		if (ui->linkToProgramCheckBox->isChecked())
-		{
-			emit(compileAndLink());
-		}
-		else
-		{
-			QString text_ = QString("________________________________________________\n");
-			emit updateLog(text_);
-			emit displayLog();
-		}
-	}
+    if (!m_shader->compileSourceCode(sEditor->toPlainText()))
+    {
+        QString error = m_shader->log();
+        emit updateLog(error);
+        emit displayLog();
+    }
+    else
+    {
+        QString text = QString("Compilation of %1 successfull.").arg(this->objectName());
+        emit updateLog(text);
+        emit displayLog();
+        if (ui->linkToProgramCheckBox->isChecked())
+        {
+            emit(compileAndLink());
+        }
+        else
+        {
+            QString text_ = QString("________________________________________________\n");
+            emit updateLog(text_);
+            emit displayLog();
+        }
+    }
 }
 
 void GLSLEditorWidget::setShaderCode(QString &text)
@@ -118,35 +118,35 @@ void GLSLEditorWidget::setShaderCode(QString &text)
 
 QString GLSLEditorWidget::getShaderCode()
 {
-	return sEditor->toPlainText();
+    return sEditor->toPlainText();
 }
 
 void GLSLEditorWidget::setCurrentFile(const QString &fileName)
 {
-	currentFileName = fileName;
-	sEditor->document()->setModified(false);
-	setWindowModified(false);
+    currentFileName = fileName;
+    sEditor->document()->setModified(false);
+    setWindowModified(false);
 
-	QString shownName = currentFileName;
-	if (currentFileName.isEmpty())
-		shownName = "untitled.txt";
-	setWindowFilePath(shownName);
+    QString shownName = currentFileName;
+    if (currentFileName.isEmpty())
+        shownName = "untitled.txt";
+    setWindowFilePath(shownName);
 }
 
 QString GLSLEditorWidget::getCurFileName()
 {
-	return currentFileName;
+    return currentFileName;
 }
 
 GLSLCodeEditor* GLSLEditorWidget::getCodeEditor()
 {
-	return sEditor;
+    return sEditor;
 }
 
 void GLSLEditorWidget::keyPressEvent(QKeyEvent *event)
 {
-	if (event->key() == Qt::Key_F5)
-	{
-		updateShaderSource();
-	}
+    if (event->key() == Qt::Key_F5)
+    {
+        updateShaderSource();
+    }
 }

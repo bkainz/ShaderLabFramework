@@ -27,13 +27,13 @@
 
 using namespace std;
 
-Light::Light():
+Light::Light() :
     m_lightPosition(QVector4D()), m_lightColor(QVector3D()), m_modelMatrix(QMatrix4x4()), m_lightIntensity()
 {
 
 }
 
-Light::Light(QVector4D lightPosition, QVector3D lightColor,float lightIntensity):
+Light::Light(QVector4D lightPosition, QVector3D lightColor, float lightIntensity) :
     m_lightPosition(QVector4D(lightPosition)), m_lightColor(QVector3D(lightColor)), m_modelMatrix(QMatrix4x4()),
     m_lightIntensity(lightIntensity)
 {
@@ -42,11 +42,11 @@ Light::Light(QVector4D lightPosition, QVector3D lightColor,float lightIntensity)
 
 }
 
-void Light::setPosition(float x, float y , float z)
+void Light::setPosition(float x, float y, float z)
 {
-    m_lightPosition = QVector4D(x, y ,z , 1.0);
+    m_lightPosition = QVector4D(x, y, z, 1.0);
     m_modelMatrix.setToIdentity();
-    m_modelMatrix.translate(x,y,z);
+    m_modelMatrix.translate(x, y, z);
 }
 
 void Light::translateX(float translationX)
@@ -54,7 +54,7 @@ void Light::translateX(float translationX)
     m_modelMatrix.translate(translationX, 0.0, 0.0);
 
     float currentPosition = m_lightPosition.x();
-    m_lightPosition.setX(currentPosition+translationX);
+    m_lightPosition.setX(currentPosition + translationX);
 }
 
 void Light::translateY(float translationY)
@@ -62,14 +62,14 @@ void Light::translateY(float translationY)
 
     m_modelMatrix.translate(0.0, translationY, 0.0);
     float currentPosition = m_lightPosition.y();
-    m_lightPosition.setY(currentPosition+translationY);
+    m_lightPosition.setY(currentPosition + translationY);
 }
 
 void Light::translateZ(float translationZ)
-{ 
+{
     m_modelMatrix.translate(0.0, 0.0, translationZ);
     float currentPosition = m_lightPosition.z();
-    m_lightPosition.setZ(currentPosition+translationZ);
+    m_lightPosition.setZ(currentPosition + translationZ);
 }
 
 QVector4D Light::getLightPosition() const

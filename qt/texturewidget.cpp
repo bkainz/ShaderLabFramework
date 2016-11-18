@@ -35,8 +35,8 @@ TextureWidget::TextureWidget(QWidget *parent) : QWidget(parent)
 
     //Put the line edit and the button in a layout
     QGridLayout *gridLayout = new QGridLayout();
-    gridLayout->addWidget(m_lineEdit,0,0);
-    gridLayout->addWidget(m_pushButton,0,1);
+    gridLayout->addWidget(m_lineEdit, 0, 0);
+    gridLayout->addWidget(m_pushButton, 0, 1);
 
     //Set the group box layout
     m_groupBox->setLayout(gridLayout);
@@ -53,7 +53,7 @@ TextureWidget::TextureWidget(QWidget *parent) : QWidget(parent)
 
 }
 
-TextureWidget::TextureWidget(QWidget *parent, QString textureName, bool isAShaderProgramUniform):
+TextureWidget::TextureWidget(QWidget *parent, QString textureName, bool isAShaderProgramUniform) :
     QWidget(parent), m_textureName(textureName), m_isAShaderProgramUniform(isAShaderProgramUniform)
 {
     //Create a group box with a line edit and a push button
@@ -63,8 +63,8 @@ TextureWidget::TextureWidget(QWidget *parent, QString textureName, bool isAShade
 
     //Put the line edit and the button in a layout
     QGridLayout *gridLayout = new QGridLayout();
-    gridLayout->addWidget(m_lineEdit,0,0);
-    gridLayout->addWidget(m_pushButton,0,1);
+    gridLayout->addWidget(m_lineEdit, 0, 0);
+    gridLayout->addWidget(m_pushButton, 0, 1);
 
     //Set the group box layout
     m_groupBox->setLayout(gridLayout);

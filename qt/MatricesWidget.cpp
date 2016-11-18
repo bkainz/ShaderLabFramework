@@ -26,69 +26,69 @@
 #include "MatricesWidget.h"
 #include "Matrix4x4Widget.h"
 
-MatricesWidget::MatricesWidget(QWidget *parent)  : QWidget(parent), ui(new Ui::MatricesWidget)
+MatricesWidget::MatricesWidget(QWidget *parent) : QWidget(parent), ui(new Ui::MatricesWidget)
 {
 
-	ui->setupUi(this);
-	m_ModelMatrix.setToIdentity();
-	m_ViewMatrix.setToIdentity();
-	m_ProjectionMatrix.setToIdentity();
+    ui->setupUi(this);
+    m_ModelMatrix.setToIdentity();
+    m_ViewMatrix.setToIdentity();
+    m_ProjectionMatrix.setToIdentity();
 
-	QHBoxLayout *vbox1 = new QHBoxLayout;
-	modelMatrixWidget = new Matrix4x4Widget(ui->ModelMatrixBox);
-	vbox1->addWidget(modelMatrixWidget);
-	ui->ModelMatrixBox->setLayout(vbox1);
+    QHBoxLayout *vbox1 = new QHBoxLayout;
+    modelMatrixWidget = new Matrix4x4Widget(ui->ModelMatrixBox);
+    vbox1->addWidget(modelMatrixWidget);
+    ui->ModelMatrixBox->setLayout(vbox1);
 
-	QHBoxLayout *vbox2 = new QHBoxLayout;
-	viewMatrixWidget = new Matrix4x4Widget(ui->ViewMatrixBox);
-	vbox2->addWidget(viewMatrixWidget);
-	ui->ViewMatrixBox->setLayout(vbox2);
+    QHBoxLayout *vbox2 = new QHBoxLayout;
+    viewMatrixWidget = new Matrix4x4Widget(ui->ViewMatrixBox);
+    vbox2->addWidget(viewMatrixWidget);
+    ui->ViewMatrixBox->setLayout(vbox2);
 
-	QHBoxLayout *vbox3= new QHBoxLayout;
-	projectionMatrixWidget = new Matrix4x4Widget(ui->ProjectionMatrixBox);
-	vbox3->addWidget(projectionMatrixWidget);
-	ui->ProjectionMatrixBox->setLayout(vbox3);
-	
-	connect(modelMatrixWidget, SIGNAL(matrixChanged(QMatrix4x4)), this, SIGNAL(modelMatrixChanged(QMatrix4x4)));
-	connect(viewMatrixWidget, SIGNAL(matrixChanged(QMatrix4x4)), this, SIGNAL(viewMatrixChanged(QMatrix4x4)));
-	connect(projectionMatrixWidget, SIGNAL(matrixChanged(QMatrix4x4)), this, SIGNAL(projectionMatrixChanged(QMatrix4x4)));
+    QHBoxLayout *vbox3 = new QHBoxLayout;
+    projectionMatrixWidget = new Matrix4x4Widget(ui->ProjectionMatrixBox);
+    vbox3->addWidget(projectionMatrixWidget);
+    ui->ProjectionMatrixBox->setLayout(vbox3);
+
+    connect(modelMatrixWidget, SIGNAL(matrixChanged(QMatrix4x4)), this, SIGNAL(modelMatrixChanged(QMatrix4x4)));
+    connect(viewMatrixWidget, SIGNAL(matrixChanged(QMatrix4x4)), this, SIGNAL(viewMatrixChanged(QMatrix4x4)));
+    connect(projectionMatrixWidget, SIGNAL(matrixChanged(QMatrix4x4)), this, SIGNAL(projectionMatrixChanged(QMatrix4x4)));
     connect(ui->m_resetButton, SIGNAL(clicked()), this, SIGNAL(resetMatrices()));
 }
 
 MatricesWidget::~MatricesWidget()
 {
-	delete ui;
+    delete ui;
 }
 
 void MatricesWidget::updateModelMatrix(QMatrix4x4 mat)
 {
-	modelMatrixWidget->updateSpinBoxes(mat);
+    modelMatrixWidget->updateSpinBoxes(mat);
 }
 
 void MatricesWidget::updateViewMatrix(QMatrix4x4 mat)
 {
-	viewMatrixWidget->updateSpinBoxes(mat);
-	//qDebug() << mat;
+    viewMatrixWidget->updateSpinBoxes(mat);
+    //qDebug() << mat;
 }
 
 void MatricesWidget::updateProjectionMatrix(QMatrix4x4 mat)
 {
-	projectionMatrixWidget->updateSpinBoxes(mat);
+    projectionMatrixWidget->updateSpinBoxes(mat);
 }
 
 void MatricesWidget::updateMatrices()
 {
-	//TODO
-	QMatrix4x4 m;
+    //TODO
+    QMatrix4x4 m;
     //m_scene->getCameraState()->getProjectionMatrix(m);
-	projectionMatrixWidget->updateSpinBoxes(m);
+    projectionMatrixWidget->updateSpinBoxes(m);
 
-	/*QMatrix4x4 m;
-	m_scene->getCameraState()->getModelMatrix(m);
-	modelMatrixWidget->updateSpinBoxes(m);
+    /*QMatrix4x4 m;
+    m_scene->getCameraState()->getModelMatrix(m);
+    modelMatrixWidget->updateSpinBoxes(m);
 
-	QMatrix4x4 m;
-	m_scene->getCameraState()->getViewMatrix(m);
-	viewMatrixWidget->updateSpinBoxes(m);*/
+    QMatrix4x4 m;
+    m_scene->getCameraState()->getViewMatrix(m);
+    viewMatrixWidget->updateSpinBoxes(m);*/
 }
 

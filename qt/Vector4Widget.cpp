@@ -29,7 +29,7 @@
 
 Vector4Widget::Vector4Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Vector4Widget)
 {
-	ui->setupUi(this);
+    ui->setupUi(this);
 
     connect(ui->a0_0, SIGNAL(valueChanged(double)), this, SLOT(updateVector(double)));
     connect(ui->a0_1, SIGNAL(valueChanged(double)), this, SLOT(updateVector(double)));
@@ -40,59 +40,59 @@ Vector4Widget::Vector4Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Vect
 
 Vector4Widget::~Vector4Widget()
 {
-	delete ui;
+    delete ui;
 }
 
 void Vector4Widget::set2D()
 {
-	ui->a0_0->setEnabled(true);
-	ui->a0_1->setEnabled(true);
-	ui->a0_2->setEnabled(false);
-	ui->a0_3->setEnabled(false);
+    ui->a0_0->setEnabled(true);
+    ui->a0_1->setEnabled(true);
+    ui->a0_2->setEnabled(false);
+    ui->a0_3->setEnabled(false);
 }
 
 void Vector4Widget::set3D()
 {
-	ui->a0_0->setEnabled(true);
-	ui->a0_1->setEnabled(true);
-	ui->a0_2->setEnabled(true);
-	ui->a0_3->setEnabled(false);
+    ui->a0_0->setEnabled(true);
+    ui->a0_1->setEnabled(true);
+    ui->a0_2->setEnabled(true);
+    ui->a0_3->setEnabled(false);
 }
 
 void Vector4Widget::set4D()
 {
-	ui->a0_0->setEnabled(true);
-	ui->a0_1->setEnabled(true);
-	ui->a0_2->setEnabled(true);
-	ui->a0_3->setEnabled(true);
+    ui->a0_0->setEnabled(true);
+    ui->a0_1->setEnabled(true);
+    ui->a0_2->setEnabled(true);
+    ui->a0_3->setEnabled(true);
 }
 
 void Vector4Widget::updateSpinBoxes(QVector4D vector)
 {
-	try
-	{ 
-		ui->a0_0->setValue(vector.x());
-		ui->a0_1->setValue(vector.y());
-		ui->a0_2->setValue(vector.z());
-		ui->a0_3->setValue(vector.w());
+    try
+    {
+        ui->a0_0->setValue(vector.x());
+        ui->a0_1->setValue(vector.y());
+        ui->a0_2->setValue(vector.z());
+        ui->a0_3->setValue(vector.w());
 
-		m_vector = vector;
-	}
-	catch (...)
-	{
-		qDebug() << "Handling exception not caught in slot.";
-	}
+        m_vector = vector;
+    }
+    catch (...)
+    {
+        qDebug() << "Handling exception not caught in slot.";
+    }
 
 }
 
 void Vector4Widget::updateVector(double val)
 {
-	m_vector.setX(ui->a0_0->value());
-	m_vector.setY(ui->a0_1->value());
-	m_vector.setZ(ui->a0_2->value());
-	m_vector.setW(ui->a0_3->value());
+    m_vector.setX(ui->a0_0->value());
+    m_vector.setY(ui->a0_1->value());
+    m_vector.setZ(ui->a0_2->value());
+    m_vector.setW(ui->a0_3->value());
 
-	emit(vectorChanged(m_vector));
+    emit(vectorChanged(m_vector));
 }
 
 

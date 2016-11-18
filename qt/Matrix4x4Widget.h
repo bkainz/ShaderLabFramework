@@ -31,26 +31,26 @@
 
 class Matrix4x4Widget : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Matrix4x4Widget(QWidget *parent = 0);
-	~Matrix4x4Widget();
+    Matrix4x4Widget(QWidget *parent = 0);
+    ~Matrix4x4Widget();
 
-	public slots: 
-        void updateSpinBoxes(QMatrix4x4 matrix);
-		void set3x3();
-		void set4x4();
+    public slots:
+    void updateSpinBoxes(QMatrix4x4 matrix);
+    void set3x3();
+    void set4x4();
 
-	private slots:
-        void updateMatrix();
+    private slots:
+    void updateMatrix();
 
-	signals:
-        void matrixChanged(QMatrix4x4 matrix);
+signals:
+    void matrixChanged(QMatrix4x4 matrix);
 
 private:
-	Ui::matrix4x4Widget *ui;
-	QMatrix4x4 m_matrix;
+    Ui::matrix4x4Widget *ui;
+    QMatrix4x4 m_matrix;
 
 };
 

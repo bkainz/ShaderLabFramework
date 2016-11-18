@@ -31,27 +31,27 @@
 
 class Vector4Widget : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Vector4Widget(QWidget *parent = 0);
-	~Vector4Widget();
+    Vector4Widget(QWidget *parent = 0);
+    ~Vector4Widget();
 
-	public slots: 
-        void updateSpinBoxes(QVector4D vector);
-		void set2D();
-		void set3D();
-		void set4D();
+    public slots:
+    void updateSpinBoxes(QVector4D vector);
+    void set2D();
+    void set3D();
+    void set4D();
 
-	private slots:
-        void updateVector(double val);
+    private slots:
+    void updateVector(double val);
 
-	signals:
-        void vectorChanged(QVector4D vector);
+signals:
+    void vectorChanged(QVector4D vector);
 
 private:
-	Ui::Vector4Widget *ui;
-	QVector4D m_vector;
+    Ui::Vector4Widget *ui;
+    QVector4D m_vector;
 
 };
 

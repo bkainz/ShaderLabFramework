@@ -34,32 +34,32 @@ class Matrix4x4Widget;
 
 class MatricesWidget : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
-    public:
-        MatricesWidget(QWidget *parent);
-		~MatricesWidget();
+public:
+    MatricesWidget(QWidget *parent);
+    ~MatricesWidget();
 
     private slots:
-        void updateModelMatrix(QMatrix4x4 mat);
-        void updateViewMatrix(QMatrix4x4 mat);
-        void updateProjectionMatrix(QMatrix4x4 mat);
-        void updateMatrices();
+    void updateModelMatrix(QMatrix4x4 mat);
+    void updateViewMatrix(QMatrix4x4 mat);
+    void updateProjectionMatrix(QMatrix4x4 mat);
+    void updateMatrices();
 
-    signals:
-        void modelMatrixChanged(QMatrix4x4 mat);
-        void viewMatrixChanged(QMatrix4x4 mat);
-        void projectionMatrixChanged(QMatrix4x4 mat);
-        void resetMatrices();
+signals:
+    void modelMatrixChanged(QMatrix4x4 mat);
+    void viewMatrixChanged(QMatrix4x4 mat);
+    void projectionMatrixChanged(QMatrix4x4 mat);
+    void resetMatrices();
 
-    private:
-        Ui::MatricesWidget *ui;
-        QMatrix4x4 m_ModelMatrix;
-        QMatrix4x4 m_ViewMatrix;
-        QMatrix4x4 m_ProjectionMatrix;
-        Matrix4x4Widget* projectionMatrixWidget;
-        Matrix4x4Widget* viewMatrixWidget;
-        Matrix4x4Widget* modelMatrixWidget;
+private:
+    Ui::MatricesWidget *ui;
+    QMatrix4x4 m_ModelMatrix;
+    QMatrix4x4 m_ViewMatrix;
+    QMatrix4x4 m_ProjectionMatrix;
+    Matrix4x4Widget* projectionMatrixWidget;
+    Matrix4x4Widget* viewMatrixWidget;
+    Matrix4x4Widget* modelMatrixWidget;
 };
 
 #endif

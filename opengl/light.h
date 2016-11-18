@@ -34,25 +34,25 @@
 
 class Light
 {
-    public:
-        Light();
-        Light(QVector4D lightPosition, QVector3D lightColor, float lightIntensity);
-        void setPosition(float x, float y , float z);
-        void translateX(float translationX);
-        void translateY(float translationY);
-        void translateZ(float translationZ);
+public:
+    Light();
+    Light(QVector4D lightPosition, QVector3D lightColor, float lightIntensity);
+    void setPosition(float x, float y, float z);
+    void translateX(float translationX);
+    void translateY(float translationY);
+    void translateZ(float translationZ);
 
-        void computeSpectrumRGB();
+    void computeSpectrumRGB();
 
-        QVector4D getLightPosition() const;    
-        QMatrix4x4 getModelMatrix() const;
+    QVector4D getLightPosition() const;
+    QMatrix4x4 getModelMatrix() const;
 
 
-    private:
-        QVector4D m_lightPosition;
-        QVector3D m_lightColor;
-        QMatrix4x4 m_modelMatrix;
-        float m_lightIntensity;
+private:
+    QVector4D m_lightPosition;
+    QVector3D m_lightColor;
+    QMatrix4x4 m_modelMatrix;
+    float m_lightIntensity;
 };
 
 #endif // LIGHT_H

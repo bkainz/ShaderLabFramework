@@ -28,17 +28,17 @@
 
 using namespace std;
 
-Texture::Texture(): m_textureId(0), m_filePath(""), m_width(0), m_height(0), m_numberOfComponents(0), m_isTextureLoaded(false)
+Texture::Texture() : m_textureId(0), m_filePath(""), m_width(0), m_height(0), m_numberOfComponents(0), m_isTextureLoaded(false)
 {
 
 }
 
-Texture::Texture(string filePath): m_textureId(0), m_filePath(filePath), m_width(0), m_height(0), m_numberOfComponents(0), m_isTextureLoaded(false)
+Texture::Texture(string filePath) : m_textureId(0), m_filePath(filePath), m_width(0), m_height(0), m_numberOfComponents(0), m_isTextureLoaded(false)
 {
 
 }
 
-Texture::Texture(int width, int height, int numberOfcomponents): m_textureId(0), m_filePath(string("")), m_width(width), m_height(height), m_numberOfComponents(numberOfcomponents), m_isTextureLoaded(false)
+Texture::Texture(int width, int height, int numberOfcomponents) : m_textureId(0), m_filePath(string("")), m_width(width), m_height(height), m_numberOfComponents(numberOfcomponents), m_isTextureLoaded(false)
 {
 
 }
@@ -51,7 +51,7 @@ Texture::~Texture()
 void Texture::loadEmptyTexture_8UC3()
 {
     //remove an eventual previous picture from the memory
-    if(glIsTexture(m_textureId) == GL_TRUE)
+    if (glIsTexture(m_textureId) == GL_TRUE)
     {
         glDeleteTextures(1, &m_textureId);
     }
@@ -63,7 +63,7 @@ void Texture::loadEmptyTexture_8UC3()
     glBindTexture(GL_TEXTURE_2D, m_textureId);
 
     //Allocate memory for a width*height texture but without data
-    glTexImage2D(GL_TEXTURE_2D , 0, GL_RGB, m_width, m_height, 0, GL_RGB, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_width, m_height, 0, GL_RGB, GL_FLOAT, NULL);
 
     //Smooth close textures
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -79,7 +79,7 @@ void Texture::loadEmptyTexture_8UC3()
 void Texture::loadEmptyTexture_32FC3()
 {
     //remove an eventual previous picture from the memory
-    if(glIsTexture(m_textureId) == GL_TRUE)
+    if (glIsTexture(m_textureId) == GL_TRUE)
     {
         glDeleteTextures(1, &m_textureId);
     }
@@ -91,7 +91,7 @@ void Texture::loadEmptyTexture_32FC3()
     glBindTexture(GL_TEXTURE_2D, m_textureId);
 
     //Allocate memory for a width*height texture but without data
-    glTexImage2D(GL_TEXTURE_2D , 0, GL_RGB32F, m_width, m_height, 0, GL_RGB, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, m_width, m_height, 0, GL_RGB, GL_FLOAT, NULL);
 
     //Smooth close textures
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -119,7 +119,7 @@ bool Texture::load_8UC3()
     QImage texture = QImage(imagePath);
 
     //If the texture cannot be loaded
-    if(texture.isNull())
+    if (texture.isNull())
     {
         cout << "Could not load the texture : " << QDir::currentPath().toStdString() + m_filePath << endl;
         return false;
@@ -158,8 +158,8 @@ bool Texture::load_8UC3()
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
         //Repeat the texture
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
         //Unbind
         glBindTexture(GL_TEXTURE_2D, 0);
@@ -182,7 +182,7 @@ GLuint Texture::getTextureId() const
 
 float Texture::getAspectRatio() const
 {
-    return (float)m_width/(float)m_height;
+    return (float)m_width / (float)m_height;
 }
 
 int Texture::getWidth() const
