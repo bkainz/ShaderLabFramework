@@ -73,8 +73,18 @@ make
 - search function in code editor
 - some random bug in the screenshot function
 
-## Examples
+## Examples implemented using the ShaderLabFramework
 
+### Gouraud shading
 <img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/3a.jpg" alt="Gouraud shading" width="250"/>
+
+### Phong shading
+<img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/3b.jpg" alt="Phong shading" width="250"/>
+
+### Toon shading
+<img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/3c.jpg" alt="Toon shading" width="250"/>
+
+### Blinn-Phong shading
+<img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/3d.jpg" alt="Blinn-Phong shading" width="250"/>
 
 
