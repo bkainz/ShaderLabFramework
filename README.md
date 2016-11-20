@@ -87,4 +87,21 @@ make
 ### Blinn-Phong shading
 <img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/3d.jpg" alt="Blinn-Phong shading" width="250"/>
 
+### Geometry subdivision
+<img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/4alevel0.jpg" alt="Geometry subdivision level 0" width="250"/>
+<img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/4alevel2.jpg" alt="Geometry subdivision level 2" width="250"/>
+
+### Texture 
+<img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/6a1.jpg" alt="Texture" width="250"/>
+<img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/6a2.jpg" alt="Texture" width="250"/>
+
+### Bump mapping 
+<img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/6b.jpg" alt="Bump mapping" width="250"/>
+
+### Render-to-texture, screen aligned image plane shading
+<img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/6c.jpg" alt="image-based blur" width="250"/>
+
+### Simple ray tracing
+<img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/7a.jpg" alt="Simple ray tracing" width="250"/>
+<img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/7b_50MCrays.jpg" alt="Simple monte-carlo ray tracing" width="250"/>
 
