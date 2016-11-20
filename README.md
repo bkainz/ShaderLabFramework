@@ -75,6 +75,6 @@ make
 
 ## Examples
 
-![Gouraud shading](https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/3a.jpg "Gouraud shading")
+![Gouraud shading](https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/3a.jpg "Gouraud shading" = 400x)
 
 
