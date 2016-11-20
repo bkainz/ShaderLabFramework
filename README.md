@@ -2,7 +2,7 @@
 
 ShaderLab is a teaching tool to solidify the fundamentals of Computer Graphics. The ShaderLab framework is based on Qt5, CMake, OpenGL 4.0, and GLSL and allows the student to modify GLSL shaders in an IDE-like environment. The framework is able to render shaded polyhedral geometry (.off/.obj), supports image-based post-processing, and  allows to implement simple ray-tracing algorithms. This tool will be intensively tested by 140 [Imperial College London CO317 Computer Graphics](http://wp.doc.ic.ac.uk/bkainz/teaching/co317-computer-graphics/) students in Spring 2017.
 
-![alt text](http://wp.doc.ic.ac.uk/bkainz/wp-content/uploads/sites/97/2016/11/ShaderLab-768x800.png "ShaderLab framework")
+![HSaderLabFramework overview](http://wp.doc.ic.ac.uk/bkainz/wp-content/uploads/sites/97/2016/11/ShaderLab-768x800.png "ShaderLab framework")
 
 
 Copyright (c) 2016 Bernhard Kainz, Antoine S Toisoul
@@ -72,4 +72,9 @@ make
 ## TODO:
 - search function in code editor
 - some random bug in the screenshot function
+
+## Examples
+
+![Gouraud shading](https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/3a.jpg "Gouraud shading")
+
 
