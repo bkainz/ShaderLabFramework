@@ -75,6 +75,6 @@ make
 
 ## Examples
 
-<img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/3a.jpg" alt="Gouraud shading" style="width: 400px;"/>
+<img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/3a.jpg" alt="Gouraud shading" width="250"/>
 
 
