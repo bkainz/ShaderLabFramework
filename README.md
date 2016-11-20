@@ -98,7 +98,7 @@ make
 ### Bump mapping 
 <img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/6b.jpg" alt="Bump mapping" width="250"/>
 
-### Render-to-texture, screen aligned image plane shading
+### Render-to-texture, screen aligned image plane shading (simple blur example)
 <img src="https://www.doc.ic.ac.uk/~bkainz/teaching/CO317/6c.jpg" alt="image-based blur" width="250"/>
 
 ### Simple ray tracing
