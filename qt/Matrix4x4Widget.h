@@ -37,6 +37,12 @@ public:
     Matrix4x4Widget(QWidget *parent = 0);
     ~Matrix4x4Widget();
 
+    /**
+     * Sets the order in which the spin boxes are selected when pressing tab.
+     * @brief setTabKeyboardOrder
+     */
+    void setTabKeyboardOrder();
+
     public slots:
     void updateSpinBoxes(QMatrix4x4 matrix);
     void set3x3();
