@@ -31,6 +31,8 @@ Matrix4x4Widget::Matrix4x4Widget(QWidget *parent) : QWidget(parent), ui(new Ui::
     ui->setupUi(this);
     m_matrix.setToIdentity();
 
+    this->setTabKeyboardOrder();
+
     connect(ui->a0_0, SIGNAL(editingFinished()), this, SLOT(updateMatrix()));
     connect(ui->a0_1, SIGNAL(editingFinished()), this, SLOT(updateMatrix()));
     connect(ui->a0_2, SIGNAL(editingFinished()), this, SLOT(updateMatrix()));
@@ -143,4 +145,30 @@ void Matrix4x4Widget::updateMatrix()
     emit(matrixChanged(m_matrix));
 }
 
+
+/**
+ * Sets the order in which the spin boxes are selected when pressing tab.
+ * @brief setTabKeyboardOrder
+ */
+void Matrix4x4Widget::setTabKeyboardOrder()
+{
+    this->setTabOrder(ui->a0_0, ui->a0_1);
+    this->setTabOrder(ui->a0_1, ui->a0_2);
+    this->setTabOrder(ui->a0_2, ui->a0_3);
+    this->setTabOrder(ui->a0_3, ui->a1_0);
+
+    this->setTabOrder(ui->a1_0, ui->a1_1);
+    this->setTabOrder(ui->a1_1, ui->a1_2);
+    this->setTabOrder(ui->a1_2, ui->a1_3);
+    this->setTabOrder(ui->a1_3, ui->a2_0);
+
+    this->setTabOrder(ui->a2_0, ui->a2_1);
+    this->setTabOrder(ui->a2_1, ui->a2_2);
+    this->setTabOrder(ui->a2_2, ui->a2_3);
+    this->setTabOrder(ui->a2_3, ui->a3_0);
+
+    this->setTabOrder(ui->a3_0, ui->a3_1);
+    this->setTabOrder(ui->a3_1, ui->a3_2);
+    this->setTabOrder(ui->a3_2, ui->a3_3);
+}
 
