@@ -415,6 +415,7 @@ void CGlSlHighlighter::setupBuiltInFunctions(void)
         << "\\bmatrixCompMult\\b"
         << "\\bouterProduct\\b"
         << "\\btranspose\\b"
+        << "\\binverse\\b"
         // vectors
         << "\\blessThan\\b"
         << "\\blessThanEqual\\b"
