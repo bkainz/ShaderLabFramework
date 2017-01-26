@@ -56,16 +56,18 @@ QString GLSLEditorWidget::removeQtDefines(QString sourceCode)
         if (pos != -1)
         {
             sourceCode.remove(pos, defines[i].length());
+            
+            pos = sourceCode.indexOf('\n', pos);
+
+			// If the removal of QtDefine leaves empty lines
+			// remove the \n
+			if (pos != -1)
+			{
+				sourceCode.remove(pos, 1);
+			}
         }
 
-        pos = sourceCode.indexOf('\n');
-
-        if (pos != -1)
-        {
-            sourceCode.remove(pos, 1);
-        }
     }
-
 
     return sourceCode;
 }
