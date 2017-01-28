@@ -88,7 +88,7 @@ protected:
     void loadFile(QString &fileName);
     bool save();
     bool saveFile(const QString &fileName);
-    bool savePipeline(const QString &fileName);
+    bool savePipeline(QString &fileName);
     void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
 
 private:
