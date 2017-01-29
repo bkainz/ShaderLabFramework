@@ -55,15 +55,6 @@ GLSLEditorWindow::GLSLEditorWindow(QGLShaderProgram* sProgram, QGLShaderProgram*
     connect(ui->actionSave_As_, SIGNAL(triggered()), this, SLOT(saveAs()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(about()));
     connect(ui->actionExit_Ctrl_X, SIGNAL(triggered()), this, SLOT(exitApplicationAction()));
-    
-    // Add keyboard shortcuts. They are connected automatically.
-    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S), this, SLOT(savePipelineAction()));
-    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Shift + Qt::Key_S), this, SLOT(savePipelineAsAction()));
-    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_L), this, SLOT(loadPipeline()));
-    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Alt + Qt::Key_L), this, SLOT(loadFromFileAction()));
-    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Alt + Qt::Key_S), this, SLOT(saveToFileAction()));
-    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Alt + Qt::Key_Shift + Qt::Key_S), this, SLOT(saveAs()));
-    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_X), this, SLOT(exitApplicationAction()));
 
     //connect(textEdit->document(), &QTextDocument::contentsChanged,
     //	this, &MainWindow::documentWasModified);
