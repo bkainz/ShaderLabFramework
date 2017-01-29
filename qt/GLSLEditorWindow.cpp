@@ -55,6 +55,8 @@ GLSLEditorWindow::GLSLEditorWindow(QGLShaderProgram* sProgram, QGLShaderProgram*
     connect(ui->actionSave_As_, SIGNAL(triggered()), this, SLOT(saveAs()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(about()));
     connect(ui->actionExit_Ctrl_X, SIGNAL(triggered()), this, SLOT(exitApplicationAction()));
+    
+    new QShortcut(QKeySequence(Qt::Key_F3), this, SLOT(savePipelineAction()));
 
     //connect(textEdit->document(), &QTextDocument::contentsChanged,
     //	this, &MainWindow::documentWasModified);
