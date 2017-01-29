@@ -33,6 +33,7 @@
 #include <QSettings>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QShortcut>
 
 GLSLEditorWindow::GLSLEditorWindow(QGLShaderProgram* sProgram, QGLShaderProgram* dsProgram, QWidget *parent) :
     QMainWindow(parent), ui(new Ui::GLSLEditorWindow)
@@ -45,6 +46,7 @@ GLSLEditorWindow::GLSLEditorWindow(QGLShaderProgram* sProgram, QGLShaderProgram*
     readSettings();
 
     setupTabs();
+    
     connect(ui->actionSave_pipeline, SIGNAL(triggered()), this, SLOT(savePipelineAction()));
     connect(ui->actionSave_pipeline_As, SIGNAL(triggered()), this, SLOT(savePipelineAsAction()));
     connect(ui->actionLoad_pipeline, SIGNAL(triggered()), this, SLOT(loadPipeline()));
@@ -53,6 +55,8 @@ GLSLEditorWindow::GLSLEditorWindow(QGLShaderProgram* sProgram, QGLShaderProgram*
     connect(ui->actionSave_As_, SIGNAL(triggered()), this, SLOT(saveAs()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(about()));
     connect(ui->actionExit_Ctrl_X, SIGNAL(triggered()), this, SLOT(exitApplicationAction()));
+    
+    new QShortcut(QKeySequence(Qt::Key_F3), this, SLOT(savePipelineAction()));
 
     //connect(textEdit->document(), &QTextDocument::contentsChanged,
     //	this, &MainWindow::documentWasModified);
@@ -403,7 +407,7 @@ bool GLSLEditorWindow::savePipelineAction()
 
 }
 
-bool GLSLEditorWindow::savePipeline(const QString& fileName)
+bool GLSLEditorWindow::savePipeline(QString& fileName)
 {
     GLSLEditorWidget* vertexEditor = static_cast<GLSLEditorWidget*>(ui->EditorTabWidget->widget(0));
     GLSLEditorWidget* geomEditor = static_cast<GLSLEditorWidget*>(ui->EditorTabWidget->widget(1));
@@ -411,6 +415,15 @@ bool GLSLEditorWindow::savePipeline(const QString& fileName)
     GLSLEditorWidget* R2TVertEditor = static_cast<GLSLEditorWidget*>(ui->EditorTabWidget->widget(3));
     GLSLEditorWidget* T2TFragEditor = static_cast<GLSLEditorWidget*>(ui->EditorTabWidget->widget(4));
 
+    // Make sure the fileName has the correct extension
+    if (!fileName.endsWith(QString(".xml"))) {
+        fileName.append(QString(".xml"));
+    }
+    
+    QString text = QString("Saving pipeline to %1").arg(fileName);
+    emit updateLog(text);
+    emit displayLog();
+    
     if (fileName.isEmpty())
     {
         pipelineFileName = QFileDialog::getSaveFileName(this,
@@ -488,7 +501,7 @@ bool GLSLEditorWindow::savePipeline(const QString& fileName)
 bool GLSLEditorWindow::loadPipeline()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Save Pipeline"), "",
+        tr("Load Pipeline"), "",
         tr("XML file (*.xml);; All Files (*)"));
 
     if (!fileName.isEmpty())
@@ -536,6 +549,7 @@ bool GLSLEditorWindow::loadPipeline()
         //Close the document
         xmlDocument.close();
     }
+    pipelineFileName = fileName;
     return true;
 }
 
