@@ -153,24 +153,24 @@ out data\n\
   vec3 normal_camSpace;\n\
   vec2 textureCoordinate;\n\
   vec4 color;\n\
-}vertexIn;\n\
+}vertexInOut;\n\
 \n\
 //Vertex shader compute the vectors per vertex\n\
 void main(void)\n\
 {\n\
   //Put the vertex in the correct coordinate system by applying the model view matrix\n\
   vec4 vertex_camSpace = mvMatrix*vertex_worldSpace; \n\
-  vertexIn.position_camSpace = vertex_camSpace;\n\
+  vertexInOut.position_camSpace = vertex_camSpace;\n\
   \n\
   //Apply the model-view transformation to the normal (only rotation, no translation)\n\
   //Normals put in the camera space\n\
-  vertexIn.normal_camSpace = normalize(normalMatrix*normal_worldSpace);\n\
+  vertexInOut.normal_camSpace = normalize(normalMatrix*normal_worldSpace);\n\
   \n\
   //Color chosen as red\n\
-  vertexIn.color = vec4(1.0, 0.0, 0.0, 1.0);\n\
+  vertexInOut.color = vec4(1.0, 0.0, 0.0, 1.0);\n\
   \n\
   //Texture coordinate\n\
-  vertexIn.textureCoordinate = textureCoordinate_input;\n\
+  vertexInOut.textureCoordinate = textureCoordinate_input;\n\
   \n\
   gl_Position = pMatrix * vertex_camSpace;\n\
 }");
