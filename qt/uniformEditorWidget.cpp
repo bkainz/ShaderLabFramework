@@ -580,7 +580,9 @@ QList<UniformEditorWidget::mUniform> UniformEditorWidget::parseUniformsFromSourc
             uniform.name == QString("diffuseCoefficient") || uniform.name == QString("specularCoefficient") ||
             uniform.name == QString("textureRendered") || uniform.name == QString("ambient") ||
             uniform.name == QString("diffuse") || uniform.name == QString("specular") ||
-            uniform.name == QString("shininess") || uniform.name == QString("time"))
+            uniform.name == QString("shininess") || 
+            uniform.name == QString("ambientCoefficent") || uniform.name == QString("diffuseCoefficent") ||
+            uniform.name == QString("specularCoefficent") ||  uniform.name == QString("time"))
         {
             continue;
         }

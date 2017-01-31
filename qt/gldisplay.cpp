@@ -445,6 +445,9 @@ void GLDisplay::sendObjectDataToShaders(Object &object)
     m_shaderProgram->setUniformValue("diffuse", material.getDiffuseColor());
     m_shaderProgram->setUniformValue("specular", material.getSpecularColor());
     m_shaderProgram->setUniformValue("shininess", material.getShininess());
+    m_shaderProgram->setUniformValue("ambientCoefficent", material.getAmbientCoefficient());
+    m_shaderProgram->setUniformValue("diffuseCoefficent", material.getDiffuseCoefficient());
+    m_shaderProgram->setUniformValue("specularCoefficent", material.getSpecularCoefficient());
 
     for (int i = 0; i < m_texturesShaderProgram.size(); ++i)
     {
