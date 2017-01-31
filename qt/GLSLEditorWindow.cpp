@@ -143,6 +143,11 @@ uniform mat3 normalMatrix; //mv matrix without translation\n\
 \n\
 uniform vec4 lightPosition_camSpace; //light Position in camera space\n\
 \n\
+uniform vec4 ambient;\n\
+uniform vec4 diffuse;\n\
+uniform vec4 specular;\n\
+uniform float shininess;\n\
+\n\
 in vec4 vertex_worldSpace;\n\
 in vec3 normal_worldSpace;\n\
 in vec2 textureCoordinate_input;\n\
