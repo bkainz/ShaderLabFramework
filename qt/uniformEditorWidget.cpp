@@ -577,7 +577,6 @@ QList<UniformEditorWidget::mUniform> UniformEditorWidget::parseUniformsFromSourc
         if (uniform.name == QString("mvMatrix") || uniform.name == QString("pMatrix") ||
             uniform.name == QString("normalMatrix") || uniform.name == QString("lightPosition_camSpace") ||
             uniform.name == QString("diffuseColor") || uniform.name == QString("specularColor") ||
-            uniform.name == QString("diffuseCoefficient") || uniform.name == QString("specularCoefficient") ||
             uniform.name == QString("textureRendered") || uniform.name == QString("ambient") ||
             uniform.name == QString("diffuse") || uniform.name == QString("specular") ||
             uniform.name == QString("shininess") || 
