@@ -8,3 +8,5 @@ shaderlabframework: clean
 
 clean:
 	$(RM) -r build ShaderLabFramework
+
+.PHONY: all clean
