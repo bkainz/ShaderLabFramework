@@ -1,5 +1,8 @@
 all: shaderlabframework
 
+run: shaderlabframework
+	./ShaderLabFramework
+
 shaderlabframework: clean
 	mkdir -p build
 	cd build && cmake ..
