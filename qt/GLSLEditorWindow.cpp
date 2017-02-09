@@ -192,6 +192,8 @@ uniform mat3 normalMatrix; //mv matrix without translation\n\
 \n\
 uniform vec4 lightPosition_camSpace; //light Position in camera space\n\
 \n\
+uniform int time;\n\
+\n\
 in data\n\
 {\n\
   vec4 position_camSpace;\n\
