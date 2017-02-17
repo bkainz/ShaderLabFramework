@@ -89,10 +89,10 @@
   </action>
   <action name="actionSave">
    <property name="text">
-    <string>Save Shader (Crtl-U)</string>
+    <string>Save Shader (Ctrl-U)</string>
    </property>
    <property name="toolTip">
-    <string>&amp;Save (Crtl-U)</string>
+    <string>&amp;Save (Ctrl-U)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+U</string>
