@@ -8,7 +8,8 @@ Antoine Toisoul, Daniel Rueckert, Bernhard Kainz, Accessible GLSL Shader Program
 YouTube Video:
 
 <p align="center">
-  <a href="https://www.youtube.com/watch?v=aa_S3yeqWZk">EG educational 2017 fast forward
+  <a href="https://www.youtube.com/watch?v=aa_S3yeqWZk">EG educational 2017 fast forward 
+  <p>
   <img src="https://img.youtube.com/vi/aa_S3yeqWZk/0.jpg"></a>
 </p>
 
