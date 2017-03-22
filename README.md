@@ -1,6 +1,10 @@
 # This is the Computer Graphics Shader Lab Framework.
 
-The Shader Lab Framework is a teaching tool to solidify the fundamentals of Computer Graphics. The ShaderLab framework is based on Qt5, CMake, OpenGL 4.0, and GLSL and allows the student to modify GLSL shaders in an IDE-like environment. The framework is able to render shaded polyhedral geometry (.off/.obj), supports image-based post-processing, and  allows to implement simple ray-tracing algorithms. This tool will be intensively tested by 140 [Imperial College London CO317 Computer Graphics](http://wp.doc.ic.ac.uk/bkainz/teaching/co317-computer-graphics/) students in Spring 2017.
+The Shader Lab Framework is a teaching tool to solidify the fundamentals of Computer Graphics. The ShaderLab framework is based on Qt5, CMake, OpenGL 4.0, and GLSL and allows the student to modify GLSL shaders in an IDE-like environment. The framework is able to render shaded polyhedral geometry (.off/.obj), supports image-based post-processing, and  allows to implement simple ray-tracing algorithms. This tool has been intensively tested by 140 [Imperial College London CO317 Computer Graphics](http://wp.doc.ic.ac.uk/bkainz/teaching/co317-computer-graphics/) students in Spring 2017 and will continue to serve as basis framework for our coursework.
+
+A comprehensive overview over out Computer Graphics course using ShaderLabFramework has been accepted for the EG 2017 educational track:
+Antoine Toisoul, Daniel Rueckert, Bernhard Kainz, Accessible GLSL Shader Programming, to appear in Proc. EuroGraphics 2017, 2017
+[![EG educational 2017 fast forward](https://img.youtube.com/vi/eAdIVPwXQsw/0.jpg)]
 
 ![HSaderLabFramework overview](http://wp.doc.ic.ac.uk/bkainz/wp-content/uploads/sites/97/2016/11/ShaderLab-768x800.png "ShaderLab framework")
 
