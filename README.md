@@ -13,9 +13,12 @@ YouTube Video:
   <img src="https://img.youtube.com/vi/aa_S3yeqWZk/0.jpg"></a>
 </p>
 
+## SaderLabFramework overview
+
 ![HSaderLabFramework overview](http://wp.doc.ic.ac.uk/bkainz/wp-content/uploads/sites/97/2016/11/ShaderLab-768x800.png "ShaderLab framework")
 
 
+## License
 
 Copyright (c) 2016 Bernhard Kainz, Antoine S Toisoul
 (b.kainz@imperial.ac.uk, antoine.toisoul13@imperial.ac.uk)
