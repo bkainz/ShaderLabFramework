@@ -7,9 +7,8 @@ Antoine Toisoul, Daniel Rueckert, Bernhard Kainz, Accessible GLSL Shader Program
 
 YouTube Video:
 
-<p align="center">
 [![EG educational 2017 fast forward](https://img.youtube.com/vi/aa_S3yeqWZk/0.jpg)](https://www.youtube.com/watch?v=aa_S3yeqWZk)
-</p>
+
 
 ![HSaderLabFramework overview](http://wp.doc.ic.ac.uk/bkainz/wp-content/uploads/sites/97/2016/11/ShaderLab-768x800.png "ShaderLab framework")
 
