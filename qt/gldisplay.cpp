@@ -44,6 +44,7 @@ m_wireframe(false), m_backFaceCulling(false), m_renderCoordinateFrame(false)
 
     m_timer.start(1000.0 / MAX_FPS);
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(updateOpenGL()));
+    shaderProgramNeedsLink = true;
 }
 
 /*
@@ -260,9 +261,6 @@ void GLDisplay::renderCoordinateFrame()
 void GLDisplay::renderScene()
 {
     //Switch to the regular shader program to render the objects
-
-    //weired! TODO - investigate have to link here to get the right context
-    m_shaderProgram->link();
     m_shaderProgram->bind();
 
     /*---Camera and matrices---*/
@@ -348,6 +346,7 @@ void GLDisplay::renderScene()
 
     m_shaderProgram->release();
 }
+
 
 void GLDisplay::linkShaderProgram()
 {

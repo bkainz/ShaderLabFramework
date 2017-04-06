@@ -191,7 +191,6 @@ protected:
 private:
     void renderText(double x, double y, const QString &str, const QFont & font = QFont());
    
-
     //Framebuffer for highres rendering
     FrameBuffer* m_framebuffer;
     FrameBuffer* m_framebufferFinalResult;
@@ -232,6 +231,7 @@ private:
     GLSLEditorWindow* shaderEditor;
 
     QOpenGLFunctions *f;
+    bool shaderProgramNeedsLink;
 };
 
 #endif // GLDISPLAY_H

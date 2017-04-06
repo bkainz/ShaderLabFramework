@@ -77,7 +77,7 @@ void MainWindow::updateUniformTab()
     {
         m_uniformEditor = new UniformEditorWidget(
             ui->m_GLWidget->getShaderProgram(), ui->m_GLWidget->getShaderDisplayProgram(),
-            ui->m_GLWidget->context(), this);
+            ui->m_GLWidget->context(), this, ui->m_GLWidget);
 
         QHBoxLayout* uniformHBoxLayout = new QHBoxLayout(ui->m_uniformsTab);
         uniformHBoxLayout->addWidget(m_uniformEditor);

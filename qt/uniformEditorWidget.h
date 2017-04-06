@@ -39,7 +39,7 @@ class UniformEditorWidget : public QWidget
 
 public:
     UniformEditorWidget(QGLShaderProgram* sProgram, QGLShaderProgram* dsProgram,
-        QOpenGLContext* glContext, QWidget *parent);
+        QOpenGLContext* glContext, QWidget *parent, QOpenGLWidget* glWidget);
     ~UniformEditorWidget();
 
     //enum uniformType { BOOL, INT, UINT, FLOAT, DOUBLE, VEC2, VEC3, VEC4, MAT3, MAT4, SAMPLER};
@@ -111,12 +111,14 @@ signals:
     void textureBrowse(QString, bool);
 
     void updateShaderProgram();
+    void updateUniformsSignal();
 
 private:
     void updateEditorWidget();
     QList<mUniform> parseUniformsFromSource(QString sourceCode);
 
     Ui::UniformEditorWidget* ui;
+    QOpenGLWidget* m_glWidget;
     QGLShaderProgram* m_shaderProgram;
     QGLShaderProgram* m_shaderProgramDisplay;
     QList<mUniform> m_shaderProgramUserUniforms; //List of uniforms in the shader program
