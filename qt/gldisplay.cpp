@@ -102,15 +102,6 @@ void GLDisplay::initializeGL()
 
     shaderEditor->show();
 
-    //Initialisation of GLEW
- /*   GLenum glewError = glewInit();
-
-    if (glewError != GLEW_OK)
-    {
-        QString error = QString("Error in GLEW initialisation\n\n");
-        updateLog(error);
-    }*/
-
     m_scene = new Scene(string("teapot")); //Initialise with the teapot
 
     this->loadTexturesAndFramebuffers();

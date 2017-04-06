@@ -32,7 +32,6 @@
 #include <QApplication>
 #include <QImage>
 
-//Load GLEW before QGLWidget otherwise does not compile
 #include "opengl/openglheaders.h"
 #include <QGLWidget>
 
