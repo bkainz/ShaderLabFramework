@@ -358,7 +358,7 @@ void GLSLEditorWindow::compileAndLink()
 
     //TODO needs to be done in context widget??
     linkShader();
-
+    emit(updateShaderProgram());
     //static_cast<QGLWidget*>(this->parent())->update();
 }
 

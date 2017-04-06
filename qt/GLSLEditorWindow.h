@@ -65,10 +65,16 @@ signals:
     void displayLog();
 
     /**
-    * Updated the uniform tab in mainwindow.
+    * Update the uniform tab in mainwindow.
     * @brief updateUniformWiget
     */
     void updateUniformTab();
+
+    /**
+    * Link the shaderprogram in mainwindow.
+    * @brief updateUniformWiget
+    */
+    void updateShaderProgram();
 
     public slots:
     void compileAndLink();

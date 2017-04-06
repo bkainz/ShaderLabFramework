@@ -92,6 +92,7 @@ void GLDisplay::initializeGL()
     connect(shaderEditor, SIGNAL(updateLog(QString)), this, SIGNAL(updateLog(QString)));
     connect(shaderEditor, SIGNAL(displayLog()), this, SIGNAL(displayLog()));
     connect(shaderEditor, SIGNAL(updateUniformTab()), this, SIGNAL(updateUniformTab()));
+    connect(shaderEditor, SIGNAL(updateShaderProgram()), this, SLOT(linkShaderProgram()));
 
     shaderEditor->loadDefaultShaders();
 
@@ -268,7 +269,6 @@ void GLDisplay::renderCoordinateFrame()
 void GLDisplay::renderScene()
 {
     //Switch to the regular shader program to render the objects
-    m_shaderProgram->link();
     m_shaderProgram->bind();
 
     /*---Camera and matrices---*/
@@ -355,12 +355,38 @@ void GLDisplay::renderScene()
     m_shaderProgram->release();
 }
 
+void GLDisplay::linkShaderProgram()
+{
+    bool displayShaderValid = false;
+    if (!m_shaderProgramDisplay->link())
+    {
+        QString error = m_shaderProgramDisplay->log();
+        emit updateLog(error);
+        emit displayLog();
+    }
+    else
+    {
+        displayShaderValid = true;
+    }
+
+    if (!m_shaderProgram->link())
+    {
+        QString error = m_shaderProgram->log();
+        emit updateLog(error);
+        emit displayLog();
+    }
+    else
+    {
+        if (displayShaderValid) {
+            emit(updateUniformTab());
+        }
+    }
+}
+
 void GLDisplay::renderToTexture(const int textureId, bool isSimplifiedPipeline)
 {
     //Switch to the display shader
     //Always bind before sending the textures to the shader
-    //weired TODO
-    m_shaderProgramDisplay->link();
     if (!m_shaderProgramDisplay->bind())
         cout << "m_shaderProgramDisplay not bound" << endl;
 

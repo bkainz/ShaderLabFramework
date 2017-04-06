@@ -163,6 +163,7 @@ signals:
     void takeScreenshot();
     void resetMatrices();
     void updateMaterial(int objectID, Material material);
+    void linkShaderProgram();
 
     /**
      * Slot to select a texture file and use it in a shader.
