@@ -26,20 +26,9 @@
 #ifndef OPENGLHEADERS_H
 #define OPENGLHEADERS_H
 
-#ifdef _WIN32
 //#include <GL/glew.h>
 #include <QtOpenGL>
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
-#endif
-
-#ifdef __gnu_linux__
-#include <GL/glew.h>
-#endif
-
-#if defined(__APPLE__) && defined(__MACH__)
-#include <OpenGL/gl3.h>
-#include <OpenGL/gl3ext.h>
-#endif
 
 #endif // OPENGLHEADERS_H
