@@ -109,6 +109,9 @@ signals:
      * @brief textureBrowse
      */
     void textureBrowse(QString, bool);
+
+    void updateShaderProgram();
+
 private:
     void updateEditorWidget();
     QList<mUniform> parseUniformsFromSource(QString sourceCode);

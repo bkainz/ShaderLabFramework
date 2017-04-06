@@ -86,6 +86,7 @@ void MainWindow::updateUniformTab()
 
         //Update the texture path
         connect(m_uniformEditor, SIGNAL(textureBrowse(QString, bool)), ui->m_GLWidget, SLOT(setTexture(QString, bool)));
+
         connect(ui->m_GLWidget, SIGNAL(updateTexturePath(QString)), m_uniformEditor, SLOT(updateTexturePath(QString)));
 
         connect(m_uniformEditor, SIGNAL(updateGL()), ui->m_GLWidget, SLOT(update()));

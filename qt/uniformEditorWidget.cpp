@@ -384,6 +384,8 @@ void UniformEditorWidget::updateUniform(double value)
     //qDebug() << "updateUniformFloatDouble(double value) " <<
     //	m_allUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str() << " " << value;
 
+    //weired! TODO - investigate have to link here to get the right context
+    m_shaderProgram->link();
     m_shaderProgram->bind();
     m_shaderProgram->setUniformValue(m_shaderProgramUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str(),
         (GLfloat)value);
@@ -394,6 +396,8 @@ void UniformEditorWidget::updateUniform(double value)
 
 void UniformEditorWidget::updateUniform(int value)
 {
+    //weired! TODO - investigate have to link here to get the right context
+    m_shaderProgram->link();
     m_shaderProgram->bind();
     m_shaderProgram->setUniformValue(m_shaderProgramUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str(), (GLint)value);
     m_shaderProgram->release();
@@ -403,6 +407,8 @@ void UniformEditorWidget::updateUniform(int value)
 
 void UniformEditorWidget::updateUniformVector2D(QVector4D value)
 {
+    //weired! TODO - investigate have to link here to get the right context
+    m_shaderProgram->link();
     m_shaderProgram->bind();
     m_shaderProgram->setUniformValue(m_shaderProgramUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str(), value.toVector2D());
     m_shaderProgram->release();
@@ -411,6 +417,8 @@ void UniformEditorWidget::updateUniformVector2D(QVector4D value)
 
 void UniformEditorWidget::updateUniformVector3D(QVector4D value)
 {
+    //weired! TODO - investigate have to link here to get the right context
+    m_shaderProgram->link();
     m_shaderProgram->bind();
     m_shaderProgram->setUniformValue(m_shaderProgramUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str(), value.toVector3D());
     m_shaderProgram->release();
@@ -420,6 +428,8 @@ void UniformEditorWidget::updateUniformVector3D(QVector4D value)
 void UniformEditorWidget::updateUniformVector4D(QVector4D value)
 {
     //qDebug() << "updateUniformVector4D " << value;
+    //weired! TODO - investigate have to link here to get the right context
+    m_shaderProgram->link();
     m_shaderProgram->bind();
     m_shaderProgram->setUniformValue(m_shaderProgramUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str(), value);
     m_shaderProgram->release();
@@ -439,6 +449,8 @@ void UniformEditorWidget::updateUniformMatrix3x3(QMatrix4x4 value)
         }
     }
 
+    //weired! TODO - investigate have to link here to get the right context
+    m_shaderProgram->link();
     m_shaderProgram->bind();
     m_shaderProgram->setUniformValue(m_shaderProgramUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str(), value);
     m_shaderProgram->release();
@@ -448,6 +460,8 @@ void UniformEditorWidget::updateUniformMatrix3x3(QMatrix4x4 value)
 
 void UniformEditorWidget::updateUniformMatrix4x4(QMatrix4x4 value)
 {
+    //weired! TODO - investigate have to link here to get the right context
+    m_shaderProgram->link();
     m_shaderProgram->bind();
     m_shaderProgram->setUniformValue(m_shaderProgramUserUniforms.at(ui->m_uniformComboBox->currentIndex()).name.toStdString().c_str(), value);
     m_shaderProgram->release();
@@ -462,6 +476,9 @@ void UniformEditorWidget::updateUniformDisplay(double value)
 
     //Relative index assumes that the display program uniforms come at the end of the QComboBox
     int relativeIndex = ui->m_uniformComboBox->currentIndex() - m_shaderProgramUserUniforms.size();
+
+    //weired! TODO - investigate have to link here to get the right context
+    m_shaderProgramDisplay->link();
     m_shaderProgramDisplay->bind();
     m_shaderProgramDisplay->setUniformValue(m_displayShaderUserUniforms.at(relativeIndex).name.toStdString().c_str(), (GLfloat)value);
     m_shaderProgramDisplay->release();
@@ -474,6 +491,8 @@ void UniformEditorWidget::updateUniformDisplay(int value)
     //Relative index assumes that the display program uniforms come at the end of the QComboBox
     int relativeIndex = ui->m_uniformComboBox->currentIndex() - m_shaderProgramUserUniforms.size();
 
+    //weired! TODO - investigate have to link here to get the right context
+    m_shaderProgramDisplay->link();
     m_shaderProgramDisplay->bind();
     m_shaderProgramDisplay->setUniformValue(m_displayShaderUserUniforms.at(relativeIndex).name.toStdString().c_str(), (GLint)value);
     m_shaderProgramDisplay->release();
@@ -486,6 +505,8 @@ void UniformEditorWidget::updateUniformDisplayVector2D(QVector4D value)
     //Relative index assumes that the display program uniforms come at the end of the QComboBox
     int relativeIndex = ui->m_uniformComboBox->currentIndex() - m_shaderProgramUserUniforms.size();
 
+    //weired! TODO - investigate have to link here to get the right context
+    m_shaderProgramDisplay->link();
     m_shaderProgramDisplay->bind();
     m_shaderProgramDisplay->setUniformValue(m_displayShaderUserUniforms.at(relativeIndex).name.toStdString().c_str(), value.toVector2D());
     m_shaderProgramDisplay->release();
@@ -497,6 +518,8 @@ void UniformEditorWidget::updateUniformDisplayVector3D(QVector4D value)
     //Relative index assumes that the display program uniforms come at the end of the QComboBox
     int relativeIndex = ui->m_uniformComboBox->currentIndex() - m_shaderProgramUserUniforms.size();
 
+    //weired! TODO - investigate have to link here to get the right context
+    m_shaderProgramDisplay->link();
     m_shaderProgramDisplay->bind();
     m_shaderProgramDisplay->setUniformValue(m_displayShaderUserUniforms.at(relativeIndex).name.toStdString().c_str(), value.toVector3D());
     m_shaderProgramDisplay->release();
@@ -508,6 +531,8 @@ void UniformEditorWidget::updateUniformDisplayVector4D(QVector4D value)
     //Relative index assumes that the display program uniforms come at the end of the QComboBox
     int relativeIndex = ui->m_uniformComboBox->currentIndex() - m_shaderProgramUserUniforms.size();
 
+    //weired! TODO - investigate have to link here to get the right context
+    m_shaderProgramDisplay->link();
     m_shaderProgramDisplay->bind();
     m_shaderProgramDisplay->setUniformValue(m_displayShaderUserUniforms.at(relativeIndex).name.toStdString().c_str(), value);
     m_shaderProgramDisplay->release();
@@ -530,6 +555,8 @@ void UniformEditorWidget::updateUniformDisplayMatrix3x3(QMatrix4x4 value)
     //Relative index assumes that the display program uniforms come at the end of the QComboBox
     int relativeIndex = ui->m_uniformComboBox->currentIndex() - m_shaderProgramUserUniforms.size();
 
+    //weired! TODO - investigate have to link here to get the right context
+    m_shaderProgramDisplay->link();
     m_shaderProgramDisplay->bind();
     m_shaderProgramDisplay->setUniformValue(m_displayShaderUserUniforms.at(relativeIndex).name.toStdString().c_str(), value);
     m_shaderProgramDisplay->release();
@@ -542,6 +569,8 @@ void UniformEditorWidget::updateUniformDisplayMatrix4x4(QMatrix4x4 value)
     //Relative index assumes that the display program uniforms come at the end of the QComboBox
     int relativeIndex = ui->m_uniformComboBox->currentIndex() - m_shaderProgramUserUniforms.size();
 
+    //weired! TODO - investigate have to link here to get the right context
+    m_shaderProgramDisplay->link();
     m_shaderProgramDisplay->bind();
     m_shaderProgramDisplay->setUniformValue(m_displayShaderUserUniforms.at(relativeIndex).name.toStdString().c_str(), value);
     m_shaderProgramDisplay->release();
