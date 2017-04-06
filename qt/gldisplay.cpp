@@ -520,7 +520,18 @@ void GLDisplay::drawFPS()
 
     //Set the color to white for to draw the FPS
     glColor3f(1.0, 1.0, 1.0);
-    //    renderText(width() - textFPS.size() - 40, 20, textFPS);
+    renderText(width() - textFPS.size() - 60, 20, textFPS);
+}
+
+void GLDisplay::renderText(double x, double y, const QString &str, const QFont & font) {
+    // Identify x and y locations to render text within widget
+    QPainter painter(this);
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
+    QPen pen(Qt::white);
+    painter.setPen(pen);
+    QFont serifFont("Times");
+    painter.setFont(serifFont);
+    painter.drawText(QPoint(x,y), str);
 }
 
 /*--------------------------Mouse events-----------------------------------*/
@@ -742,7 +753,7 @@ void GLDisplay::takeScreenshot()
             username = homePath.first().split(QDir::separator()).last();
         }
         glColor3f(1.0, 1.0, 1.0);
-        // renderText(10.0, 20.0, username + QString(" ") + currentDate.toString() + QString(" ") + currentTime.toString());
+        renderText(10.0, 20.0, username + QString(" ") + currentDate.toString() + QString(" ") + currentTime.toString());
 
          //The OpenGL window is at position this->x(), this->y() in its parent
          //Start reading pixels from there

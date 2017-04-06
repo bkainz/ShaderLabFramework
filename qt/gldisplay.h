@@ -189,6 +189,9 @@ protected:
 
 
 private:
+    void renderText(double x, double y, const QString &str, const QFont & font = QFont());
+   
+
     //Framebuffer for highres rendering
     FrameBuffer* m_framebuffer;
     FrameBuffer* m_framebufferFinalResult;
