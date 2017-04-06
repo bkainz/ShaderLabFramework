@@ -268,6 +268,7 @@ void GLDisplay::renderCoordinateFrame()
 void GLDisplay::renderScene()
 {
     //Switch to the regular shader program to render the objects
+    m_shaderProgram->link();
     m_shaderProgram->bind();
 
     /*---Camera and matrices---*/
@@ -358,6 +359,8 @@ void GLDisplay::renderToTexture(const int textureId, bool isSimplifiedPipeline)
 {
     //Switch to the display shader
     //Always bind before sending the textures to the shader
+    //weired TODO
+    m_shaderProgramDisplay->link();
     if (!m_shaderProgramDisplay->bind())
         cout << "m_shaderProgramDisplay not bound" << endl;
 
