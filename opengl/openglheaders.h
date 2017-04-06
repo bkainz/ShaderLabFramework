@@ -26,7 +26,6 @@
 #ifndef OPENGLHEADERS_H
 #define OPENGLHEADERS_H
 
-//#include <GL/glew.h>
 #include <QtOpenGL>
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
