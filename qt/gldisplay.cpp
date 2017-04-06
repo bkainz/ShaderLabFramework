@@ -86,7 +86,7 @@ void GLDisplay::initializeGL()
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
-    glClearColor(0,0,0,0);
+    glClearColor(0, 0, 0, 0);
 
     shaderEditor = new GLSLEditorWindow(m_shaderProgram, m_shaderProgramDisplay, this);
     connect(shaderEditor, SIGNAL(updateLog(QString)), this, SIGNAL(updateLog(QString)));
@@ -525,7 +525,7 @@ void GLDisplay::drawFPS()
 
     //Set the color to white for to draw the FPS
     glColor3f(1.0, 1.0, 1.0);
-//    renderText(width() - textFPS.size() - 40, 20, textFPS);
+    //    renderText(width() - textFPS.size() - 40, 20, textFPS);
 }
 
 /*--------------------------Mouse events-----------------------------------*/
@@ -747,10 +747,10 @@ void GLDisplay::takeScreenshot()
             username = homePath.first().split(QDir::separator()).last();
         }
         glColor3f(1.0, 1.0, 1.0);
-       // renderText(10.0, 20.0, username + QString(" ") + currentDate.toString() + QString(" ") + currentTime.toString());
+        // renderText(10.0, 20.0, username + QString(" ") + currentDate.toString() + QString(" ") + currentTime.toString());
 
-        //The OpenGL window is at position this->x(), this->y() in its parent
-        //Start reading pixels from there
+         //The OpenGL window is at position this->x(), this->y() in its parent
+         //Start reading pixels from there
 
         glReadPixels(0, 0, (GLsizei)width, (GLsizei)height, GL_RGB, GL_UNSIGNED_BYTE, data);
 

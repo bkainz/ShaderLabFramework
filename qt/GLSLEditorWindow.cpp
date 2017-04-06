@@ -46,7 +46,7 @@ GLSLEditorWindow::GLSLEditorWindow(QGLShaderProgram* sProgram, QGLShaderProgram*
     readSettings();
 
     setupTabs();
-    
+
     connect(ui->actionSave_pipeline, SIGNAL(triggered()), this, SLOT(savePipelineAction()));
     connect(ui->actionSave_pipeline_As, SIGNAL(triggered()), this, SLOT(savePipelineAsAction()));
     connect(ui->actionLoad_pipeline, SIGNAL(triggered()), this, SLOT(loadPipeline()));
@@ -55,7 +55,7 @@ GLSLEditorWindow::GLSLEditorWindow(QGLShaderProgram* sProgram, QGLShaderProgram*
     connect(ui->actionSave_As_, SIGNAL(triggered()), this, SLOT(saveAs()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(about()));
     connect(ui->actionExit_Ctrl_X, SIGNAL(triggered()), this, SLOT(exitApplicationAction()));
-    
+
     new QShortcut(QKeySequence(Qt::Key_F3), this, SLOT(savePipelineAction()));
 
     //connect(textEdit->document(), &QTextDocument::contentsChanged,
@@ -434,11 +434,11 @@ bool GLSLEditorWindow::savePipeline(QString& fileName)
     if (!fileName.endsWith(QString(".xml"))) {
         fileName.append(QString(".xml"));
     }
-    
+
     QString text = QString("Saving pipeline to %1").arg(fileName);
     emit updateLog(text);
     emit displayLog();
-    
+
     if (fileName.isEmpty())
     {
         pipelineFileName = QFileDialog::getSaveFileName(this,
