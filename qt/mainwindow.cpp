@@ -88,7 +88,7 @@ void MainWindow::updateUniformTab()
         connect(m_uniformEditor, SIGNAL(textureBrowse(QString, bool)), ui->m_GLWidget, SLOT(setTexture(QString, bool)));
         connect(ui->m_GLWidget, SIGNAL(updateTexturePath(QString)), m_uniformEditor, SLOT(updateTexturePath(QString)));
 
-        connect(m_uniformEditor, SIGNAL(updateGL()), ui->m_GLWidget, SLOT(updateGL()));
+        connect(m_uniformEditor, SIGNAL(updateGL()), ui->m_GLWidget, SLOT(update()));
     }
     else //update widget
     {
@@ -116,7 +116,7 @@ void MainWindow::updateMaterialTab()
 
             ui->m_materialTab->setLayout(HBoxLayout);
 
-            connect(m_materialEditor, SIGNAL(updateGL()), ui->m_GLWidget, SLOT(updateGL()));
+            connect(m_materialEditor, SIGNAL(updateGL()), ui->m_GLWidget, SLOT(update()));
             m_materialEditors.push_back(m_materialEditor);
 
             connect(m_materialEditor, SIGNAL(updateMaterial(int, Material)), ui->m_GLWidget, SLOT(updateMaterial(int, Material)));
