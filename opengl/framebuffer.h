@@ -76,6 +76,8 @@ private:
     //A framebuffer contains a color buffer, a depth buffer and a stencil buffer
     std::vector<Texture> m_colourBuffers;
     GLuint m_depthBufferId;
+
+    QOpenGLFunctions *f;
 };
 
 #endif // FRAMEBUFFER_H

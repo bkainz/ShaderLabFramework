@@ -30,19 +30,19 @@ using namespace std;
 FrameBuffer::FrameBuffer() : m_framebufferId(0), m_width(0), m_height(0),
 m_colourBuffers(vector<Texture>()), m_depthBufferId(0)
 {
-
+    f = QOpenGLContext::currentContext()->functions();
 }
 
 FrameBuffer::FrameBuffer(int width, int height) : m_framebufferId(0), m_width(width), m_height(height),
 m_colourBuffers(vector<Texture>()), m_depthBufferId(0)
 {
-
+    f = QOpenGLContext::currentContext()->functions();
 }
 
 FrameBuffer::~FrameBuffer()
 {
-    glDeleteFramebuffers(1, &m_framebufferId);
-    glDeleteRenderbuffers(1, &m_depthBufferId);
+    f->glDeleteFramebuffers(1, &m_framebufferId);
+    f->glDeleteRenderbuffers(1, &m_depthBufferId);
     m_colourBuffers.clear();
 
 }
@@ -51,40 +51,40 @@ FrameBuffer::~FrameBuffer()
 void FrameBuffer::createRenderBuffer(GLuint &id, GLenum format)
 {
     //Delete any previous buffer
-    if (glIsRenderbuffer(id) == GL_TRUE)
+    if (f->glIsRenderbuffer(id) == GL_TRUE)
     {
         //1 is the number of id to delete
-        glDeleteRenderbuffers(1, &id);
+        f->glDeleteRenderbuffers(1, &id);
     }
 
     //Generate a new id for the renderbuffer of the Framebuffer
-    glGenRenderbuffers(1, &id);
+    f->glGenRenderbuffers(1, &id);
 
     //Start working with the renderbuffer : bing
-    glBindRenderbuffer(GL_RENDERBUFFER, id);
+    f->glBindRenderbuffer(GL_RENDERBUFFER, id);
 
     //Create renderbuffer with same width and height
-    glRenderbufferStorage(GL_RENDERBUFFER, format, m_width, m_height);
+    f->glRenderbufferStorage(GL_RENDERBUFFER, format, m_width, m_height);
 
     //Stop working with it
-    glBindRenderbuffer(GL_RENDERBUFFER, 0);
+    f->glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
 }
 
 bool FrameBuffer::load_8UC3()
 {
 
-    if (glIsFramebuffer(m_framebufferId) == GL_TRUE)
+    if (f->glIsFramebuffer(m_framebufferId) == GL_TRUE)
     {
-        glDeleteFramebuffers(1, &m_framebufferId);
+        f->glDeleteFramebuffers(1, &m_framebufferId);
         m_colourBuffers.clear(); //Empty colour buffers
     }
 
     //Generate ID
-    glGenFramebuffers(1, &m_framebufferId);
+    f->glGenFramebuffers(1, &m_framebufferId);
 
     //Create renderbuffer with same width and height
-    glBindFramebuffer(GL_FRAMEBUFFER, m_framebufferId);
+    f->glBindFramebuffer(GL_FRAMEBUFFER, m_framebufferId);
 
     //Colorbuffer
     Texture colorBuffer = Texture(m_width, m_height, 3);
@@ -96,23 +96,23 @@ bool FrameBuffer::load_8UC3()
     this->createRenderBuffer(m_depthBufferId, GL_DEPTH24_STENCIL8);
 
     //Attach colour buffer and render buffer to framebuffer
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_colourBuffers[0].getTextureId(), 0);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_depthBufferId);
+    f->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_colourBuffers[0].getTextureId(), 0);
+    f->glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_depthBufferId);
 
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    if (f->glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     {
         cout << "Error in framebuffer creation. Clear memory." << endl;
 
         //Clear the memory associated with the framebuffer, renderbuffer and color buffer
-        glDeleteFramebuffers(1, &m_framebufferId);
-        glDeleteRenderbuffers(1, &m_depthBufferId);
+        f->glDeleteFramebuffers(1, &m_framebufferId);
+        f->glDeleteRenderbuffers(1, &m_depthBufferId);
         m_colourBuffers.clear();
 
         return false;
     }
 
     //Stop working with it
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    f->glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     return true;
 
@@ -121,17 +121,17 @@ bool FrameBuffer::load_8UC3()
 bool FrameBuffer::load_32FC3()
 {
 
-    if (glIsFramebuffer(m_framebufferId) == GL_TRUE)
+    if (f->glIsFramebuffer(m_framebufferId) == GL_TRUE)
     {
-        glDeleteFramebuffers(1, &m_framebufferId);
+        f->glDeleteFramebuffers(1, &m_framebufferId);
         m_colourBuffers.clear(); //Empty colour buffers
     }
 
     //Generate ID
-    glGenFramebuffers(1, &m_framebufferId);
+    f->glGenFramebuffers(1, &m_framebufferId);
 
     //Create renderbuffer with same width and height
-    glBindFramebuffer(GL_FRAMEBUFFER, m_framebufferId);
+    f->glBindFramebuffer(GL_FRAMEBUFFER, m_framebufferId);
 
     //Colorbuffer
     Texture colorBuffer = Texture(m_width, m_height, 3);
@@ -146,24 +146,24 @@ bool FrameBuffer::load_32FC3()
     this->createRenderBuffer(m_depthBufferId, GL_DEPTH24_STENCIL8);
 
     //Attach colour buffer and render buffer to framebuffer
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_colourBuffers[0].getTextureId(), 0);
+    f->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_colourBuffers[0].getTextureId(), 0);
 
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_depthBufferId);
+    f->glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_depthBufferId);
 
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    if (f->glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     {
         cout << "Error in framebuffer creation. Clear memory." << endl;
 
         //Clear the memory associated with the framebuffer, renderbuffer and color buffer
-        glDeleteFramebuffers(1, &m_framebufferId);
-        glDeleteRenderbuffers(1, &m_depthBufferId);
+        f->glDeleteFramebuffers(1, &m_framebufferId);
+        f->glDeleteRenderbuffers(1, &m_depthBufferId);
         m_colourBuffers.clear();
 
         return false;
     }
 
     //Stop working with it
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    f->glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     return true;
 

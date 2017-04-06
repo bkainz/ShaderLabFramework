@@ -35,7 +35,7 @@
 #include <QGLFunctions>
 
 UniformEditorWidget::UniformEditorWidget(QGLShaderProgram* sProgram, QGLShaderProgram* dsProgram,
-    QGLContext* glContext, QWidget *parent) : QWidget(parent), ui(new Ui::UniformEditorWidget)
+    QOpenGLContext* glContext, QWidget *parent) : QWidget(parent), ui(new Ui::UniformEditorWidget)
 {
     ui->setupUi(this);
     m_glContext = glContext;
@@ -59,7 +59,7 @@ UniformEditorWidget::~UniformEditorWidget()
     delete ui;
 }
 
-void UniformEditorWidget::updateShaderPrograms(QGLShaderProgram* sProgram, QGLShaderProgram* dsProgram, QGLContext* glContext)
+void UniformEditorWidget::updateShaderPrograms(QGLShaderProgram* sProgram, QGLShaderProgram* dsProgram, QOpenGLContext* glContext)
 {
     //qDebug() << "updateShaderPrograms";
     m_shaderProgram = sProgram;
@@ -199,7 +199,7 @@ void UniformEditorWidget::setUniformEditorWidgets(QList<mUniform> &uniformList, 
         static_cast<QGridLayout*>(ui->m_UniformEditFrame->layout())->addWidget(textLabel, 0, 0);
     }
 
-    QGLFunctions fncs(m_glContext);
+//    QGLFunctions fncs(m_glContext);
 
     //TODO nicify this
     if (uniformList.at(index).type == QString("bool"))

@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     ui->setupUi(this);
     //Enable multisampling
-    QGLFormat format = ui->m_GLWidget->format();
+    QSurfaceFormat format = ui->m_GLWidget->format();
     format.setSamples(16);
     ui->m_GLWidget->setFormat(format);
 
@@ -92,8 +92,8 @@ void MainWindow::updateUniformTab()
     }
     else //update widget
     {
-        ui->m_GLWidget->context()->makeCurrent();
-        ui->m_GLWidget->updateGL();
+        ui->m_GLWidget->makeCurrent();
+        ui->m_GLWidget->update();
         m_uniformEditor->updateShaderPrograms(
             ui->m_GLWidget->getShaderProgram(), ui->m_GLWidget->getShaderDisplayProgram(),
             ui->m_GLWidget->context());
@@ -126,8 +126,8 @@ void MainWindow::updateMaterialTab()
     {
         for (int k = 0; k < objectList.size(); k++)
         {
-            ui->m_GLWidget->context()->makeCurrent();
-            ui->m_GLWidget->updateGL();
+            ui->m_GLWidget->makeCurrent();
+            ui->m_GLWidget->update();
             m_materialEditors.at(k)->updateEditor(k);
         }
     }

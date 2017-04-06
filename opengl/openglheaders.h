@@ -28,6 +28,9 @@
 
 #ifdef _WIN32
 #include <GL/glew.h>
+#include <QtOpenGL>
+#include <QOpenGLContext>
+#include <QOpenGLFunctions>
 #endif
 
 #ifdef __gnu_linux__

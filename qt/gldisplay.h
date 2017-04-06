@@ -63,13 +63,13 @@ class GLSLEditorWindow;
 
 using namespace std;
 
-class GLDisplay : public QGLWidget
+class GLDisplay : public QOpenGLWidget
 {
     Q_OBJECT
 
 public:
     GLDisplay(QWidget *parent);
-    GLDisplay(const QGLFormat& glFormat, QWidget *parent);
+    //GLDisplay(const QGLFormat& glFormat, QWidget *parent);
     ~GLDisplay();
 
     /**
@@ -189,8 +189,8 @@ protected:
 
 private:
     //Framebuffer for highres rendering
-    FrameBuffer m_framebuffer;
-    FrameBuffer m_framebufferFinalResult;
+    FrameBuffer* m_framebuffer;
+    FrameBuffer* m_framebufferFinalResult;
 
     //Camera
     Camera m_cameraScene;
@@ -226,6 +226,8 @@ private:
 
     //Editor
     GLSLEditorWindow* shaderEditor;
+
+    QOpenGLFunctions *f;
 };
 
 #endif // GLDISPLAY_H
