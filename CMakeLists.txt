@@ -17,7 +17,6 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Xml REQUIRED)
 find_package(Qt5OpenGL REQUIRED)
-find_package(GLEW REQUIRED)
 find_package(OpenGL REQUIRED)
 
 set(CMAKE_CXX_FLAGS_COVERAGE "${CMAKE_CXX_FLAGS_RELEASE} -fprofile-arcs -ftest-coverage")
@@ -29,8 +28,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}
 					${CMAKE_CURRENT_SOURCE_DIR}/qt
 					${CMAKE_CURRENT_SOURCE_DIR}/opengl
 					${CMAKE_CURRENT_BINARY_DIR} 
-					${CMAKE_BINARY_DIR} 
-					${GLEW_INCLUDE_DIRS})
+					${CMAKE_BINARY_DIR} )
 			
 
 				
@@ -100,4 +98,4 @@ add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 
 add_executable(ShaderLabFramework ${SRCS} ${HDRS} ${FORMS})
 qt5_use_modules(ShaderLabFramework Core Gui OpenGL Xml)
-target_link_libraries(ShaderLabFramework ${QT_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES})
+target_link_libraries(ShaderLabFramework ${QT_LIBRARIES} ${OPENGL_LIBRARIES})

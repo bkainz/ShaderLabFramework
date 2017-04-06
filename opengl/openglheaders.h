@@ -27,7 +27,7 @@
 #define OPENGLHEADERS_H
 
 #ifdef _WIN32
-#include <GL/glew.h>
+//#include <GL/glew.h>
 #include <QtOpenGL>
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
