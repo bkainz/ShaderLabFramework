@@ -29,6 +29,13 @@
 
 int main(int argc, char *argv[])
 {
+    //By default sets OpenGL to OpenGL 4 with Core Profile
+    QSurfaceFormat glFormat;
+    glFormat.setMajorVersion(4);
+    glFormat.setProfile(QSurfaceFormat::CoreProfile);
+
+    QSurfaceFormat::setDefaultFormat(glFormat);
+
     QApplication a(argc, argv);
     a.setAttribute(Qt::AA_UseDesktopOpenGL);
     MainWindow w;
