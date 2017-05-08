@@ -62,6 +62,14 @@ m_wireframe(false), m_backFaceCulling(false), m_renderCoordinateFrame(false)
 
 GLDisplay::~GLDisplay()
 {
+    delete m_scene;
+
+    delete m_shaderProgram;
+    delete m_shaderProgramDisplay;
+    delete m_framebuffer;
+
+    delete m_framebufferFinalResult;
+    delete shaderEditor;
 
 }
 

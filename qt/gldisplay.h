@@ -70,7 +70,7 @@ class GLDisplay : public QOpenGLWidget
 public:
     GLDisplay(QWidget *parent);
     //GLDisplay(const QGLFormat& glFormat, QWidget *parent);
-    ~GLDisplay();
+    virtual ~GLDisplay();
 
     /**
      * Sets the opengl parameters (e.g wireframe rendering ...)
