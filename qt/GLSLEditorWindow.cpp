@@ -137,6 +137,7 @@ void GLSLEditorWindow::loadDefaultShaders()
 
     //TODO -- default shaders inline
     QString stdVert("#version 400 \n\n\
+layout(location = 0) in vec4 vertex_worldSpace;\n\
 uniform mat4 mvMatrix;\n\
 uniform mat4 pMatrix;\n\
 uniform mat3 normalMatrix; //mv matrix without translation\n\
@@ -151,7 +152,7 @@ uniform float ambientCoefficent;\n\
 uniform float diffuseCoefficent;\n\
 uniform float specularCoefficent;\n\
 \n\
-in vec4 vertex_worldSpace;\n\
+//in vec4 vertex_worldSpace;\n\
 in vec3 normal_worldSpace;\n\
 in vec2 textureCoordinate_input;\n\
 \n\
@@ -253,10 +254,11 @@ void main(void)\n\
     m_shaderProgram->addShaderFromSourceCode(QGLShader::Fragment, stdFrag);
 
     QString texStdVert("#version 400\n\n\
+layout(location = 0) in vec4 vertex_worldSpace;\n\
 uniform mat4 mvMatrix;\n\
 uniform mat4 pMatrix;\n\
 \n\
-in vec4 vertex_worldSpace;\n\
+//in vec4 vertex_worldSpace;\n\
 in vec2 textureCoordinate_input;\n\
 \n\
 out vec2 varyingTextureCoordinate;\n\
