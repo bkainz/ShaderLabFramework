@@ -456,6 +456,7 @@ void GLDisplay::renderToTexture(const int textureId, bool isSimplifiedPipeline)
     //Draw the current object
     square.getQtVBO().bind();
     
+    m_shaderProgramDisplay->enableAttributeArray("vertex_worldSpace");
     //qDebug() << "vertex_worldSpace " << m_shaderProgramDisplay->attributeLocation("vertex_worldSpace");
     m_shaderProgramDisplay->setAttributeBuffer("vertex_worldSpace", GL_UNSIGNED_INT, 0, 3);
     glDrawArrays(GL_TRIANGLES, 0, square.getMesh().getIndicesArray().size());
