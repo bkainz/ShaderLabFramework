@@ -339,6 +339,7 @@ void GLDisplay::renderScene()
         }
 
         //Draw the current object
+        m_shaderProgram->enableAttributeArray("vertex_worldSpace");
         objectList[k].getQtVBO().bind();
         m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_UNSIGNED_INT, 0, 3);
 
@@ -357,7 +358,6 @@ void GLDisplay::renderScene()
 
     }
 
-   // m_shaderProgram->disableAttributeArray("vertex_worldSpace");
     m_shaderProgram->disableAttributeArray("normal_worldSpace");
     m_shaderProgram->disableAttributeArray("textureCoordinates_input");
 
@@ -453,13 +453,13 @@ void GLDisplay::renderToTexture(const int textureId, bool isSimplifiedPipeline)
 
     //Draw the current object
     square.getQtVBO().bind();
+    m_shaderProgramDisplay->enableAttributeArray("vertex_worldSpace");
     m_shaderProgramDisplay->setAttributeBuffer("vertex_worldSpace", GL_UNSIGNED_INT, 0, 3);
     glDrawArrays(GL_TRIANGLES, 0, square.getMesh().getIndicesArray().size());
     //glDrawElements(GL_TRIANGLES, square.getMesh().getIndicesArray().size(), GL_UNSIGNED_INT, square.getMesh().getIndicesArray().constData());
 
    // square.getQtVBO().release();
 
-    //m_shaderProgramDisplay->disableAttributeArray("vertex_worldSpace");
     m_shaderProgramDisplay->disableAttributeArray("normal_worldSpace");
     m_shaderProgramDisplay->disableAttributeArray("textureCoordinates_input");
 
