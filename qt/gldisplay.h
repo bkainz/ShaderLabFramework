@@ -232,6 +232,8 @@ private:
 
     QOpenGLFunctions *f;
     bool shaderProgramNeedsLink;
+
+    Object square;
 };
 
 #endif // GLDISPLAY_H

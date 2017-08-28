@@ -111,6 +111,7 @@ void GLDisplay::initializeGL()
 
     shaderEditor->show();
 
+    qDebug() << "loading scene";
     m_scene = new Scene(string("teapot")); //Initialise with the teapot
 
     this->loadTexturesAndFramebuffers();
@@ -131,6 +132,8 @@ void GLDisplay::initializeGL()
     QVector4D positionScene = QVector4D(0.0, 0.0, INITIAL_CAMERA_Z_POSITION, 1.0);
     QVector4D upVectorScene = QVector4D(0.0, 1.0, 0.0, 1.0);
     QVector4D centerScene = QVector4D(0.0, 0.0, 0.0, 1.0);
+
+    square = Object(string("square"));
 
     m_cameraScene = Camera(positionScene, upVectorScene, centerScene, true, (float)m_framebuffer->getWidth() / (float)m_framebuffer->getHeight(), 45.0);
     emit updateViewMatrix(m_cameraScene.getViewMatrix());
@@ -334,8 +337,14 @@ void GLDisplay::renderScene()
             //activate wireframe
             setOpenGLWireframeState(true);
         }
+
         //Draw the current object
-        glDrawElements(GL_TRIANGLES, indicesArray.size(), GL_UNSIGNED_INT, indicesArray.constData());
+        objectList[k].getQtVBO().bind();
+        m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_UNSIGNED_INT, 0, 3);
+
+        glDrawArrays(GL_TRIANGLES, 0, indicesArray.size());
+        //glDrawElements(GL_TRIANGLES, indicesArray.size(), GL_UNSIGNED_INT, indicesArray.constData());
+        //objectList[k].getQtVBO().release();
 
         if (m_wireframe)
         {
@@ -348,7 +357,7 @@ void GLDisplay::renderScene()
 
     }
 
-    m_shaderProgram->disableAttributeArray("vertex_worldSpace");
+   // m_shaderProgram->disableAttributeArray("vertex_worldSpace");
     m_shaderProgram->disableAttributeArray("normal_worldSpace");
     m_shaderProgram->disableAttributeArray("textureCoordinates_input");
 
@@ -423,7 +432,6 @@ void GLDisplay::renderToTexture(const int textureId, bool isSimplifiedPipeline)
 
     //The square is betweem -0.5 and 0.5
     //Scale it by a factor of 2 so that it covers the entire screen (between -1 and 1)
-    Object square = Object(string("square"));
     square.scale(2.0);
 
     QMatrix4x4 viewMatrixQuad = m_cameraQuad.getViewMatrix();
@@ -444,9 +452,14 @@ void GLDisplay::renderToTexture(const int textureId, bool isSimplifiedPipeline)
     m_shaderProgramDisplay->enableAttributeArray("normal_worldSpace");
 
     //Draw the current object
-    glDrawElements(GL_TRIANGLES, square.getMesh().getIndicesArray().size(), GL_UNSIGNED_INT, square.getMesh().getIndicesArray().constData());
+    square.getQtVBO().bind();
+    m_shaderProgramDisplay->setAttributeBuffer("vertex_worldSpace", GL_UNSIGNED_INT, 0, 3);
+    glDrawArrays(GL_TRIANGLES, 0, square.getMesh().getIndicesArray().size());
+    //glDrawElements(GL_TRIANGLES, square.getMesh().getIndicesArray().size(), GL_UNSIGNED_INT, square.getMesh().getIndicesArray().constData());
 
-    m_shaderProgramDisplay->disableAttributeArray("vertex_worldSpace");
+   // square.getQtVBO().release();
+
+    //m_shaderProgramDisplay->disableAttributeArray("vertex_worldSpace");
     m_shaderProgramDisplay->disableAttributeArray("normal_worldSpace");
     m_shaderProgramDisplay->disableAttributeArray("textureCoordinates_input");
 

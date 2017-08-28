@@ -33,6 +33,8 @@
 #include <QApplication>
 #include <QVector3D>
 #include <QMatrix4x4>
+#include <QOpenGLBuffer>
+#include <QObject>
 
 #include <string>
 #include <sstream>
@@ -92,6 +94,7 @@ public:
 
     Mesh getMesh() const;
     Material getMaterial() const;
+    QOpenGLBuffer getQtVBO() const;
 
     void setMaterial(Material material);
 
@@ -101,10 +104,10 @@ public:
     int getRotationZ() const;
 
 private:
-
     std::string m_objectName;
     Mesh m_mesh;
     Material m_material;
+    QOpenGLBuffer m_QtVBO;
 
     QMatrix4x4 m_modelMatrix;
     int m_rotationX;

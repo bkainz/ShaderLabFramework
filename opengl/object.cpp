@@ -47,6 +47,12 @@ m_modelMatrix(QMatrix4x4()), m_rotationX(0), m_rotationY(0), m_rotationZ(0)
 
     m_material = Material(QColor(128, 0, 0), QColor(255, 0, 0), QColor(255, 255, 255), 1.0, 1.0, 1.0, 10.0);
 
+    if (m_QtVBO.create()) qDebug() << "Success creating vertex position buffer";
+    m_QtVBO.setUsagePattern(QOpenGLBuffer::StaticDraw);
+    if (m_QtVBO.bind()) qDebug() << "Success biding vertex position buffer";
+    //  send the vertice data to the vbo using allocate
+    m_QtVBO.allocate(m_mesh.getVertices().constData(), 3 * m_mesh.getVertices().size() * sizeof(float));
+    qDebug() << "buffer size " << m_QtVBO.size();
 }
 
 Object::~Object()
@@ -218,6 +224,13 @@ Mesh Object::getMesh() const
 {
     return m_mesh;
 }
+
+
+QOpenGLBuffer Object::getQtVBO() const
+{
+    return m_QtVBO;
+}
+
 
 QMatrix4x4 Object::getModelMatrix() const
 {
