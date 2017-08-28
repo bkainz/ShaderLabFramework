@@ -280,7 +280,7 @@ out vec4 fragColor;\n\
 void main(void)\n\
 {\n\
   //Render the texture on a quad\n\
-  fragColor = texture2D(textureRendered, varyingTextureCoordinate.st);\n\
+  fragColor = texture(textureRendered, varyingTextureCoordinate.st);\n\
 }");
 
     m_shaderProgramDisplay->addShaderFromSourceCode(QGLShader::Vertex, texStdVert);
