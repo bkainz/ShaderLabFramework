@@ -95,6 +95,7 @@ public:
     Mesh getMesh() const;
     Material getMaterial() const;
     QOpenGLBuffer getQtVBO() const;
+    QOpenGLBuffer getIndexBuffer() const;
 
     void setMaterial(Material material);
 
@@ -113,6 +114,8 @@ private:
     Mesh m_mesh;
     Material m_material;
     QOpenGLBuffer m_QtVBO;
+    QOpenGLBuffer m_QtIndexBuffer;
+
     int m_vertexOffset;
     int m_indicesOffset;
     int m_texturesCoordsOffset;

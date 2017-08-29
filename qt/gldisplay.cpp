@@ -116,6 +116,7 @@ void GLDisplay::initializeGL()
     //Load VAO
     if(!m_renderingVAO.create())
         cerr << "Could not create VAO" << endl;
+
     m_renderingVAO.bind();
 
     m_scene = new Scene(string("teapot")); //Initialise with the teapot
@@ -362,9 +363,11 @@ void GLDisplay::renderScene()
         //m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_UNSIGNED_INT, 0, 3);
         m_renderingVAO.bind();
 
-        glDrawArraysInstanced(GL_TRIANGLES, 0, objectList[k].getMesh().getIndicesArray().size(), 1);
+        //glDrawArraysInstanced(GL_TRIANGLES, 0, indicesArray.size(), 1);
 
         //glDrawArrays(GL_TRIANGLES, 0, indicesArray.size());
+
+        glDrawElements(GL_TRIANGLES, indicesArray.size(), GL_UNSIGNED_SHORT, 0);
         //glDrawElements(GL_TRIANGLES, indicesArray.size(), GL_UNSIGNED_INT, indicesArray.constData());
         //objectList[k].getQtVBO().release();
 

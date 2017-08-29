@@ -53,14 +53,11 @@ m_modelMatrix(QMatrix4x4()), m_rotationX(0), m_rotationY(0), m_rotationZ(0)
     if (m_QtVBO.bind()) qDebug() << "Success biding vertex position buffer";
 
     size_t VBOSize =   3 * m_mesh.getVertices().size() * sizeof(float)
-            + m_mesh.getIndicesArray().size() * sizeof(GLuint)
             + 2 * m_mesh.getTextureCoordinates().size() * sizeof(float)
             + 3 * m_mesh.getVertexNormals().size() * sizeof(float);
 
-
     m_vertexOffset = 0;
-    m_indicesOffset = 3 * m_mesh.getVertices().size() * sizeof(float);
-    m_texturesCoordsOffset = m_indicesOffset + m_mesh.getIndicesArray().size() * sizeof(GLuint);
+    m_texturesCoordsOffset = 3 * m_mesh.getVertices().size() * sizeof(float);
     m_normalsOffset = m_texturesCoordsOffset + 2 * m_mesh.getTextureCoordinates().size() * sizeof(float);
 
     m_QtVBO.allocate(VBOSize);
@@ -68,16 +65,29 @@ m_modelMatrix(QMatrix4x4()), m_rotationX(0), m_rotationY(0), m_rotationZ(0)
     //  send the vertice data to the vbo using allocate
     m_QtVBO.write(m_vertexOffset, m_mesh.getVertices().constData(), 3 * m_mesh.getVertices().size() * sizeof(float));
 
-    //Send the indices data
-    m_QtVBO.write(m_indicesOffset, m_mesh.getIndicesArray().constData(), m_mesh.getIndicesArray().size() * sizeof(GLuint));
-
     //Send the texture coordinates data
     m_QtVBO.write(m_texturesCoordsOffset, m_mesh.getTextureCoordinates().constData(), 2 * m_mesh.getTextureCoordinates().size() * sizeof(float));
 
     //Send the normals data
     m_QtVBO.write(m_normalsOffset, m_mesh.getVertexNormals().constData(), 3 * m_mesh.getVertexNormals().size() * sizeof(float));
 
-    qDebug() << "buffer size " << m_QtVBO.size();
+    m_QtIndexBuffer = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+
+    if (m_QtIndexBuffer.create())
+        qDebug() << "Success creating the index buffer";
+    m_QtIndexBuffer.setUsagePattern(QOpenGLBuffer::StaticDraw);
+
+    if (m_QtIndexBuffer.bind())
+        qDebug() << "Success biding vertex position buffer";
+
+    //Send the indices data
+    m_QtIndexBuffer.allocate(m_mesh.getIndicesArray().size() * sizeof(GLuint));
+
+    //Send the indices data
+    m_QtIndexBuffer.write(0, m_mesh.getIndicesArray().constData(), m_mesh.getIndicesArray().size() * sizeof(GLuint));
+
+    qDebug() << "VBO buffer size " << m_QtVBO.size();
+    qDebug() << "Index buffer buffer size " << m_QtIndexBuffer.size();
 }
 
 Object::~Object()
@@ -254,6 +264,11 @@ Mesh Object::getMesh() const
 QOpenGLBuffer Object::getQtVBO() const
 {
     return m_QtVBO;
+}
+
+QOpenGLBuffer Object::getIndexBuffer() const
+{
+    return m_QtIndexBuffer;
 }
 
 int Object::getVertexOffset() const
