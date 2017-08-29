@@ -52,24 +52,26 @@ m_modelMatrix(QMatrix4x4()), m_rotationX(0), m_rotationY(0), m_rotationZ(0)
 
     if (m_QtVBO.bind()) qDebug() << "Success biding vertex position buffer";
 
-    size_t VBOSize =   3 * m_mesh.getVertices().size() * sizeof(float)
-            + 2 * m_mesh.getTextureCoordinates().size() * sizeof(float)
-            + 3 * m_mesh.getVertexNormals().size() * sizeof(float);
+    int sizeVertices = m_mesh.getVertices().size() * sizeof(QVector3D);
+    int sizeTextureCoords = m_mesh.getTextureCoordinates().size() * sizeof(QVector2D);
+    int sizeNormals = m_mesh.getVertexNormals().size() * sizeof(QVector3D);
+
+    size_t VBOSize = sizeVertices + sizeTextureCoords + sizeNormals;
 
     m_vertexOffset = 0;
-    m_texturesCoordsOffset = 3 * m_mesh.getVertices().size() * sizeof(float);
-    m_normalsOffset = m_texturesCoordsOffset + 2 * m_mesh.getTextureCoordinates().size() * sizeof(float);
+    m_texturesCoordsOffset =  sizeVertices;
+    m_normalsOffset = m_texturesCoordsOffset + sizeTextureCoords;
 
     m_QtVBO.allocate(VBOSize);
 
     //  send the vertice data to the vbo using allocate
-    m_QtVBO.write(m_vertexOffset, m_mesh.getVertices().constData(), 3 * m_mesh.getVertices().size() * sizeof(float));
+    m_QtVBO.write(m_vertexOffset, m_mesh.getVertices().constData(),  sizeVertices);
 
     //Send the texture coordinates data
-    m_QtVBO.write(m_texturesCoordsOffset, m_mesh.getTextureCoordinates().constData(), 2 * m_mesh.getTextureCoordinates().size() * sizeof(float));
+    m_QtVBO.write(m_texturesCoordsOffset, m_mesh.getTextureCoordinates().constData(), sizeTextureCoords);
 
     //Send the normals data
-    m_QtVBO.write(m_normalsOffset, m_mesh.getVertexNormals().constData(), 3 * m_mesh.getVertexNormals().size() * sizeof(float));
+    m_QtVBO.write(m_normalsOffset, m_mesh.getVertexNormals().constData(), sizeNormals);
 
     m_QtIndexBuffer = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
 
@@ -78,7 +80,7 @@ m_modelMatrix(QMatrix4x4()), m_rotationX(0), m_rotationY(0), m_rotationZ(0)
     m_QtIndexBuffer.setUsagePattern(QOpenGLBuffer::StaticDraw);
 
     if (m_QtIndexBuffer.bind())
-        qDebug() << "Success biding vertex position buffer";
+        qDebug() << "Success biding the index buffer";
 
     //Send the indices data
     m_QtIndexBuffer.allocate(m_mesh.getIndicesArray().size() * sizeof(GLuint));

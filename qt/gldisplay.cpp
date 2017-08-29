@@ -175,13 +175,15 @@ void GLDisplay::resizeGL(int width, int height)
 void GLDisplay::paintGL()
 {
     //Render the scene
+    //f->glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer->getFramebufferID());
     f->glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     //Clear screen
     //Clear the color and the z buffer
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glViewport(0, 0, m_framebuffer->getWidth(), m_framebuffer->getHeight());
+    //glViewport(0, 0, m_framebuffer->getWidth(), m_framebuffer->getHeight());
+    glViewport(0, 0, this->width(), this->height());
 
     this->setOpenGLRenderingState();
 
