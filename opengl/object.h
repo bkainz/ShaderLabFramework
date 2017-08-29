@@ -98,6 +98,11 @@ public:
 
     void setMaterial(Material material);
 
+    int getVertexOffset() const;
+    int getIndicesOffset() const;
+    int getTextureCoordinatesOffset() const;
+    int getNormalsOffset() const;
+
     QMatrix4x4 getModelMatrix() const;
     int getRotationX() const;
     int getRotationY() const;
@@ -108,6 +113,10 @@ private:
     Mesh m_mesh;
     Material m_material;
     QOpenGLBuffer m_QtVBO;
+    int m_vertexOffset;
+    int m_indicesOffset;
+    int m_texturesCoordsOffset;
+    int m_normalsOffset;
 
     QMatrix4x4 m_modelMatrix;
     int m_rotationX;

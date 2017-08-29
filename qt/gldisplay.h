@@ -234,6 +234,7 @@ private:
     bool shaderProgramNeedsLink;
 
     Object square;
+    QOpenGLVertexArrayObject m_renderingVAO;
 };
 
 #endif // GLDISPLAY_H

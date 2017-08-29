@@ -49,9 +49,34 @@ m_modelMatrix(QMatrix4x4()), m_rotationX(0), m_rotationY(0), m_rotationZ(0)
 
     if (m_QtVBO.create()) qDebug() << "Success creating vertex position buffer";
     m_QtVBO.setUsagePattern(QOpenGLBuffer::StaticDraw);
+
     if (m_QtVBO.bind()) qDebug() << "Success biding vertex position buffer";
+
+    size_t VBOSize =   3 * m_mesh.getVertices().size() * sizeof(float)
+            + 3 * m_mesh.getVertices().size() * sizeof(float)
+            + m_mesh.getIndicesArray().size() * sizeof(GLuint)
+            + 3 * m_mesh.getVertexNormals().size() * sizeof(float);
+
+
+    m_vertexOffset = 0;
+    m_indicesOffset = 3 * m_mesh.getVertices().size() * sizeof(float);
+    m_texturesCoordsOffset = m_indicesOffset + m_mesh.getIndicesArray().size() * sizeof(GLuint);
+    m_normalsOffset = m_texturesCoordsOffset + 2 * m_mesh.getTextureCoordinates().size() * sizeof(float);
+
+    m_QtVBO.allocate(VBOSize);
+
     //  send the vertice data to the vbo using allocate
-    m_QtVBO.allocate(m_mesh.getVertices().constData(), 3 * m_mesh.getVertices().size() * sizeof(float));
+    m_QtVBO.write(m_vertexOffset, m_mesh.getVertices().constData(), 3 * m_mesh.getVertices().size() * sizeof(float));
+
+    //Send the indices data
+    m_QtVBO.write(m_indicesOffset, m_mesh.getIndicesArray().constData(), m_mesh.getIndicesArray().size() * sizeof(GLuint));
+
+    //Send the texture coordinates data
+    m_QtVBO.write(m_texturesCoordsOffset, m_mesh.getTextureCoordinates().constData(), 2 * m_mesh.getTextureCoordinates().size() * sizeof(float));
+
+    //Send the normals data
+    m_QtVBO.write(m_normalsOffset, m_mesh.getVertexNormals().constData(), 3 * m_mesh.getVertexNormals().size() * sizeof(float));
+
     qDebug() << "buffer size " << m_QtVBO.size();
 }
 
@@ -231,6 +256,25 @@ QOpenGLBuffer Object::getQtVBO() const
     return m_QtVBO;
 }
 
+int Object::getVertexOffset() const
+{
+    return m_vertexOffset;
+}
+
+int Object::getIndicesOffset() const
+{
+    return m_indicesOffset;
+}
+
+int Object::getTextureCoordinatesOffset() const
+{
+    return m_texturesCoordsOffset;
+}
+
+int Object::getNormalsOffset() const
+{
+    return m_normalsOffset;
+}
 
 QMatrix4x4 Object::getModelMatrix() const
 {

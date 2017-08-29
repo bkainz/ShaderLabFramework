@@ -112,7 +112,23 @@ void GLDisplay::initializeGL()
     shaderEditor->show();
 
     qDebug() << "loading scene";
+
+    //Load VAO
+    if(!m_renderingVAO.create())
+        cerr << "Could not create VAO" << endl;
+    m_renderingVAO.bind();
+
     m_scene = new Scene(string("teapot")); //Initialise with the teapot
+
+    m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
+    m_shaderProgram->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_scene->getObjects()[0].getTextureCoordinatesOffset(), 2, 0);
+    m_shaderProgram->setAttributeBuffer("normal_worldSpace", GL_FLOAT,  m_scene->getObjects()[0].getNormalsOffset(), 3, 0);
+
+    m_shaderProgram->enableAttributeArray("vertex_worldSpace");
+    m_shaderProgram->enableAttributeArray("textureCoordinate_input");
+    m_shaderProgram->enableAttributeArray("normal_worldSpace");
+
+    m_renderingVAO.release();
 
     this->loadTexturesAndFramebuffers();
 
@@ -158,7 +174,7 @@ void GLDisplay::resizeGL(int width, int height)
 void GLDisplay::paintGL()
 {
     //Render the scene
-    f->glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer->getFramebufferID());
+    f->glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     //Clear screen
     //Clear the color and the z buffer
@@ -176,15 +192,15 @@ void GLDisplay::paintGL()
     this->renderScene();
 
     //Apply one render to texture pass
-    f->glBindFramebuffer(GL_FRAMEBUFFER, m_framebufferFinalResult->getFramebufferID());
+  /*  f->glBindFramebuffer(GL_FRAMEBUFFER, m_framebufferFinalResult->getFramebufferID());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glViewport(0, 0, m_framebufferFinalResult->getWidth(), m_framebufferFinalResult->getHeight());
 
     this->renderToTexture(m_framebuffer->getColorBufferID(0), false);
-
+*/
     /*------ Display the framebuffer on the screen -----*/
-    f->glBindFramebuffer(GL_FRAMEBUFFER, 0);
+ /*   f->glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glViewport(0, 0, this->width(), this->height());
@@ -192,7 +208,7 @@ void GLDisplay::paintGL()
     //use the simplified pipeline for better speed
     this->renderToTexture(m_framebufferFinalResult->getColorBufferID(0), true);
 
-    this->drawFPS();
+    this->drawFPS();*/
 }
 
 void GLDisplay::setOpenGLWireframeState(bool activateWireframeMode)
@@ -325,11 +341,11 @@ void GLDisplay::renderScene()
         //m_shaderProgram->setAttributeArray("vertex_worldSpace", vertices.constData());
         //m_shaderProgram->enableAttributeArray("vertex_worldSpace");
 
-        m_shaderProgram->setAttributeArray("textureCoordinate_input", textureCoordinates.constData());
-        m_shaderProgram->enableAttributeArray("textureCoordinate_input");
+        //m_shaderProgram->setAttributeArray("textureCoordinate_input", textureCoordinates.constData());
+       // m_shaderProgram->enableAttributeArray("textureCoordinate_input");
 
-        m_shaderProgram->setAttributeArray("normal_worldSpace", normals.constData());
-        m_shaderProgram->enableAttributeArray("normal_worldSpace");
+        //m_shaderProgram->setAttributeArray("normal_worldSpace", normals.constData());
+        //m_shaderProgram->enableAttributeArray("normal_worldSpace");
 
         //on some platforms Qt and ANGLE require this workaround
         if (m_wireframe)
@@ -339,12 +355,16 @@ void GLDisplay::renderScene()
         }
 
         //Draw the current object
-        m_shaderProgram->enableAttributeArray("vertex_worldSpace");
+        //m_shaderProgram->enableAttributeArray("vertex_worldSpace");
         //qDebug() << "vertex_worldSpace " << m_shaderProgram->attributeLocation("vertex_worldSpace");
-        objectList[k].getQtVBO().bind();
-        m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_UNSIGNED_INT, 0, 3);
+        //objectList[k].getQtVBO().bind();
 
-        glDrawArrays(GL_TRIANGLES, 0, indicesArray.size());
+        //m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_UNSIGNED_INT, 0, 3);
+        m_renderingVAO.bind();
+
+        glDrawArraysInstanced(GL_TRIANGLES, 0, objectList[k].getMesh().getIndicesArray().size(), 1);
+
+        //glDrawArrays(GL_TRIANGLES, 0, indicesArray.size());
         //glDrawElements(GL_TRIANGLES, indicesArray.size(), GL_UNSIGNED_INT, indicesArray.constData());
         //objectList[k].getQtVBO().release();
 
@@ -359,11 +379,14 @@ void GLDisplay::renderScene()
 
     }
 
-    m_shaderProgram->disableAttributeArray("vertex_worldSpace");
+    /*m_shaderProgram->disableAttributeArray("vertex_worldSpace");
     m_shaderProgram->disableAttributeArray("normal_worldSpace");
     m_shaderProgram->disableAttributeArray("textureCoordinates_input");
+*/
+    m_renderingVAO.release();
 
     m_shaderProgram->release();
+
 }
 
 
