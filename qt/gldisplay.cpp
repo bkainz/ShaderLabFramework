@@ -731,7 +731,9 @@ void GLDisplay::updateObject(QString object)
     }
 
     m_scene->removeObjects();
+
     m_scene->addObject(objectFileName);
+
     emit(updateMaterialTab());
     update();//Update openGL
 }
