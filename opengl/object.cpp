@@ -53,8 +53,8 @@ m_modelMatrix(QMatrix4x4()), m_rotationX(0), m_rotationY(0), m_rotationZ(0)
     if (m_QtVBO.bind()) qDebug() << "Success biding vertex position buffer";
 
     size_t VBOSize =   3 * m_mesh.getVertices().size() * sizeof(float)
-            + 3 * m_mesh.getVertices().size() * sizeof(float)
             + m_mesh.getIndicesArray().size() * sizeof(GLuint)
+            + 2 * m_mesh.getTextureCoordinates().size() * sizeof(float)
             + 3 * m_mesh.getVertexNormals().size() * sizeof(float);
 
 
