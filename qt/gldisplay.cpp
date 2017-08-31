@@ -711,7 +711,6 @@ void GLDisplay::updateObject(QString object)
 {
     string objectFileName;
 
-    m_renderingVAO.destroy();
     m_renderingVAO.bind();
 
     if (object == "Square")
