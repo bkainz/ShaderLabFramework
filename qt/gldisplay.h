@@ -233,8 +233,9 @@ private:
     QOpenGLFunctions *f;
     bool shaderProgramNeedsLink;
 
-    Object square;
+    Object m_R2Tsquare;
     QOpenGLVertexArrayObject m_renderingVAO;
+    QOpenGLVertexArrayObject m_R2TVAO;
 };
 
 #endif // GLDISPLAY_H

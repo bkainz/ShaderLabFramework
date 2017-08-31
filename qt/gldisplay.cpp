@@ -150,7 +150,27 @@ void GLDisplay::initializeGL()
     QVector4D upVectorScene = QVector4D(0.0, 1.0, 0.0, 1.0);
     QVector4D centerScene = QVector4D(0.0, 0.0, 0.0, 1.0);
 
-    square = Object(string("square"));
+
+    if(!m_R2TVAO.create())
+        cerr << "Could not create R2T VAO" << endl;
+
+    m_R2TVAO.bind();
+
+    m_R2Tsquare = Object(string("square"));
+
+    //The square is betweem -0.5 and 0.5
+    //Scale it by a factor of 2 so that it covers the entire screen (between -1 and 1)
+    m_R2Tsquare.scale(2.0);
+
+    m_shaderProgramDisplay->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
+    m_shaderProgramDisplay->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_R2Tsquare.getTextureCoordinatesOffset(), 2, 0);
+    m_shaderProgramDisplay->setAttributeBuffer("normal_worldSpace", GL_FLOAT,  m_R2Tsquare.getNormalsOffset(), 3, 0);
+
+    m_shaderProgramDisplay->enableAttributeArray("vertex_worldSpace");
+    m_shaderProgramDisplay->enableAttributeArray("textureCoordinate_input");
+    m_shaderProgramDisplay->enableAttributeArray("normal_worldSpace");
+
+    m_R2TVAO.release();
 
     m_cameraScene = Camera(positionScene, upVectorScene, centerScene, true, (float)m_framebuffer->getWidth() / (float)m_framebuffer->getHeight(), 45.0);
     emit updateViewMatrix(m_cameraScene.getViewMatrix());
@@ -175,15 +195,15 @@ void GLDisplay::resizeGL(int width, int height)
 void GLDisplay::paintGL()
 {
     //Render the scene
-    //f->glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer->getFramebufferID());
-    f->glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    f->glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer->getFramebufferID());
+    //f->glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     //Clear screen
     //Clear the color and the z buffer
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //glViewport(0, 0, m_framebuffer->getWidth(), m_framebuffer->getHeight());
-    glViewport(0, 0, this->width(), this->height());
+    glViewport(0, 0, m_framebuffer->getWidth(), m_framebuffer->getHeight());
+    //glViewport(0, 0, this->width(), this->height());
 
     this->setOpenGLRenderingState();
 
@@ -195,15 +215,15 @@ void GLDisplay::paintGL()
     this->renderScene();
 
     //Apply one render to texture pass
-  /*  f->glBindFramebuffer(GL_FRAMEBUFFER, m_framebufferFinalResult->getFramebufferID());
+    f->glBindFramebuffer(GL_FRAMEBUFFER, m_framebufferFinalResult->getFramebufferID());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glViewport(0, 0, m_framebufferFinalResult->getWidth(), m_framebufferFinalResult->getHeight());
 
     this->renderToTexture(m_framebuffer->getColorBufferID(0), false);
-*/
+
     /*------ Display the framebuffer on the screen -----*/
- /*   f->glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    f->glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glViewport(0, 0, this->width(), this->height());
@@ -211,7 +231,7 @@ void GLDisplay::paintGL()
     //use the simplified pipeline for better speed
     this->renderToTexture(m_framebufferFinalResult->getColorBufferID(0), true);
 
-    this->drawFPS();*/
+    this->drawFPS();
 }
 
 void GLDisplay::setOpenGLWireframeState(bool activateWireframeMode)
@@ -460,41 +480,21 @@ void GLDisplay::renderToTexture(const int textureId, bool isSimplifiedPipeline)
         }
     }
 
-    //The square is betweem -0.5 and 0.5
-    //Scale it by a factor of 2 so that it covers the entire screen (between -1 and 1)
-    square.scale(2.0);
 
     QMatrix4x4 viewMatrixQuad = m_cameraQuad.getViewMatrix();
     QMatrix4x4 projectionMatrixQuad = m_cameraQuad.getProjectionMatrix();
 
-    m_shaderProgramDisplay->setUniformValue("mMatrix", square.getModelMatrix());
-    m_shaderProgramDisplay->setUniformValue("mvMatrix", viewMatrixQuad*square.getModelMatrix());
+    m_shaderProgramDisplay->setUniformValue("mMatrix", m_R2Tsquare.getModelMatrix());
+    m_shaderProgramDisplay->setUniformValue("mvMatrix", viewMatrixQuad*m_R2Tsquare.getModelMatrix());
     m_shaderProgramDisplay->setUniformValue("mvMatrixScene", m_scene->getObjects()[0].getModelMatrix()*m_cameraScene.getViewMatrix());
     m_shaderProgramDisplay->setUniformValue("pMatrix", projectionMatrixQuad);
 
-   // m_shaderProgramDisplay->setAttributeArray("vertex_worldSpace", square.getMesh().getVertices().constData());
-   // m_shaderProgramDisplay->enableAttributeArray("vertex_worldSpace");
-
-    m_shaderProgramDisplay->setAttributeArray("textureCoordinate_input", square.getMesh().getTextureCoordinates().constData());
-    m_shaderProgramDisplay->enableAttributeArray("textureCoordinate_input");
-
-    m_shaderProgramDisplay->setAttributeArray("normal_worldSpace", square.getMesh().getVertexNormals().constData());
-    m_shaderProgramDisplay->enableAttributeArray("normal_worldSpace");
-
     //Draw the current object
-    square.getQtVBO().bind();
-    
-    m_shaderProgramDisplay->enableAttributeArray("vertex_worldSpace");
-    //qDebug() << "vertex_worldSpace " << m_shaderProgramDisplay->attributeLocation("vertex_worldSpace");
-    m_shaderProgramDisplay->setAttributeBuffer("vertex_worldSpace", GL_UNSIGNED_INT, 0, 3);
-    glDrawArrays(GL_TRIANGLES, 0, square.getMesh().getIndicesArray().size());
-    //glDrawElements(GL_TRIANGLES, square.getMesh().getIndicesArray().size(), GL_UNSIGNED_INT, square.getMesh().getIndicesArray().constData());
+    m_R2TVAO.bind();
 
-   // square.getQtVBO().release();
-    m_shaderProgramDisplay->disableAttributeArray("vertex_worldSpace");
-    m_shaderProgramDisplay->disableAttributeArray("normal_worldSpace");
-    m_shaderProgramDisplay->disableAttributeArray("textureCoordinates_input");
+    glDrawElements(GL_TRIANGLES, m_R2Tsquare.getMesh().getIndicesArray().size(), GL_UNSIGNED_INT, 0);
 
+    m_R2TVAO.release();
     m_shaderProgramDisplay->release();
 }
 
