@@ -369,7 +369,7 @@ void GLDisplay::renderScene()
 
         //glDrawArrays(GL_TRIANGLES, 0, indicesArray.size());
 
-        glDrawElements(GL_TRIANGLES, indicesArray.size(), GL_UNSIGNED_SHORT, 0);
+        glDrawElements(GL_TRIANGLES, indicesArray.size(), GL_UNSIGNED_INT, 0);
         //glDrawElements(GL_TRIANGLES, indicesArray.size(), GL_UNSIGNED_INT, indicesArray.constData());
         //objectList[k].getQtVBO().release();
 
@@ -711,6 +711,9 @@ void GLDisplay::updateObject(QString object)
 {
     string objectFileName;
 
+    m_renderingVAO.destroy();
+    m_renderingVAO.bind();
+
     if (object == "Square")
     {
         objectFileName = "square";
@@ -735,6 +738,16 @@ void GLDisplay::updateObject(QString object)
     m_scene->removeObjects();
 
     m_scene->addObject(objectFileName);
+
+    m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
+    m_shaderProgram->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_scene->getObjects()[0].getTextureCoordinatesOffset(), 2, 0);
+    m_shaderProgram->setAttributeBuffer("normal_worldSpace", GL_FLOAT,  m_scene->getObjects()[0].getNormalsOffset(), 3, 0);
+
+    m_shaderProgram->enableAttributeArray("vertex_worldSpace");
+    m_shaderProgram->enableAttributeArray("textureCoordinate_input");
+    m_shaderProgram->enableAttributeArray("normal_worldSpace");
+
+    m_renderingVAO.release();
 
     emit(updateMaterialTab());
     update();//Update openGL
