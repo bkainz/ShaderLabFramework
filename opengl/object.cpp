@@ -278,11 +278,6 @@ int Object::getVertexOffset() const
     return m_vertexOffset;
 }
 
-int Object::getIndicesOffset() const
-{
-    return m_indicesOffset;
-}
-
 int Object::getTextureCoordinatesOffset() const
 {
     return m_texturesCoordsOffset;

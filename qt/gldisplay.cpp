@@ -194,6 +194,9 @@ void GLDisplay::resizeGL(int width, int height)
 
 void GLDisplay::paintGL()
 {
+    //Enable depth test
+    glEnable(GL_DEPTH_TEST);
+
     //Render the scene
     f->glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer->getFramebufferID());
     //f->glBindFramebuffer(GL_FRAMEBUFFER, 0);

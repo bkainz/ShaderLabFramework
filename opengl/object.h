@@ -117,7 +117,6 @@ private:
     QOpenGLBuffer m_QtIndexBuffer;
 
     int m_vertexOffset;
-    int m_indicesOffset;
     int m_texturesCoordsOffset;
     int m_normalsOffset;
 
