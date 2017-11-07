@@ -36,7 +36,6 @@ GLDisplay::GLDisplay(QWidget *parent) : QOpenGLWidget(parent),
 m_cameraScene(Camera()), m_cameraQuad(Camera()),
 m_mousePos(0, 0),
 m_lastFPSUpdate(0), m_frameCounter(0), m_FPS(0),
-//m_shaderProgram(), m_shaderProgramDisplay(),
 m_wireframe(false), m_backFaceCulling(false), m_renderCoordinateFrame(false)
 {
     m_shaderProgram = new QGLShaderProgram(this);
@@ -44,21 +43,8 @@ m_wireframe(false), m_backFaceCulling(false), m_renderCoordinateFrame(false)
 
     m_timer.start(1000.0 / MAX_FPS);
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(updateOpenGL()));
-    shaderProgramNeedsLink = true;
+    m_shaderProgramNeedsLink = true;
 }
-
-/*
-GLDisplay::GLDisplay(const QGLFormat& glFormat, QWidget *parent) : QGLWidget(glFormat, parent),
-m_cameraScene(Camera()), m_cameraQuad(Camera()),
-m_mousePos(0, 0),
-m_timeFPS(QTime()), m_lastFPSUpdate(0), m_frameCounter(0), m_FPS(0),
-// m_shaderProgram(), m_shaderProgramDisplay(),
-m_wireframe(false), m_backFaceCulling(false), m_renderCoordinateFrame(false)
-{
-    m_shaderProgram = new QGLShaderProgram(this);
-    m_shaderProgramDisplay = new QGLShaderProgram(this);
-}
-*/
 
 GLDisplay::~GLDisplay()
 {
@@ -69,7 +55,7 @@ GLDisplay::~GLDisplay()
     delete m_framebuffer;
 
     delete m_framebufferFinalResult;
-    delete shaderEditor;
+    delete m_shaderEditor;
 
 }
 
@@ -97,19 +83,19 @@ void GLDisplay::initializeGL()
     glEnable(GL_MULTISAMPLE);
     glClearColor(0, 0, 0, 0);
 
-    shaderEditor = new GLSLEditorWindow(m_shaderProgram, m_shaderProgramDisplay, this);
-    connect(shaderEditor, SIGNAL(updateLog(QString)), this, SIGNAL(updateLog(QString)));
-    connect(shaderEditor, SIGNAL(displayLog()), this, SIGNAL(displayLog()));
-    connect(shaderEditor, SIGNAL(updateUniformTab()), this, SIGNAL(updateUniformTab()));
-    connect(shaderEditor, SIGNAL(updateShaderProgram()), this, SLOT(linkShaderProgram()));
+    m_shaderEditor = new GLSLEditorWindow(m_shaderProgram, m_shaderProgramDisplay, this);
+    connect(m_shaderEditor, SIGNAL(updateLog(QString)), this, SIGNAL(updateLog(QString)));
+    connect(m_shaderEditor, SIGNAL(displayLog()), this, SIGNAL(displayLog()));
+    connect(m_shaderEditor, SIGNAL(updateUniformTab()), this, SIGNAL(updateUniformTab()));
+    connect(m_shaderEditor, SIGNAL(updateShaderProgram()), this, SLOT(linkShaderProgram()));
 
-    shaderEditor->loadDefaultShaders();
+    m_shaderEditor->loadDefaultShaders();
 
-    shaderEditor->resize(QDesktopWidget().availableGeometry(this).size().width() * 0.5,
+    m_shaderEditor->resize(QDesktopWidget().availableGeometry(this).size().width() * 0.5,
         QDesktopWidget().availableGeometry(this).size().height() * 0.97);
-    shaderEditor->move(QDesktopWidget().availableGeometry(this).size().width() * 0.5, 0);
+    m_shaderEditor->move(QDesktopWidget().availableGeometry(this).size().width() * 0.5, 0);
 
-    shaderEditor->show();
+    m_shaderEditor->show();
 
     qDebug() << "loading scene";
 
@@ -199,14 +185,12 @@ void GLDisplay::paintGL()
 
     //Render the scene
     f->glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer->getFramebufferID());
-    //f->glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     //Clear screen
     //Clear the color and the z buffer
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glViewport(0, 0, m_framebuffer->getWidth(), m_framebuffer->getHeight());
-    //glViewport(0, 0, this->width(), this->height());
 
     this->setOpenGLRenderingState();
 
@@ -362,17 +346,6 @@ void GLDisplay::renderScene()
         //sendData
         this->sendObjectDataToShaders(objectList[k]);
 
-        /*---------------- Vertices, texture coordinates and normals ---------------------*/
-
-        //m_shaderProgram->setAttributeArray("vertex_worldSpace", vertices.constData());
-        //m_shaderProgram->enableAttributeArray("vertex_worldSpace");
-
-        //m_shaderProgram->setAttributeArray("textureCoordinate_input", textureCoordinates.constData());
-       // m_shaderProgram->enableAttributeArray("textureCoordinate_input");
-
-        //m_shaderProgram->setAttributeArray("normal_worldSpace", normals.constData());
-        //m_shaderProgram->enableAttributeArray("normal_worldSpace");
-
         //on some platforms Qt and ANGLE require this workaround
         if (m_wireframe)
         {
@@ -381,40 +354,22 @@ void GLDisplay::renderScene()
         }
 
         //Draw the current object
-        //m_shaderProgram->enableAttributeArray("vertex_worldSpace");
-        //qDebug() << "vertex_worldSpace " << m_shaderProgram->attributeLocation("vertex_worldSpace");
-        //objectList[k].getQtVBO().bind();
+         m_renderingVAO.bind();
 
-        //m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_UNSIGNED_INT, 0, 3);
-        m_renderingVAO.bind();
+         glDrawElements(GL_TRIANGLES, indicesArray.size(), GL_UNSIGNED_INT, 0);
 
-        //glDrawArraysInstanced(GL_TRIANGLES, 0, indicesArray.size(), 1);
+         if (m_wireframe)
+         {
+             //deactivate wireframe!
+             setOpenGLWireframeState(false);
+         }
 
-        //glDrawArrays(GL_TRIANGLES, 0, indicesArray.size());
-
-        glDrawElements(GL_TRIANGLES, indicesArray.size(), GL_UNSIGNED_INT, 0);
-        //glDrawElements(GL_TRIANGLES, indicesArray.size(), GL_UNSIGNED_INT, indicesArray.constData());
-        //objectList[k].getQtVBO().release();
-
-        if (m_wireframe)
-        {
-            //deactivate wireframe!
-            setOpenGLWireframeState(false);
-        }
-
-        //Unbind the textures
-        glBindTexture(GL_TEXTURE_2D, 0);
-
+         //Unbind the textures
+         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-    /*m_shaderProgram->disableAttributeArray("vertex_worldSpace");
-    m_shaderProgram->disableAttributeArray("normal_worldSpace");
-    m_shaderProgram->disableAttributeArray("textureCoordinates_input");
-*/
     m_renderingVAO.release();
-
     m_shaderProgram->release();
-
 }
 
 
@@ -648,7 +603,7 @@ void GLDisplay::mouseMoveEvent(QMouseEvent *event)
     }
     else if (event->buttons() == Qt::LeftButton && QApplication::keyboardModifiers() == Qt::ControlModifier)
     {
-        m_scene->translateLightSourceZ(0, (m_mousePos.x() - event->pos().x()) / 100.0);
+        m_scene->translateLightSourceX(0, (m_mousePos.x() - event->pos().x()) / 100.0);
         m_scene->translateLightSourceY(0, (m_mousePos.y() - event->pos().y()) / 100.0);
     }
 
@@ -673,7 +628,6 @@ void GLDisplay::keyPressEvent(QKeyEvent *event)
     {
         m_scene->translateLightSourceZ(0, 5.0);
     }
-
 
     //Reset scene and animation
     if (event->key() == Qt::Key_D)

@@ -70,7 +70,6 @@ void Light::translateZ(float translationZ)
     m_modelMatrix.translate(0.0, 0.0, translationZ);
     float currentPosition = m_lightPosition.z();
     m_lightPosition.setZ(currentPosition + translationZ);
-    cout << m_lightPosition.z() << endl;
 }
 
 QVector4D Light::getLightPosition() const

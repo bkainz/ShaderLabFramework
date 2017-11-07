@@ -69,7 +69,6 @@ class GLDisplay : public QOpenGLWidget
 
 public:
     GLDisplay(QWidget *parent);
-    //GLDisplay(const QGLFormat& glFormat, QWidget *parent);
     virtual ~GLDisplay();
 
     /**
@@ -228,10 +227,10 @@ private:
     bool m_renderCoordinateFrame;
 
     //Editor
-    GLSLEditorWindow* shaderEditor;
+    GLSLEditorWindow* m_shaderEditor;
 
     QOpenGLFunctions *f;
-    bool shaderProgramNeedsLink;
+    bool m_shaderProgramNeedsLink;
 
     Object m_R2Tsquare;
     QOpenGLVertexArrayObject m_renderingVAO;
