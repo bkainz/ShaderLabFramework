@@ -26,6 +26,8 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#define LIGHT_POSITION_Z 33.87
+
 #include "opengl/object.h"
 #include "opengl/light.h"
 

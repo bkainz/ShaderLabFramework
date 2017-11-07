@@ -143,7 +143,7 @@ void Scene::buildScene(string object)
     this->addObject(object);
 
     //Be careful not to put the light inside the object
-    m_pointLights.push_back(Light(QVector4D(-10.0, 0.0, 30.0, 1.0), QVector3D(1.0, 1.0, 1.0), 1.0));
+    m_pointLights.push_back(Light(QVector4D(0.0, 0.0, LIGHT_POSITION_Z, 1.0), QVector3D(1.0, 1.0, 1.0), 1.0));
 }
 
 
@@ -164,7 +164,7 @@ void Scene::resetScene()
     //Be careful not to put the light inside the object
     for (int k = 0; k < m_objects.size(); k++)
     {
-        m_pointLights[k].setPosition(0.0, 0.0, 30.0);
+        m_pointLights[k].setPosition(0.0, 0.0, LIGHT_POSITION_Z);
     }
 }
 

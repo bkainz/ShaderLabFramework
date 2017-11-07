@@ -356,7 +356,7 @@ void GLDisplay::renderScene()
         m_shaderProgram->setUniformValue("mvMatrix", viewMatrixScene*modelMatrixObject);
         m_shaderProgram->setUniformValue("pMatrix", projectionScene);
         m_shaderProgram->setUniformValue("normalMatrix", (viewMatrixScene*modelMatrixObject).normalMatrix()); //Normals are in the camera space
-        m_shaderProgram->setUniformValue("lightPosition_camSpace", viewMatrixScene*lightModelMatrix*lightPosition); //Light position in the camera space
+        m_shaderProgram->setUniformValue("lightPosition_camSpace", viewMatrixScene*lightPosition); //Light position in the camera space
         m_shaderProgram->setUniformValue("time", m_timeFPS.elapsed()); //Time
 
         //sendData
@@ -648,7 +648,7 @@ void GLDisplay::mouseMoveEvent(QMouseEvent *event)
     }
     else if (event->buttons() == Qt::LeftButton && QApplication::keyboardModifiers() == Qt::ControlModifier)
     {
-        m_scene->translateLightSourceX(0, (m_mousePos.x() - event->pos().x()) / 100.0);
+        m_scene->translateLightSourceZ(0, (m_mousePos.x() - event->pos().x()) / 100.0);
         m_scene->translateLightSourceY(0, (m_mousePos.y() - event->pos().y()) / 100.0);
     }
 
