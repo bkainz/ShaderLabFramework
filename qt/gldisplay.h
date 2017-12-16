@@ -235,6 +235,7 @@ private:
     Object m_R2Tsquare;
     QOpenGLVertexArrayObject m_renderingVAO;
     QOpenGLVertexArrayObject m_R2TVAO;
+	QOpenGLDebugLogger logger;
 };
 
 #endif // GLDISPLAY_H

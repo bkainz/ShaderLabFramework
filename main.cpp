@@ -32,8 +32,9 @@ int main(int argc, char *argv[])
     //By default sets OpenGL to OpenGL 4 with Core Profile
     QSurfaceFormat glFormat;
     glFormat.setMajorVersion(4);
-    glFormat.setMinorVersion(5);
+    glFormat.setMinorVersion(4);
     glFormat.setProfile(QSurfaceFormat::CoreProfile);
+	glFormat.setOption(QSurfaceFormat::DebugContext);
 
     QSurfaceFormat::setDefaultFormat(glFormat);
 

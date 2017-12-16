@@ -39,6 +39,14 @@
 #include <string>
 #include <sstream>
 
+#define USE_INTERLEAVED 0
+struct Vertex
+{
+	QVector3D position;
+	QVector3D normal;
+	QVector3D texcoord;
+};
+
 class Object
 {
 public:
