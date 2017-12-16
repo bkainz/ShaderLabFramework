@@ -73,12 +73,6 @@ m_modelMatrix(QMatrix4x4()), m_rotationX(0), m_rotationY(0), m_rotationZ(0)
 
 #else
 
-	QVector<QVector3D> vertices;
-	for (int i = 0; i < m_mesh.getVertices().size(); i++)
-	{
-		vertices.push_back(m_mesh.getVertices()[i]);
-	}
-
     int sizeVertices = m_mesh.getVertices().size() * sizeof(QVector3D);
     int sizeTextureCoords = m_mesh.getTextureCoordinates().size() * sizeof(QVector2D);
     int sizeNormals = m_mesh.getVertexNormals().size() * sizeof(QVector3D);
@@ -86,20 +80,19 @@ m_modelMatrix(QMatrix4x4()), m_rotationX(0), m_rotationY(0), m_rotationZ(0)
     size_t VBOSize = sizeVertices + sizeTextureCoords + sizeNormals;
 
     m_vertexOffset = 0;
-    //m_texturesCoordsOffset = sizeVertices;
-	m_normalsOffset = sizeVertices;//m_texturesCoordsOffset + sizeTextureCoords;
-	m_texturesCoordsOffset = m_normalsOffset + sizeNormals;
+    m_texturesCoordsOffset = sizeVertices;
+	m_normalsOffset = m_texturesCoordsOffset + sizeTextureCoords;
 
     m_QtVBO.allocate(VBOSize);
 
     //  send the vertice data to the vbo using allocate
-    m_QtVBO.write(m_vertexOffset, vertices.constData(),  sizeVertices);
-
-	//Send the normals data
-	m_QtVBO.write(m_normalsOffset, m_mesh.getVertexNormals().constData(), sizeNormals);
+    m_QtVBO.write(m_vertexOffset, m_mesh.getVertices().constData(),  sizeVertices);
 
     //Send the texture coordinates data
     m_QtVBO.write(m_texturesCoordsOffset, m_mesh.getTextureCoordinates().constData(), sizeTextureCoords);
+
+	//Send the normals data
+	m_QtVBO.write(m_normalsOffset, m_mesh.getVertexNormals().constData(), sizeNormals);
 #endif
 
     m_QtIndexBuffer = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
