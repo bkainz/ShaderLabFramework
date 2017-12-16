@@ -45,6 +45,8 @@ m_wireframe(false), m_backFaceCulling(false), m_renderCoordinateFrame(false)
     m_timer.start(1000.0 / MAX_FPS);
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(updateOpenGL()));
     m_shaderProgramNeedsLink = true;
+
+	connect(&logger, SIGNAL(messageLogged(QOpenGLDebugMessage)), this, SLOT(glMessageLogged(QOpenGLDebugMessage)));
 }
 
 GLDisplay::~GLDisplay()
@@ -58,6 +60,11 @@ GLDisplay::~GLDisplay()
     delete m_framebufferFinalResult;
     delete m_shaderEditor;
 
+}
+
+void GLDisplay::glMessageLogged(QOpenGLDebugMessage m)
+{
+	qDebug() << "gl message logged: " << m;
 }
 
 void GLDisplay::initializeGL()

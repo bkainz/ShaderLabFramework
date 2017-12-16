@@ -177,6 +177,8 @@ signals:
      */
     void updateOpenGL();
 
+	void glMessageLogged(QOpenGLDebugMessage m);
+
 protected:
     void initializeGL();
     void resizeGL(int width, int height);
