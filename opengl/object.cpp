@@ -51,9 +51,9 @@ m_modelMatrix(QMatrix4x4()), m_rotationX(0), m_rotationY(0), m_rotationZ(0)
 
     if (m_QtVBO.bind()) qDebug() << "Success biding vertex position buffer";
 
-	qDebug() << m_mesh.getVertices().size();
-	qDebug() << m_mesh.getVertexNormals().size();
-	qDebug() << m_mesh.getTextureCoordinates().size();
+	//qDebug() << m_mesh.getVertices().size();
+	//qDebug() << m_mesh.getVertexNormals().size();
+	//qDebug() << m_mesh.getTextureCoordinates().size();
 
 	int numVertices = m_mesh.getVertices().size();
 
