@@ -119,6 +119,7 @@ void GLDisplay::reinitGL()
 
 	qDebug() << "loading scene";
 
+	m_renderingVAO.destroy();
 	//Load VAO
 	if (!m_renderingVAO.create())
 		cerr << "Could not create VAO" << endl;
@@ -782,58 +783,38 @@ void GLDisplay::projectionMatrixUpdated(QMatrix4x4 projectionMatrix)
 
 void GLDisplay::takeScreenshot()
 {
-    int width = m_framebufferFinalResult->getWidth();
-    int height = m_framebufferFinalResult->getHeight();
-    int numberOfComponents = 3;
+	QImage screenshot0 = this->grabFramebuffer();
 
-    uchar *data = new uchar[width*height*numberOfComponents];
-
-    if (data != NULL)
-    {
-        //Read the data from the screen
-        f->glBindFramebuffer(GL_FRAMEBUFFER, m_framebufferFinalResult->getFramebufferID());
-        //Reset the viewport !!
-        glViewport(0, 0, width, height);
-
-        //Add the username date and time to the screenshot
-        QDate currentDate = QDate::currentDate();
-        QTime currentTime = QTime::currentTime();
-        QString username;
+	QDate currentDate = QDate::currentDate();
+	QTime currentTime = QTime::currentTime();
+	QString username;
 #ifdef WIN32
-        username = qgetenv("USERNAME");
+	username = qgetenv("USERNAME");
 #else
-        username = qgetenv("USER");
+	username = qgetenv("USER");
 #endif
-        if (username.isEmpty())
-        {
-            QStringList homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-            username = homePath.first().split(QDir::separator()).last();
-        }
-        glColor3f(1.0, 1.0, 1.0);
-        renderText(10.0, 20.0, username + QString(" ") + currentDate.toString() + QString(" ") + currentTime.toString());
+	if (username.isEmpty())
+	{
+		QStringList homePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+		username = homePath.first().split(QDir::separator()).last();
+	}
 
-         //The OpenGL window is at position this->x(), this->y() in its parent
-         //Start reading pixels from there
+	QPainter p;
+	if (!p.begin(&screenshot0)) qDebug() << "setting QPainter failed! "; 
 
-        glReadPixels(0, 0, (GLsizei)width, (GLsizei)height, GL_RGB, GL_UNSIGNED_BYTE, data);
+	p.setPen(QPen(Qt::white));
+	p.setFont(QFont("Times", 8, QFont::Normal));
+	p.drawText(screenshot0.rect(), Qt::AlignBottom, username + QString(" ") + 
+			currentDate.toString() + QString(" ") + currentTime.toString());
+	p.end();
 
-        //Reverse the image : OpenGL texture coordinate system has a y axis going up
-        //QImage is indexed with a y axis going down
-        //Save the mirrored screenshot
-        QImage screenshot = QImage(data, width, height, QImage::Format_RGB888);
-
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-            QDir::currentPath(),
-            tr("Images (*.jpg)"));
-
-        screenshot.mirrored().save(fileName);
-
-        QString text = QString("Screenshot saved : %1\n\n").arg(fileName);
-        emit updateLog(text);
-        emit displayLog();
-
-        delete[] data;
-    }
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+		QDir::currentPath(),
+		tr("Images (*.jpg)"));
+	screenshot0.save(fileName);
+	QString text = QString("Screenshot saved : %1\n\n").arg(fileName);
+	emit updateLog(text);
+	emit displayLog();
 }
 
 void GLDisplay::resetMatrices()
