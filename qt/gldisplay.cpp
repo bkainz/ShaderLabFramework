@@ -738,7 +738,7 @@ void GLDisplay::updateObject(QString object)
     //m_scene->removeObjects();
 
     //m_scene->addObject(m_objectFileName);
-
+	this->linkShaderProgram();
 	//this->reinitGL();
 /*	m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
     m_shaderProgram->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_scene->getObjects()[0].getTextureCoordinatesOffset(), 2, 0);
