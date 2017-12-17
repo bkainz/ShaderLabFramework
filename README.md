@@ -29,9 +29,8 @@ IN THE SOFTWARE.
 This tool was inspired by ['Shader Maker'](http://cgvr.cs.uni-bremen.de/teaching/shader_maker/), a Computer Graphics teaching tool developed by the team of Prof.Dr.Gabriel Zachmann, 	University of Bremen. The Copyright holders of 'Shader Maker' granted permission to use their code. The GLSL shader editor syntax highlighter classes are based on the implementation provided by 'Shader Maker'.
 
 ## Dependencies:
-- [Qt5](https://www.qt.io/download/)
+- [Qt5 v5.9+](https://www.qt.io/download/)
 - [CMake](https://cmake.org/download/) 
-- [GLEW](http://glew.sourceforge.net/)
 
 ## Compile and run:
 
@@ -71,7 +70,7 @@ make
 
 ## TODO:
 - search function in code editor
-- some random bug in the screenshot function
+- conversion of the coordinate frame for OpenGL4 (will not work on Mac etc. at the moment)
 
 ## Examples implemented using the ShaderLabFramework
 
