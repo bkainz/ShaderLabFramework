@@ -239,6 +239,7 @@ private:
     QOpenGLVertexArrayObject m_renderingVAO;
     QOpenGLVertexArrayObject m_R2TVAO;
 	QOpenGLDebugLogger logger;
+	string m_objectFileName;
 };
 
 #endif // GLDISPLAY_H

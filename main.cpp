@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     QSurfaceFormat glFormat;
     glFormat.setMajorVersion(4);
     glFormat.setMinorVersion(4);
-    glFormat.setProfile(QSurfaceFormat::CoreProfile);
+	glFormat.setProfile(QSurfaceFormat::CompatibilityProfile);// ::CoreProfile);
 	glFormat.setOption(QSurfaceFormat::DebugContext);
 
     QSurfaceFormat::setDefaultFormat(glFormat);

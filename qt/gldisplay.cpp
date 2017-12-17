@@ -39,6 +39,7 @@ m_mousePos(0, 0),
 m_lastFPSUpdate(0), m_frameCounter(0), m_FPS(0),
 m_wireframe(false), m_backFaceCulling(false), m_renderCoordinateFrame(false)
 {
+	m_objectFileName = "teapot";
     m_shaderProgram = new QGLShaderProgram(this);
     m_shaderProgramDisplay = new QGLShaderProgram(this);
 
@@ -104,7 +105,6 @@ void GLDisplay::initializeGL()
     m_shaderEditor->show();
 
 	this->reinitGL();
-
 }
 
 
@@ -125,17 +125,18 @@ void GLDisplay::reinitGL()
 		cerr << "Could not create VAO" << endl;
 
 	m_renderingVAO.bind();
+	
+	m_scene = new Scene(m_objectFileName);
 
-
-    if(m_scene == NULL)
+    /*if(m_scene == NULL)
     {
         m_scene = new Scene(string("teapot")); //Initialise with the teapot
     }
     else
     {
-        QVector<Object> currentObjects = m_scene->getObjects();
-        m_scene = new Scene(currentObjects[0].getObjectName()); //Initialise with the teapot
-    }
+        //QVector<Object> currentObjects = m_scene->getObjects();
+		m_scene = new Scene(m_objectFileName);//currentObjects[0].getObjectName()); //Initialise with the teapot
+    }*/
 
 	m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
 	m_shaderProgram->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_scene->getObjects()[0].getTextureCoordinatesOffset(), 2, 0);
@@ -284,7 +285,8 @@ void GLDisplay::setOpenGLRenderingState()
 
 void GLDisplay::renderCoordinateFrame()
 {
-	//TODO redo for OpenGL 4
+	//TODO redo for OpenGL 4 -- this is only possible in compatibility profile.
+	//DO NOT USE OLD-STYLE OPENGL here
     // IMPORTANT : During the rotation the coordinate frame might not look orthogonal
     // This is due to the rendering window that is not square
     // Expand the window so that it becomes a square and the coordinate frame will be orthogonal
@@ -315,7 +317,6 @@ void GLDisplay::renderCoordinateFrame()
 
     //Render the coordinate frame
     // ! The rotation must be applied when the line is centered at the origin
-#if 0
     glBegin(GL_LINES);
     glColor3f(0.0, 0.0, 0.0);
     glVertex3f(-1.0, 0.0, 0.0);
@@ -332,7 +333,6 @@ void GLDisplay::renderCoordinateFrame()
     glColor3f(0.0, 0.0, 1.0);
     glVertex3f(0.0, 0.0, 1.0);
     glEnd();
-#endif
 
     glLineWidth(1);
 }
@@ -710,36 +710,37 @@ void GLDisplay::updateCameraFieldOfView(double fieldOfView)
 
 void GLDisplay::updateObject(QString object)
 {
-    string objectFileName;
+    //string objectFileName;
 
-    m_renderingVAO.bind();
+    //m_renderingVAO.bind();
 
     if (object == "Square")
     {
-        objectFileName = "square";
+		m_objectFileName = "square";
     }
     else if (object == "Cube")
     {
-        objectFileName = "cube";
+		m_objectFileName = "cube";
     }
     else if (object == "Monkey")
     {
-        objectFileName = "monkey";
+		m_objectFileName = "monkey";
     }
     else if (object == "Teapot")
     {
-        objectFileName = "teapot";
+		m_objectFileName = "teapot";
     }
     else if (object == "Teapot low res")
     {
-        objectFileName = "teapot-low";
+		m_objectFileName = "teapot-low";
     }
 
-    m_scene->removeObjects();
+    //m_scene->removeObjects();
 
-    m_scene->addObject(objectFileName);
+    //m_scene->addObject(m_objectFileName);
 
-	m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
+	//this->reinitGL();
+/*	m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
     m_shaderProgram->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_scene->getObjects()[0].getTextureCoordinatesOffset(), 2, 0);
     m_shaderProgram->setAttributeBuffer("normal_worldSpace", GL_FLOAT,  m_scene->getObjects()[0].getNormalsOffset(), 3, 0);
 	
@@ -747,7 +748,7 @@ void GLDisplay::updateObject(QString object)
     m_shaderProgram->enableAttributeArray("textureCoordinate_input");
     m_shaderProgram->enableAttributeArray("normal_worldSpace");
 
-    m_renderingVAO.release();
+    m_renderingVAO.release();*/
 
     emit(updateMaterialTab());
     update();//Update openGL
