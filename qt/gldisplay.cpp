@@ -112,6 +112,8 @@ void GLDisplay::initializeGL()
     if(!m_renderingVAO.create())
         cerr << "Could not create VAO" << endl;
 
+
+
     m_renderingVAO.bind();
 
     m_scene = new Scene(string("teapot")); //Initialise with the teapot
@@ -121,13 +123,13 @@ void GLDisplay::initializeGL()
 	f->glVertexAttribPointer(m_shaderProgram->attributeLocation("textureCoordinate_input"), 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, texcoord)));
 	f->glVertexAttribPointer(m_shaderProgram->attributeLocation("normal_worldSpace"), 3, GL_FLOAT, GL_TRUE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, normal)));
 #else
-	f->glVertexAttribPointer(m_shaderProgram->attributeLocation("vertex_worldSpace"), 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(0));
-	f->glVertexAttribPointer(m_shaderProgram->attributeLocation("textureCoordinate_input"), 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(m_scene->getObjects()[0].getTextureCoordinatesOffset()));
-	f->glVertexAttribPointer(m_shaderProgram->attributeLocation("normal_worldSpace"), 3, GL_FLOAT, GL_TRUE, 0, reinterpret_cast<void*>(m_scene->getObjects()[0].getNormalsOffset()));
+	//f->glVertexAttribPointer(m_shaderProgram->attributeLocation("vertex_worldSpace"), 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(0));
+	//f->glVertexAttribPointer(m_shaderProgram->attributeLocation("textureCoordinate_input"), 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(m_scene->getObjects()[0].getTextureCoordinatesOffset()));
+	//f->glVertexAttribPointer(m_shaderProgram->attributeLocation("normal_worldSpace"), 3, GL_FLOAT, GL_TRUE, 0, reinterpret_cast<void*>(m_scene->getObjects()[0].getNormalsOffset()));
 #endif
-	//m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
-    //m_shaderProgram->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_scene->getObjects()[0].getTextureCoordinatesOffset(), 2, 0);
-    //m_shaderProgram->setAttributeBuffer("normal_worldSpace", GL_FLOAT,  m_scene->getObjects()[0].getNormalsOffset(), 3, 0);
+	m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
+    m_shaderProgram->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_scene->getObjects()[0].getTextureCoordinatesOffset(), 2, 0);
+    m_shaderProgram->setAttributeBuffer("normal_worldSpace", GL_FLOAT,  m_scene->getObjects()[0].getNormalsOffset(), 3, 0);
 
     m_shaderProgram->enableAttributeArray("vertex_worldSpace");
     m_shaderProgram->enableAttributeArray("textureCoordinate_input");
@@ -153,7 +155,6 @@ void GLDisplay::initializeGL()
     QVector4D positionScene = QVector4D(0.0, 0.0, INITIAL_CAMERA_Z_POSITION, 1.0);
     QVector4D upVectorScene = QVector4D(0.0, 1.0, 0.0, 1.0);
     QVector4D centerScene = QVector4D(0.0, 0.0, 0.0, 1.0);
-
 
     if(!m_R2TVAO.create())
         cerr << "Could not create R2T VAO" << endl;
@@ -184,6 +185,7 @@ void GLDisplay::initializeGL()
 	const QList<QOpenGLDebugMessage> messages = logger.loggedMessages();
 	for (const QOpenGLDebugMessage &message : messages)
 		qDebug() << message;
+
 }
 
 void GLDisplay::resizeGL(int width, int height)
@@ -241,6 +243,10 @@ void GLDisplay::paintGL()
     this->renderToTexture(m_framebufferFinalResult->getColorBufferID(0), true);
 
     this->drawFPS();
+
+	const QList<QOpenGLDebugMessage> messages = logger.loggedMessages();
+	for (const QOpenGLDebugMessage &message : messages)
+		qDebug() << message;
 }
 
 void GLDisplay::setOpenGLWireframeState(bool activateWireframeMode)
@@ -267,6 +273,7 @@ void GLDisplay::setOpenGLRenderingState()
 
 void GLDisplay::renderCoordinateFrame()
 {
+	//TODO redo for OpenGL 4
     // IMPORTANT : During the rotation the coordinate frame might not look orthogonal
     // This is due to the rendering window that is not square
     // Expand the window so that it becomes a square and the coordinate frame will be orthogonal
@@ -297,6 +304,7 @@ void GLDisplay::renderCoordinateFrame()
 
     //Render the coordinate frame
     // ! The rotation must be applied when the line is centered at the origin
+#if 0
     glBegin(GL_LINES);
     glColor3f(0.0, 0.0, 0.0);
     glVertex3f(-1.0, 0.0, 0.0);
@@ -313,6 +321,7 @@ void GLDisplay::renderCoordinateFrame()
     glColor3f(0.0, 0.0, 1.0);
     glVertex3f(0.0, 0.0, 1.0);
     glEnd();
+#endif
 
     glLineWidth(1);
 }
@@ -551,7 +560,7 @@ void GLDisplay::drawFPS()
     QString textFPS = QString("%1 FPS").arg(m_FPS);
 
     //Set the color to white for to draw the FPS
-    glColor3f(1.0, 1.0, 1.0);
+   // glColor3f(1.0, 1.0, 1.0);
     renderText(width() - textFPS.size() - 60, 20, textFPS);
 }
 
@@ -722,13 +731,13 @@ void GLDisplay::updateObject(QString object)
 	f->glVertexAttribPointer(m_shaderProgram->attributeLocation("textureCoordinate_input"), 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, texcoord)));
 	f->glVertexAttribPointer(m_shaderProgram->attributeLocation("normal_worldSpace"), 3, GL_FLOAT, GL_TRUE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, normal)));
 #else
-	f->glVertexAttribPointer(m_shaderProgram->attributeLocation("vertex_worldSpace"), 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(0));
-	f->glVertexAttribPointer(m_shaderProgram->attributeLocation("textureCoordinate_input"), 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(m_scene->getObjects()[0].getTextureCoordinatesOffset()));
-	f->glVertexAttribPointer(m_shaderProgram->attributeLocation("normal_worldSpace"), 3, GL_FLOAT, GL_TRUE, 0, reinterpret_cast<void*>(m_scene->getObjects()[0].getNormalsOffset()));
+	//f->glVertexAttribPointer(m_shaderProgram->attributeLocation("vertex_worldSpace"), 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(0));
+	//f->glVertexAttribPointer(m_shaderProgram->attributeLocation("textureCoordinate_input"), 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(m_scene->getObjects()[0].getTextureCoordinatesOffset()));
+	//f->glVertexAttribPointer(m_shaderProgram->attributeLocation("normal_worldSpace"), 3, GL_FLOAT, GL_TRUE, 0, reinterpret_cast<void*>(m_scene->getObjects()[0].getNormalsOffset()));
 #endif
-	//m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
-    //m_shaderProgram->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_scene->getObjects()[0].getTextureCoordinatesOffset(), 2, 0);
-    //m_shaderProgram->setAttributeBuffer("normal_worldSpace", GL_FLOAT,  m_scene->getObjects()[0].getNormalsOffset(), 3, 0);
+	m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
+    m_shaderProgram->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_scene->getObjects()[0].getTextureCoordinatesOffset(), 2, 0);
+    m_shaderProgram->setAttributeBuffer("normal_worldSpace", GL_FLOAT,  m_scene->getObjects()[0].getNormalsOffset(), 3, 0);
 	
     m_shaderProgram->enableAttributeArray("vertex_worldSpace");
     m_shaderProgram->enableAttributeArray("textureCoordinate_input");

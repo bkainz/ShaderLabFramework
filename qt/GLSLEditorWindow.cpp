@@ -136,8 +136,11 @@ void GLSLEditorWindow::loadDefaultShaders()
     m_shaderProgramDisplay->removeAllShaders();
 
     //TODO -- default shaders inline
-    QString stdVert("#version 400 \n\n\
-layout(location = 0) in vec4 vertex_worldSpace;\n\
+	QString stdVert("#version 440 \n\n\
+in vec3 vertex_worldSpace;\n\
+in vec3 normal_worldSpace;\n\
+in vec2 textureCoordinate_input;\n\
+\n\
 uniform mat4 mvMatrix;\n\
 uniform mat4 pMatrix;\n\
 uniform mat3 normalMatrix; //mv matrix without translation\n\
@@ -152,10 +155,6 @@ uniform float ambientCoefficent;\n\
 uniform float diffuseCoefficent;\n\
 uniform float specularCoefficent;\n\
 \n\
-//in vec4 vertex_worldSpace;\n\
-in vec3 normal_worldSpace;\n\
-in vec2 textureCoordinate_input;\n\
-\n\
 out data\n\
 {\n\
   vec4 position_camSpace;\n\
@@ -168,22 +167,24 @@ out data\n\
 void main(void)\n\
 {\n\
   //Put the vertex in the correct coordinate system by applying the model view matrix\n\
-  vec4 vertex_camSpace = mvMatrix*vertex_worldSpace; \n\
+  vec4 vertex_camSpace = mvMatrix*vec4(vertex_worldSpace,1.0f); \n\
   vertexInOut.position_camSpace = vertex_camSpace;\n\
   \n\
   //Apply the model-view transformation to the normal (only rotation, no translation)\n\
   //Normals put in the camera space\n\
   vertexInOut.normal_camSpace = normalize(normalMatrix*normal_worldSpace);\n\
   \n\
+  //we need to make sure that the normals and texture coords aren't optimised away, so we have to use them somehow\n\
+  float arrayEnsurer = (vertexInOut.normal_camSpace.x + textureCoordinate_input.x)*0.0001;\n\
   //Color chosen as red\n\
-  vertexInOut.color = vec4(1.0, 0.0, 0.0, 1.0);\n\
+  vertexInOut.color = vec4(1.0+arrayEnsurer, 0.0, 0.0, 1.0);\n\
   \n\
   //Texture coordinate\n\
   vertexInOut.textureCoordinate = textureCoordinate_input;\n\
   \n\
   gl_Position = pMatrix * vertex_camSpace;\n\
 }");
-    QString stdGeom("#version 400 \n\n\
+    QString stdGeom("#version 440 \n\n\
 layout(triangles) in;\n\
 layout(triangle_strip, max_vertices = 3) out;\n\
 \n\
@@ -222,7 +223,7 @@ void main() {\n\
   }\n\
   EndPrimitive();\n\
  }");
-    QString stdFrag("#version 400\n\n\
+    QString stdFrag("#version 440\n\n\
 uniform vec4 ambient;\n\
 uniform vec4 diffuse;\n\
 uniform vec4 specular;\n\
@@ -253,7 +254,7 @@ void main(void)\n\
     m_shaderProgram->addShaderFromSourceCode(QGLShader::Geometry, stdGeom);
     m_shaderProgram->addShaderFromSourceCode(QGLShader::Fragment, stdFrag);
 
-    QString texStdVert("#version 400\n\n\
+    QString texStdVert("#version 440\n\n\
 layout(location = 0) in vec4 vertex_worldSpace;\n\
 uniform mat4 mvMatrix;\n\
 uniform mat4 pMatrix;\n\
@@ -272,7 +273,7 @@ void main(void)\n\
   varyingTextureCoordinate = textureCoordinate_input;\n\
   gl_Position = pMatrix * vertex_camSpace;\n\
 }");
-    QString texStdFrag("#version 400\n\n\
+    QString texStdFrag("#version 440\n\n\
 uniform sampler2D textureRendered;\n\
 \n\
 in vec2 varyingTextureCoordinate;\n\
