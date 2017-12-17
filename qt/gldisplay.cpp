@@ -156,6 +156,7 @@ void GLDisplay::reinitGL()
 	QVector4D upVectorScene = QVector4D(0.0, 1.0, 0.0, 1.0);
 	QVector4D centerScene = QVector4D(0.0, 0.0, 0.0, 1.0);
 
+    m_R2TVAO.destroy();
 	if (!m_R2TVAO.create())
 		cerr << "Could not create R2T VAO" << endl;
 

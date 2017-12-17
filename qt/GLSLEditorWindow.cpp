@@ -136,7 +136,7 @@ void GLSLEditorWindow::loadDefaultShaders()
     m_shaderProgramDisplay->removeAllShaders();
 
     //TODO -- default shaders inline
-	QString stdVert("#version 440 \n\n\
+    QString stdVert("#version 410 \n\n\
 in vec3 vertex_worldSpace;\n\
 in vec3 normal_worldSpace;\n\
 in vec2 textureCoordinate_input;\n\
@@ -196,7 +196,7 @@ void main(void)\n\
   \n\
   gl_Position = pMatrix * vertex_camSpace;\n\
 }");
-    QString stdGeom("#version 440 \n\n\
+    QString stdGeom("#version 410 \n\n\
 layout(triangles) in;\n\
 layout(triangle_strip, max_vertices = 3) out;\n\
 \n\
@@ -235,7 +235,7 @@ void main() {\n\
   }\n\
   EndPrimitive();\n\
  }");
-    QString stdFrag("#version 440\n\n\
+    QString stdFrag("#version 410\n\n\
 uniform vec4 ambient;\n\
 uniform vec4 diffuse;\n\
 uniform vec4 specular;\n\
@@ -266,7 +266,7 @@ void main(void)\n\
     m_shaderProgram->addShaderFromSourceCode(QGLShader::Geometry, stdGeom);
     m_shaderProgram->addShaderFromSourceCode(QGLShader::Fragment, stdFrag);
 
-    QString texStdVert("#version 440\n\n\
+    QString texStdVert("#version 410\n\n\
 layout(location = 0) in vec4 vertex_worldSpace;\n\
 uniform mat4 mvMatrix;\n\
 uniform mat4 pMatrix;\n\
@@ -285,7 +285,7 @@ void main(void)\n\
   varyingTextureCoordinate = textureCoordinate_input;\n\
   gl_Position = pMatrix * vertex_camSpace;\n\
 }");
-    QString texStdFrag("#version 440\n\n\
+    QString texStdFrag("#version 410\n\n\
 uniform sampler2D textureRendered;\n\
 \n\
 in vec2 varyingTextureCoordinate;\n\
