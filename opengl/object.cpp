@@ -56,8 +56,9 @@ m_modelMatrix(QMatrix4x4()), m_rotationX(0), m_rotationY(0), m_rotationZ(0)
 	qDebug() << m_mesh.getTextureCoordinates().size();
 
 	int numVertices = m_mesh.getVertices().size();
+
     int sizeVertices = numVertices * sizeof(QVector3D);//m_mesh.getVertices().size() * sizeof(QVector3D);
-    int sizeTextureCoords = numVertices * sizeof(QVector2D);//m_mesh.getTextureCoordinates().size() * sizeof(QVector2D);
+    int sizeTextureCoords = m_mesh.getTextureCoordinates().size() * sizeof(QVector2D);
     int sizeNormals = numVertices * sizeof(QVector3D);//m_mesh.getVertexNormals().size() * sizeof(QVector3D);
 
     size_t VBOSize = sizeVertices + sizeTextureCoords + sizeNormals;
@@ -311,4 +312,10 @@ int Object::getRotationY() const
 int Object::getRotationZ() const
 {
     return m_rotationZ;
+}
+
+
+std::string Object::getObjectName() const
+{
+    return m_objectName;
 }

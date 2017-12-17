@@ -109,6 +109,8 @@ public:
     int getRotationY() const;
     int getRotationZ() const;
 
+    std::string getObjectName() const;
+
 private:
     std::string m_objectName;
     Mesh m_mesh;

@@ -125,7 +125,16 @@ void GLDisplay::reinitGL()
 
 	m_renderingVAO.bind();
 
-	m_scene = new Scene(string("teapot")); //Initialise with the teapot
+
+    if(m_scene == NULL)
+    {
+        m_scene = new Scene(string("teapot")); //Initialise with the teapot
+    }
+    else
+    {
+        QVector<Object> currentObjects = m_scene->getObjects();
+        m_scene = new Scene(currentObjects[0].getObjectName()); //Initialise with the teapot
+    }
 
 	m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
 	m_shaderProgram->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_scene->getObjects()[0].getTextureCoordinatesOffset(), 2, 0);
