@@ -181,7 +181,8 @@ signals:
 
 protected:
     void initializeGL();
-    void resizeGL(int width, int height);
+	void reinitGL();
+	void resizeGL(int width, int height);
     void paintGL();
     void wheelEvent(QWheelEvent* event);
     void mousePressEvent(QMouseEvent *event);

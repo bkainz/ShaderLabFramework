@@ -54,25 +54,6 @@ m_modelMatrix(QMatrix4x4()), m_rotationX(0), m_rotationY(0), m_rotationZ(0)
 	qDebug() << m_mesh.getVertices().size();
 	qDebug() << m_mesh.getVertexNormals().size();
 	qDebug() << m_mesh.getTextureCoordinates().size();
-#if USE_INTERLEAVED //interleaved attibutes
-
-	QVector<Vertex> vertices;
-	for (int i = 0; i < m_mesh.getVertices().size(); i++)
-	{
-		Vertex v;
-		v.position = m_mesh.getVertices()[i];
-		v.normal = m_mesh.getVertexNormals()[i];
-		v.texcoord = QVector3D(m_mesh.getTextureCoordinates()[i],0.0);
-		vertices.push_back(v);
-	}
-
-	size_t VBOSize = m_mesh.getVertices().size() * sizeof(Vertex);
-
-	m_QtVBO.allocate(VBOSize);
-
-	m_QtVBO.write(0, vertices.constData(), VBOSize);
-
-#else
 
 	int numVertices = m_mesh.getVertices().size();
     int sizeVertices = numVertices * sizeof(QVector3D);//m_mesh.getVertices().size() * sizeof(QVector3D);
@@ -95,9 +76,8 @@ m_modelMatrix(QMatrix4x4()), m_rotationX(0), m_rotationY(0), m_rotationZ(0)
 
 	//Send the normals data
 	m_QtVBO.write(m_normalsOffset, m_mesh.getVertexNormals().constData(), sizeNormals);
-#endif
 
-    m_QtIndexBuffer = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+	m_QtIndexBuffer = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
 
     if (m_QtIndexBuffer.create())
         qDebug() << "Success creating the index buffer";

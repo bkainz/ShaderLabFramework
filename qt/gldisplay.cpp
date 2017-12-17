@@ -73,9 +73,6 @@ void GLDisplay::initializeGL()
     f = QOpenGLContext::currentContext()->functions();
     f->initializeOpenGLFunctions();
 
-    m_framebuffer = new FrameBuffer();
-    m_framebufferFinalResult = new FrameBuffer();
-
     QString OpenGLInfo;
     OpenGLInfo = QString("Widget OpenGl: %1.%2\n").arg(format().majorVersion()).arg(format().minorVersion());
 
@@ -106,81 +103,84 @@ void GLDisplay::initializeGL()
 
     m_shaderEditor->show();
 
-    qDebug() << "loading scene";
+	this->reinitGL();
 
-    //Load VAO
-    if(!m_renderingVAO.create())
-        cerr << "Could not create VAO" << endl;
+}
 
 
+void GLDisplay::reinitGL()
+{
+	m_framebuffer = new FrameBuffer();
+	m_framebufferFinalResult = new FrameBuffer();
 
-    m_renderingVAO.bind();
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_MULTISAMPLE);
+	glClearColor(0, 0, 0, 0);
 
-    m_scene = new Scene(string("teapot")); //Initialise with the teapot
+	qDebug() << "loading scene";
 
-#if USE_INTERLEAVED //interleaved attibutes
-	f->glVertexAttribPointer(m_shaderProgram->attributeLocation("vertex_worldSpace"), 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, position)));
-	f->glVertexAttribPointer(m_shaderProgram->attributeLocation("textureCoordinate_input"), 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, texcoord)));
-	f->glVertexAttribPointer(m_shaderProgram->attributeLocation("normal_worldSpace"), 3, GL_FLOAT, GL_TRUE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, normal)));
-#else
-	//f->glVertexAttribPointer(m_shaderProgram->attributeLocation("vertex_worldSpace"), 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(0));
-	//f->glVertexAttribPointer(m_shaderProgram->attributeLocation("textureCoordinate_input"), 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(m_scene->getObjects()[0].getTextureCoordinatesOffset()));
-	//f->glVertexAttribPointer(m_shaderProgram->attributeLocation("normal_worldSpace"), 3, GL_FLOAT, GL_TRUE, 0, reinterpret_cast<void*>(m_scene->getObjects()[0].getNormalsOffset()));
-#endif
+	//Load VAO
+	if (!m_renderingVAO.create())
+		cerr << "Could not create VAO" << endl;
+
+	m_renderingVAO.bind();
+
+	m_scene = new Scene(string("teapot")); //Initialise with the teapot
+
 	m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
-    m_shaderProgram->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_scene->getObjects()[0].getTextureCoordinatesOffset(), 2, 0);
-    m_shaderProgram->setAttributeBuffer("normal_worldSpace", GL_FLOAT,  m_scene->getObjects()[0].getNormalsOffset(), 3, 0);
+	m_shaderProgram->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_scene->getObjects()[0].getTextureCoordinatesOffset(), 2, 0);
+	m_shaderProgram->setAttributeBuffer("normal_worldSpace", GL_FLOAT, m_scene->getObjects()[0].getNormalsOffset(), 3, 0);
 
-    m_shaderProgram->enableAttributeArray("vertex_worldSpace");
-    m_shaderProgram->enableAttributeArray("textureCoordinate_input");
-    m_shaderProgram->enableAttributeArray("normal_worldSpace");
+	m_shaderProgram->enableAttributeArray("vertex_worldSpace");
+	m_shaderProgram->enableAttributeArray("textureCoordinate_input");
+	m_shaderProgram->enableAttributeArray("normal_worldSpace");
 
-    m_renderingVAO.release();
+	m_renderingVAO.release();
 
-    this->loadTexturesAndFramebuffers();
+	this->loadTexturesAndFramebuffers();
 
-    //Starts the FPS time
-    m_timeFPS.start();
+	//Starts the FPS time
+	m_timeFPS.start();
 
-    /*---- Camera initialisation to render----*/
-    //The camera that displays the final square is the moving camera
-    //Compute the transformation of the camera
-    QVector4D positionQuad = QVector4D(0.0, 0.0, 1.0, 1.0);
-    QVector4D upVectorQuad = QVector4D(0.0, 1.0, 0.0, 1.0);
-    QVector4D centerQuad = QVector4D(0.0, 0.0, 0.0, 1.0);
+	/*---- Camera initialisation to render----*/
+	//The camera that displays the final square is the moving camera
+	//Compute the transformation of the camera
+	QVector4D positionQuad = QVector4D(0.0, 0.0, 1.0, 1.0);
+	QVector4D upVectorQuad = QVector4D(0.0, 1.0, 0.0, 1.0);
+	QVector4D centerQuad = QVector4D(0.0, 0.0, 0.0, 1.0);
 
-    //Render the quad without perspective
-    m_cameraQuad = Camera(positionQuad, upVectorQuad, centerQuad, false);
+	//Render the quad without perspective
+	m_cameraQuad = Camera(positionQuad, upVectorQuad, centerQuad, false);
 
-    QVector4D positionScene = QVector4D(0.0, 0.0, INITIAL_CAMERA_Z_POSITION, 1.0);
-    QVector4D upVectorScene = QVector4D(0.0, 1.0, 0.0, 1.0);
-    QVector4D centerScene = QVector4D(0.0, 0.0, 0.0, 1.0);
+	QVector4D positionScene = QVector4D(0.0, 0.0, INITIAL_CAMERA_Z_POSITION, 1.0);
+	QVector4D upVectorScene = QVector4D(0.0, 1.0, 0.0, 1.0);
+	QVector4D centerScene = QVector4D(0.0, 0.0, 0.0, 1.0);
 
-    if(!m_R2TVAO.create())
-        cerr << "Could not create R2T VAO" << endl;
+	if (!m_R2TVAO.create())
+		cerr << "Could not create R2T VAO" << endl;
 
-    m_R2TVAO.bind();
+	m_R2TVAO.bind();
 
-    m_R2Tsquare = Object(string("square"));
+	m_R2Tsquare = Object(string("square"));
 
-    //The square is betweem -0.5 and 0.5
-    //Scale it by a factor of 2 so that it covers the entire screen (between -1 and 1)
-    m_R2Tsquare.scale(2.0);
+	//The square is betweem -0.5 and 0.5
+	//Scale it by a factor of 2 so that it covers the entire screen (between -1 and 1)
+	m_R2Tsquare.scale(2.0);
 
-    m_shaderProgramDisplay->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
-    m_shaderProgramDisplay->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_R2Tsquare.getTextureCoordinatesOffset(), 2, 0);
-    m_shaderProgramDisplay->setAttributeBuffer("normal_worldSpace", GL_FLOAT,  m_R2Tsquare.getNormalsOffset(), 3, 0);
+	m_shaderProgramDisplay->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
+	m_shaderProgramDisplay->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_R2Tsquare.getTextureCoordinatesOffset(), 2, 0);
+	m_shaderProgramDisplay->setAttributeBuffer("normal_worldSpace", GL_FLOAT, m_R2Tsquare.getNormalsOffset(), 3, 0);
 
-    m_shaderProgramDisplay->enableAttributeArray("vertex_worldSpace");
-    m_shaderProgramDisplay->enableAttributeArray("textureCoordinate_input");
-    m_shaderProgramDisplay->enableAttributeArray("normal_worldSpace");
+	m_shaderProgramDisplay->enableAttributeArray("vertex_worldSpace");
+	m_shaderProgramDisplay->enableAttributeArray("textureCoordinate_input");
+	m_shaderProgramDisplay->enableAttributeArray("normal_worldSpace");
 
-    m_R2TVAO.release();
+	m_R2TVAO.release();
 
-    m_cameraScene = Camera(positionScene, upVectorScene, centerScene, true, (float)m_framebuffer->getWidth() / (float)m_framebuffer->getHeight(), 45.0);
-    emit updateViewMatrix(m_cameraScene.getViewMatrix());
-    emit updateProjectionMatrix(m_cameraScene.getProjectionMatrix());
-    emit(updateMaterialTab());
+	m_cameraScene = Camera(positionScene, upVectorScene, centerScene, true, (float)m_framebuffer->getWidth() / (float)m_framebuffer->getHeight(), 45.0);
+	emit updateViewMatrix(m_cameraScene.getViewMatrix());
+	emit updateProjectionMatrix(m_cameraScene.getProjectionMatrix());
+	emit(updateMaterialTab());
 
 	const QList<QOpenGLDebugMessage> messages = logger.loggedMessages();
 	for (const QOpenGLDebugMessage &message : messages)
@@ -430,6 +430,8 @@ void GLDisplay::linkShaderProgram()
             emit(updateUniformTab());
         }
     }
+
+	reinitGL();
 }
 
 void GLDisplay::renderToTexture(const int textureId, bool isSimplifiedPipeline)
@@ -726,15 +728,6 @@ void GLDisplay::updateObject(QString object)
 
     m_scene->addObject(objectFileName);
 
-#if USE_INTERLEAVED //interleaved attibutes
-	f->glVertexAttribPointer(m_shaderProgram->attributeLocation("vertex_worldSpace"), 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, position)));
-	f->glVertexAttribPointer(m_shaderProgram->attributeLocation("textureCoordinate_input"), 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, texcoord)));
-	f->glVertexAttribPointer(m_shaderProgram->attributeLocation("normal_worldSpace"), 3, GL_FLOAT, GL_TRUE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, normal)));
-#else
-	//f->glVertexAttribPointer(m_shaderProgram->attributeLocation("vertex_worldSpace"), 3, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(0));
-	//f->glVertexAttribPointer(m_shaderProgram->attributeLocation("textureCoordinate_input"), 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void*>(m_scene->getObjects()[0].getTextureCoordinatesOffset()));
-	//f->glVertexAttribPointer(m_shaderProgram->attributeLocation("normal_worldSpace"), 3, GL_FLOAT, GL_TRUE, 0, reinterpret_cast<void*>(m_scene->getObjects()[0].getNormalsOffset()));
-#endif
 	m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
     m_shaderProgram->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_scene->getObjects()[0].getTextureCoordinatesOffset(), 2, 0);
     m_shaderProgram->setAttributeBuffer("normal_worldSpace", GL_FLOAT,  m_scene->getObjects()[0].getNormalsOffset(), 3, 0);

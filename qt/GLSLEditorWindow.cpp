@@ -180,10 +180,16 @@ void main(void)\n\
   //Uniforms and array objects that are nor used for \n\
   //the final output(!) are  removed during \n\
   //glsl compilation regardless if you assign them. \n\
-  float arrayEnsurer = (vertexInOut.normal_camSpace.x + textureCoordinate_input.x)*0.0001;\n\
-  //Color chosen as red plus a negligible contribution by arrayEnsurer \n\
+  vec4 workaround = \n\
+		vec4((vertexInOut.normal_camSpace.x + textureCoordinate_input.x)*0.0001, 0, 0, 1);\n\
+  \n\
+  //forwarding pure red as RGBA color\n\
   //Try to use the normals as RGB color or the texture coordiantes!\n\
-  vertexInOut.color = vec4(1.0+arrayEnsurer, 0.0, 0.0, 1.0);\n\
+  vertexInOut.color = vec4(1.0, 0.0, 0.0, 1.0);\n\
+  \n\
+  //a negligible contribution from normals and texcoords is added \n\
+  //to ensure these array objects are not optimsed away \n\
+  vertexInOut.color += workaround;\n\
   \n\
   //Texture coordinate\n\
   vertexInOut.textureCoordinate = textureCoordinate_input;\n\
