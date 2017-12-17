@@ -74,6 +74,9 @@ void GLDisplay::initializeGL()
     f = QOpenGLContext::currentContext()->functions();
     f->initializeOpenGLFunctions();
 
+	m_framebuffer = new FrameBuffer();
+	m_framebufferFinalResult = new FrameBuffer();
+
     QString OpenGLInfo;
     OpenGLInfo = QString("Widget OpenGl: %1.%2\n").arg(format().majorVersion()).arg(format().minorVersion());
 
@@ -110,9 +113,6 @@ void GLDisplay::initializeGL()
 
 void GLDisplay::reinitGL()
 {
-	m_framebuffer = new FrameBuffer();
-	m_framebufferFinalResult = new FrameBuffer();
-
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_MULTISAMPLE);
 	glClearColor(0, 0, 0, 0);
@@ -128,23 +128,12 @@ void GLDisplay::reinitGL()
 	
 	m_scene = new Scene(m_objectFileName);
 
-    /*if(m_scene == NULL)
-    {
-        m_scene = new Scene(string("teapot")); //Initialise with the teapot
-    }
-    else
-    {
-        //QVector<Object> currentObjects = m_scene->getObjects();
-		m_scene = new Scene(m_objectFileName);//currentObjects[0].getObjectName()); //Initialise with the teapot
-    }*/
-
-	m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
-	m_shaderProgram->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_scene->getObjects()[0].getTextureCoordinatesOffset(), 2, 0);
-	m_shaderProgram->setAttributeBuffer("normal_worldSpace", GL_FLOAT, m_scene->getObjects()[0].getNormalsOffset(), 3, 0);
-
 	m_shaderProgram->enableAttributeArray("vertex_worldSpace");
 	m_shaderProgram->enableAttributeArray("textureCoordinate_input");
 	m_shaderProgram->enableAttributeArray("normal_worldSpace");
+	m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
+	m_shaderProgram->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_scene->getObjects()[0].getTextureCoordinatesOffset(), 2, 0);
+	m_shaderProgram->setAttributeBuffer("normal_worldSpace", GL_FLOAT, m_scene->getObjects()[0].getNormalsOffset(), 3, 0);
 
 	m_renderingVAO.release();
 
@@ -710,10 +699,6 @@ void GLDisplay::updateCameraFieldOfView(double fieldOfView)
 
 void GLDisplay::updateObject(QString object)
 {
-    //string objectFileName;
-
-    //m_renderingVAO.bind();
-
     if (object == "Square")
     {
 		m_objectFileName = "square";
@@ -735,20 +720,8 @@ void GLDisplay::updateObject(QString object)
 		m_objectFileName = "teapot-low";
     }
 
-    //m_scene->removeObjects();
-
-    //m_scene->addObject(m_objectFileName);
 	this->linkShaderProgram();
 	//this->reinitGL();
-/*	m_shaderProgram->setAttributeBuffer("vertex_worldSpace", GL_FLOAT, 0, 3, 0);
-    m_shaderProgram->setAttributeBuffer("textureCoordinate_input", GL_FLOAT, m_scene->getObjects()[0].getTextureCoordinatesOffset(), 2, 0);
-    m_shaderProgram->setAttributeBuffer("normal_worldSpace", GL_FLOAT,  m_scene->getObjects()[0].getNormalsOffset(), 3, 0);
-	
-    m_shaderProgram->enableAttributeArray("vertex_worldSpace");
-    m_shaderProgram->enableAttributeArray("textureCoordinate_input");
-    m_shaderProgram->enableAttributeArray("normal_worldSpace");
-
-    m_renderingVAO.release();*/
 
     emit(updateMaterialTab());
     update();//Update openGL
