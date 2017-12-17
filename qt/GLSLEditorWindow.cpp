@@ -174,9 +174,15 @@ void main(void)\n\
   //Normals put in the camera space\n\
   vertexInOut.normal_camSpace = normalize(normalMatrix*normal_worldSpace);\n\
   \n\
-  //we need to make sure that the normals and texture coords aren't optimised away, so we have to use them somehow\n\
+  //we need to make sure that the normals and texture coordinates\n\
+  //aren't optimised away, \n\
+  //so we have to use them somehow.\n\
+  //Uniforms and array objects that are nor used for \n\
+  //the final output(!) are  removed during \n\
+  //glsl compilation regardless if you assign them. \n\
   float arrayEnsurer = (vertexInOut.normal_camSpace.x + textureCoordinate_input.x)*0.0001;\n\
-  //Color chosen as red\n\
+  //Color chosen as red plus a negligible contribution by arrayEnsurer \n\
+  //Try to use the normals as RGB color or the texture coordiantes!\n\
   vertexInOut.color = vec4(1.0+arrayEnsurer, 0.0, 0.0, 1.0);\n\
   \n\
   //Texture coordinate\n\
