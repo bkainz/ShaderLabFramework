@@ -44,7 +44,7 @@ IN THE SOFTWARE.
 This tool was inspired by ['Shader Maker'](http://cgvr.cs.uni-bremen.de/teaching/shader_maker/), a Computer Graphics teaching tool developed by the team of Prof.Dr.Gabriel Zachmann, 	University of Bremen. The Copyright holders of 'Shader Maker' granted permission to use their code. The GLSL shader editor syntax highlighter classes are based on the implementation provided by 'Shader Maker'.
 
 ## Dependencies:
-- [Qt5 v5.9+](https://www.qt.io/download/)
+- [Qt5 v5.9](https://www.qt.io/download/)
 - [CMake](https://cmake.org/download/) 
 
 ## Compile and run:
