@@ -6,7 +6,7 @@ A comprehensive overview over out Computer Graphics course using ShaderLabFramew
 [Antoine Toisoul, Daniel Rueckert, Bernhard Kainz, Accessible GLSL Shader Programming](https://diglib.eg.org/handle/10.2312/eged20171024), in Proc. EuroGraphics 2017, 2017
 
 
-If you use the renderer for your research please cite : 
+If you use the ShaderLab Framework for your research please cite : 
 
 <p align="center">
 <pre><code>@inproceedings{Toisoul2017ShaderLabFramework,
