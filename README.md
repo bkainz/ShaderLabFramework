@@ -5,6 +5,20 @@ The Shader Lab Framework is a teaching tool to solidify the fundamentals of Comp
 A comprehensive overview over out Computer Graphics course using ShaderLabFramework has been accepted for the EG 2017 educational track:
 [Antoine Toisoul, Daniel Rueckert, Bernhard Kainz, Accessible GLSL Shader Programming](https://diglib.eg.org/handle/10.2312/eged20171024), in Proc. EuroGraphics 2017, 2017
 
+
+If you use the renderer for your research please cite : 
+
+<p align="center">
+<pre><code>@inproceedings{toisoul2017ShaderLabFramework,
+  title={Accessible GLSL shader programming},
+  author={Toisoul, Antoine and Rueckert, Daniel and Kainz, Bernhard},
+  booktitle={Proceedings of the European Association for Computer Graphics: Education papers},
+  pages={35--42},
+  year={2017},
+  organization={Eurographics Association}
+}</code></pre>
+</p>
+
 YouTube Video:
 
 <p align="center">
