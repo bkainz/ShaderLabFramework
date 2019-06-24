@@ -9,7 +9,7 @@ A comprehensive overview over out Computer Graphics course using ShaderLabFramew
 If you use the renderer for your research please cite : 
 
 <p align="center">
-<pre><code>@inproceedings{toisoul2017ShaderLabFramework,
+<pre><code>@inproceedings{Toisoul2017ShaderLabFramework,
   title={Accessible GLSL shader programming},
   author={Toisoul, Antoine and Rueckert, Daniel and Kainz, Bernhard},
   booktitle={Proceedings of the European Association for Computer Graphics: Education papers},
